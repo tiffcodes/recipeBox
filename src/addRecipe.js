@@ -8,9 +8,6 @@ export default class AddRecipe extends React.Component {
 			ingredients: [],
 			instructions: [],
 			listFocus: false, 
-			titleValue: '', 
-			ingredientValue: '',
-			instructionValue: '', 
 			titleError: false, 
 			ingredientError: false,
 			instructionError: false
@@ -92,13 +89,7 @@ export default class AddRecipe extends React.Component {
 	}
 
 	handleTitleChange(e) {
-		// update state
-		this.setState({
-			titleValue: e.target.value
-		});
-
 		let titleVal = this.recipeTitle.value;
-		
 		// run validation 
 		if (titleVal.length <= 1) {
 			this.setState({
@@ -112,14 +103,7 @@ export default class AddRecipe extends React.Component {
 	}
 
 	handleIngredientChange(e) {
-		this.setState({
-			ingredientValue: e.target.value
-		});
-
 		let ingredVal = e.target.value;
-		// let ingredList = this.state.ingredients;
-		// console.log('ingredList',ingredList);
-		
 		// run validation 
 		if (ingredVal.length <= 1) {
 			this.setState({
@@ -133,12 +117,7 @@ export default class AddRecipe extends React.Component {
 	}
 
 	handleInstructionChange(e) {
-		this.setState({
-			instructionValue: e.target.value
-		});
-
 		let instructVal = e.target.value;
-		
 		// run validation 
 		if (instructVal.length <= 1) {
 			this.setState({

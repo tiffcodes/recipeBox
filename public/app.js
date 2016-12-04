@@ -26168,9 +26168,6 @@ var AddRecipe = function (_React$Component) {
 			ingredients: [],
 			instructions: [],
 			listFocus: false,
-			titleValue: '',
-			ingredientValue: '',
-			instructionValue: '',
 			titleError: false,
 			ingredientError: false,
 			instructionError: false
@@ -26260,13 +26257,7 @@ var AddRecipe = function (_React$Component) {
 	}, {
 		key: 'handleTitleChange',
 		value: function handleTitleChange(e) {
-			// update state
-			this.setState({
-				titleValue: e.target.value
-			});
-
 			var titleVal = this.recipeTitle.value;
-
 			// run validation 
 			if (titleVal.length <= 1) {
 				this.setState({
@@ -26281,14 +26272,7 @@ var AddRecipe = function (_React$Component) {
 	}, {
 		key: 'handleIngredientChange',
 		value: function handleIngredientChange(e) {
-			this.setState({
-				ingredientValue: e.target.value
-			});
-
 			var ingredVal = e.target.value;
-			// let ingredList = this.state.ingredients;
-			// console.log('ingredList',ingredList);
-
 			// run validation 
 			if (ingredVal.length <= 1) {
 				this.setState({
@@ -26303,12 +26287,7 @@ var AddRecipe = function (_React$Component) {
 	}, {
 		key: 'handleInstructionChange',
 		value: function handleInstructionChange(e) {
-			this.setState({
-				instructionValue: e.target.value
-			});
-
 			var instructVal = e.target.value;
-
 			// run validation 
 			if (instructVal.length <= 1) {
 				this.setState({
