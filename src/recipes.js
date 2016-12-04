@@ -31,7 +31,13 @@ export default class Recipes extends React.Component {
 			<section>
 				<h3>Recipes:</h3>
 				{
-					this.state.recipe.map((recipe, i) => {
+					this.state.recipe.sort(function(a, b){
+						let titleA = a.title.toLowerCase();
+						let titleB = b.title.toLowerCase();
+					    if(titleA < titleB) return -1;
+					    if(titleA > titleB) return 1;
+					    return 0;
+					}).map((recipe, i) => {
 						return (
 							<div key={i} className="recipe">
 								<i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, recipe)}></i>

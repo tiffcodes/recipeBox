@@ -19,7 +19,7 @@ class App extends React.Component {
 			loggedIn: false
 		}
 
-		var config = {
+		let config = {
 		  apiKey: "AIzaSyBvMwXsV0jsyGOy2laI6mUPdSo4irwT9hI",
 		  authDomain: "my-project-734e0.firebaseapp.com",
 		  databaseURL: "https://my-project-734e0.firebaseio.com",
@@ -55,7 +55,7 @@ class App extends React.Component {
 	}
 
 	render() {
-		var main;
+		let main;
 		if (this.state.loggedIn) {
 			main =  <div>
 						<div className="signOut"><a href="#" onClick={e => this.signout.call(this,e)}>Sign out</a></div>

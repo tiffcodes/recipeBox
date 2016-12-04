@@ -26668,7 +26668,7 @@ var App = function (_React$Component) {
 		value: function render() {
 			var _this4 = this;
 
-			var main;
+			var main = void 0;
 			if (this.state.loggedIn) {
 				main = _react2.default.createElement(
 					'div',
@@ -27021,7 +27021,13 @@ var Recipes = function (_React$Component) {
 					null,
 					'Recipes:'
 				),
-				this.state.recipe.map(function (recipe, i) {
+				this.state.recipe.sort(function (a, b) {
+					var titleA = a.title.toLowerCase();
+					var titleB = b.title.toLowerCase();
+					if (titleA < titleB) return -1;
+					if (titleA > titleB) return 1;
+					return 0;
+				}).map(function (recipe, i) {
 					return _react2.default.createElement(
 						'div',
 						{ key: i, className: 'recipe' },

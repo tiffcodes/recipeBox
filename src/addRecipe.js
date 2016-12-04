@@ -48,7 +48,7 @@ export default class AddRecipe extends React.Component {
 
 	removeIngredient(ingredientToRemove){
 		// get the index of the ingredient to remove
-		var indexOfIngred = this.state.ingredients.indexOf(ingredientToRemove);
+		let indexOfIngred = this.state.ingredients.indexOf(ingredientToRemove);
 		// make a new instance of the ingredientsArray from state
 		let ingredientsArray = Array.from(this.state.ingredients);
 		ingredientsArray.splice(indexOfIngred, 1);
@@ -78,7 +78,7 @@ export default class AddRecipe extends React.Component {
 
 	removeInstruction(instructionToRemove) {
 		// get the index of the ingredient to remove
-		var indexOfInstruction = this.state.instructions.indexOf(instructionToRemove);
+		let indexOfInstruction = this.state.instructions.indexOf(instructionToRemove);
 		// make a new instance of the ingredientsArray from state
 		let instructionArray = Array.from(this.state.instructions);
 		instructionArray.splice(indexOfInstruction, 1);
