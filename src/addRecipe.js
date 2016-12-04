@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Footer from './footer.js';
-import Header from './header.js';
 
 export default class AddRecipe extends React.Component {
 	constructor(props, context) {
 		super();
 		this.state = {
-			recipe: [],
 			ingredients: [],
 			instructions: [],
 			listFocus: false, 
@@ -18,18 +15,6 @@ export default class AddRecipe extends React.Component {
 			ingredientError: false,
 			instructionError: false
 		}
-	}
-
-	componentDidMount() {
-		firebase.database().ref('recipe').on('value', (res) => {
-			const data = res.val();
-			const recipe = [];
-			for(let key in data) {
-				data[key].key = key;
-				recipe.push(data[key]);
-			}
-			this.setState({recipe});
-		});
 	}
 
 	listFocus() {
@@ -226,11 +211,6 @@ export default class AddRecipe extends React.Component {
 		});
 	}
 
-	removeRecipe(recipeToRemove) {
-		recipeToRemove.key 
-		firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
-	}
-
 	render() {
 		return (
 			<section>
@@ -316,55 +296,13 @@ export default class AddRecipe extends React.Component {
 							})}
 						</ul>
 
-
 						<label>Serves:</label>
 						<input type="text" ref={ref => this.recipeServes = ref}/>
 
 						<input type="submit" />
 					</div>
 				</form>
-				<section>
-					<h3>Recipes:</h3>
-					{this.state.recipe.map((recipe, i) => {
-						return(
-							<div key={i} className="recipe">
-								<i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, recipe)}></i>
-								<h2>{recipe.title}</h2>
-								<p>{recipe.prepTime ? recipe.prepTime : 'Unknown'}</p>
-								<p>{recipe.totalTime ? recipe.totalTime : 'Unknown'}</p>
-								<ul>
-
-									{ (() => {
-										if(recipe.ingredients !== "") {
-											return recipe.ingredients.map((recipeIngred, i) => {
-													return (
-														<li key={i}>{recipeIngred}</li>
-													)
-												});
-											}
-
-										})()
-									}
-								</ul>
-								<ul>
-									{ (() => {
-										if(recipe.instructions !== "") {
-											return recipe.instructions.map((recipeInstruction, i) => {
-													return (
-														<li key={i}>{recipeInstruction}</li>
-													)
-												});
-											}
-
-										})()
-									}
-								</ul>
-								<p>{recipe.serves ? recipe.serves : 'Unknown'}</p>
-							</div>
-						)
-					})}
-				</section>
-			</section>
+			</section>	
 		);
 	};
 }

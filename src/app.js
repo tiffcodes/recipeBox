@@ -9,6 +9,7 @@ import Footer from './footer.js';
 import NotFound from './notFound.js';
 import AddRecipe from './addRecipe.js';
 import Header from './header.js';
+import Recipes from './recipes.js';
 
 
 class App extends React.Component {
@@ -59,6 +60,7 @@ class App extends React.Component {
 			main =  <div>
 						<div className="signOut"><a href="#" onClick={e => this.signout.call(this,e)}>Sign out</a></div>
 						<AddRecipe /> 
+						<Recipes />
 					</div>;
 
 		} else {
@@ -86,7 +88,8 @@ App.contextTypes = {
 ReactDom.render(
 	<Router history={browserHistory}>
 		<Route path="/" component={App} />
-		<Route path="/recipes" component={AddRecipe} />
+		<Route path="/addrecipes" component={AddRecipe} />
+		<Route path="/recipes" component={Recipes} />
 		<Route path="*" component={NotFound} />
 	</Router>, document.getElementById('app'));
 

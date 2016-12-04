@@ -26148,14 +26148,6 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _footer = require('./footer.js');
-
-var _footer2 = _interopRequireDefault(_footer);
-
-var _header = require('./header.js');
-
-var _header2 = _interopRequireDefault(_header);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26173,7 +26165,6 @@ var AddRecipe = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (AddRecipe.__proto__ || Object.getPrototypeOf(AddRecipe)).call(this));
 
 		_this.state = {
-			recipe: [],
 			ingredients: [],
 			instructions: [],
 			listFocus: false,
@@ -26188,21 +26179,6 @@ var AddRecipe = function (_React$Component) {
 	}
 
 	_createClass(AddRecipe, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			var _this2 = this;
-
-			firebase.database().ref('recipe').on('value', function (res) {
-				var data = res.val();
-				var recipe = [];
-				for (var key in data) {
-					data[key].key = key;
-					recipe.push(data[key]);
-				}
-				_this2.setState({ recipe: recipe });
-			});
-		}
-	}, {
 		key: 'listFocus',
 		value: function listFocus() {
 			this.setState({
@@ -26404,15 +26380,9 @@ var AddRecipe = function (_React$Component) {
 			});
 		}
 	}, {
-		key: 'removeRecipe',
-		value: function removeRecipe(recipeToRemove) {
-			recipeToRemove.key;
-			firebase.database().ref('recipe/' + recipeToRemove.key).remove();
-		}
-	}, {
 		key: 'render',
 		value: function render() {
-			var _this3 = this;
+			var _this2 = this;
 
 			return _react2.default.createElement(
 				'section',
@@ -26420,7 +26390,7 @@ var AddRecipe = function (_React$Component) {
 				_react2.default.createElement(
 					'form',
 					{ action: '', onSubmit: function onSubmit(e) {
-							return _this3.validateRecipeForm.call(_this3, e);
+							return _this2.validateRecipeForm.call(_this2, e);
 						}, className: 'addRecipe' },
 					_react2.default.createElement(
 						'div',
@@ -26448,11 +26418,11 @@ var AddRecipe = function (_React$Component) {
 						_react2.default.createElement('input', { type: 'text',
 							className: this.state.titleError ? 'error' : 'none',
 							ref: function ref(_ref) {
-								return _this3.recipeTitle = _ref;
+								return _this2.recipeTitle = _ref;
 							}
 							// value={this.state.titleValue} 
 							, onChange: function onChange(e) {
-								return _this3.handleTitleChange.call(_this3, e);
+								return _this2.handleTitleChange.call(_this2, e);
 							} }),
 						_react2.default.createElement(
 							'label',
@@ -26460,7 +26430,7 @@ var AddRecipe = function (_React$Component) {
 							'Enter the prep time:'
 						),
 						_react2.default.createElement('input', { type: 'text', ref: function ref(_ref2) {
-								return _this3.recipePrepTime = _ref2;
+								return _this2.recipePrepTime = _ref2;
 							} }),
 						_react2.default.createElement(
 							'label',
@@ -26468,7 +26438,7 @@ var AddRecipe = function (_React$Component) {
 							'Enter the total time:'
 						),
 						_react2.default.createElement('input', { type: 'text', ref: function ref(_ref3) {
-								return _this3.recipeTotalTime = _ref3;
+								return _this2.recipeTotalTime = _ref3;
 							} }),
 						_react2.default.createElement(
 							'label',
@@ -26492,20 +26462,20 @@ var AddRecipe = function (_React$Component) {
 								className: this.state.ingredientError ? 'error enterIngred' : 'enterIngred',
 								id: 'ingredient', type: 'text',
 								ref: function ref(_ref4) {
-									return _this3.recipeIngredients = _ref4;
+									return _this2.recipeIngredients = _ref4;
 								},
 								onKeyDown: function onKeyDown(e) {
-									return _this3.createIngredient.call(_this3, e);
+									return _this2.createIngredient.call(_this2, e);
 								},
 								onFocus: function onFocus(e) {
-									return _this3.listFocus.call(_this3, e);
+									return _this2.listFocus.call(_this2, e);
 								},
 								onBlur: function onBlur(e) {
-									return _this3.listUnFocus.call(_this3, e);
+									return _this2.listUnFocus.call(_this2, e);
 								}
 								// value={this.state.ingredientValue} 
 								, onChange: function onChange(e) {
-									return _this3.handleIngredientChange.call(_this3, e);
+									return _this2.handleIngredientChange.call(_this2, e);
 								} })
 						),
 						_react2.default.createElement(
@@ -26516,7 +26486,7 @@ var AddRecipe = function (_React$Component) {
 									'li',
 									{ key: i, className: 'ingredientList' },
 									_react2.default.createElement('i', { className: 'fa fa-minus deleteIngred', onClick: function onClick(e) {
-											return _this3.removeIngredient.call(_this3, ingredient);
+											return _this2.removeIngredient.call(_this2, ingredient);
 										} }),
 									_react2.default.createElement(
 										'span',
@@ -26549,20 +26519,20 @@ var AddRecipe = function (_React$Component) {
 								className: this.state.instructionError ? 'error enterIngred' : 'enterIngred',
 								type: 'text', id: 'instruction',
 								ref: function ref(_ref5) {
-									return _this3.recipeInstructions = _ref5;
+									return _this2.recipeInstructions = _ref5;
 								},
 								onKeyDown: function onKeyDown(e) {
-									return _this3.createInstruction.call(_this3, e);
+									return _this2.createInstruction.call(_this2, e);
 								},
 								onFocus: function onFocus(e) {
-									return _this3.listFocus.call(_this3, e);
+									return _this2.listFocus.call(_this2, e);
 								},
 								onBlur: function onBlur(e) {
-									return _this3.listUnFocus.call(_this3, e);
+									return _this2.listUnFocus.call(_this2, e);
 								}
 								// value={this.state.instructionValue} 
 								, onChange: function onChange(e) {
-									return _this3.handleInstructionChange.call(_this3, e);
+									return _this2.handleInstructionChange.call(_this2, e);
 								}
 							})
 						),
@@ -26574,7 +26544,7 @@ var AddRecipe = function (_React$Component) {
 									'li',
 									{ key: i, className: 'instructionList' },
 									_react2.default.createElement('i', { className: 'fa fa-minus deleteInstruction', onClick: function onClick(e) {
-											return _this3.removeInstruction.call(_this3, instruction);
+											return _this2.removeInstruction.call(_this2, instruction);
 										} }),
 									_react2.default.createElement(
 										'span',
@@ -26590,78 +26560,10 @@ var AddRecipe = function (_React$Component) {
 							'Serves:'
 						),
 						_react2.default.createElement('input', { type: 'text', ref: function ref(_ref6) {
-								return _this3.recipeServes = _ref6;
+								return _this2.recipeServes = _ref6;
 							} }),
 						_react2.default.createElement('input', { type: 'submit' })
 					)
-				),
-				_react2.default.createElement(
-					'section',
-					null,
-					_react2.default.createElement(
-						'h3',
-						null,
-						'Recipes:'
-					),
-					this.state.recipe.map(function (recipe, i) {
-						return _react2.default.createElement(
-							'div',
-							{ key: i, className: 'recipe' },
-							_react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
-									return _this3.removeRecipe.call(_this3, recipe);
-								} }),
-							_react2.default.createElement(
-								'h2',
-								null,
-								recipe.title
-							),
-							_react2.default.createElement(
-								'p',
-								null,
-								recipe.prepTime ? recipe.prepTime : 'Unknown'
-							),
-							_react2.default.createElement(
-								'p',
-								null,
-								recipe.totalTime ? recipe.totalTime : 'Unknown'
-							),
-							_react2.default.createElement(
-								'ul',
-								null,
-								function () {
-									if (recipe.ingredients !== "") {
-										return recipe.ingredients.map(function (recipeIngred, i) {
-											return _react2.default.createElement(
-												'li',
-												{ key: i },
-												recipeIngred
-											);
-										});
-									}
-								}()
-							),
-							_react2.default.createElement(
-								'ul',
-								null,
-								function () {
-									if (recipe.instructions !== "") {
-										return recipe.instructions.map(function (recipeInstruction, i) {
-											return _react2.default.createElement(
-												'li',
-												{ key: i },
-												recipeInstruction
-											);
-										});
-									}
-								}()
-							),
-							_react2.default.createElement(
-								'p',
-								null,
-								recipe.serves ? recipe.serves : 'Unknown'
-							)
-						);
-					})
 				)
 			);
 		}
@@ -26675,7 +26577,7 @@ var AddRecipe = function (_React$Component) {
 
 exports.default = AddRecipe;
 
-},{"./footer.js":237,"./header.js":238,"react":232,"react-dom":51}],236:[function(require,module,exports){
+},{"react":232,"react-dom":51}],236:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26713,6 +26615,10 @@ var _addRecipe2 = _interopRequireDefault(_addRecipe);
 var _header = require('./header.js');
 
 var _header2 = _interopRequireDefault(_header);
+
+var _recipes = require('./recipes.js');
+
+var _recipes2 = _interopRequireDefault(_recipes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26799,7 +26705,8 @@ var App = function (_React$Component) {
 							'Sign out'
 						)
 					),
-					_react2.default.createElement(_addRecipe2.default, null)
+					_react2.default.createElement(_addRecipe2.default, null),
+					_react2.default.createElement(_recipes2.default, null)
 				);
 			} else {
 				main = _react2.default.createElement(
@@ -26834,11 +26741,12 @@ _reactDom2.default.render(_react2.default.createElement(
 	_reactRouter.Router,
 	{ history: _reactRouter.browserHistory },
 	_react2.default.createElement(_reactRouter.Route, { path: '/', component: App }),
-	_react2.default.createElement(_reactRouter.Route, { path: '/recipes', component: _addRecipe2.default }),
+	_react2.default.createElement(_reactRouter.Route, { path: '/addrecipes', component: _addRecipe2.default }),
+	_react2.default.createElement(_reactRouter.Route, { path: '/recipes', component: _recipes2.default }),
 	_react2.default.createElement(_reactRouter.Route, { path: '*', component: _notFound2.default })
 ), document.getElementById('app'));
 
-},{"./addRecipe.js":235,"./footer.js":237,"./header.js":238,"./notFound.js":239,"./signIn.js":240,"./signUp.js":241,"react":232,"react-dom":51,"react-router":81}],237:[function(require,module,exports){
+},{"./addRecipe.js":235,"./footer.js":237,"./header.js":238,"./notFound.js":239,"./recipes.js":240,"./signIn.js":241,"./signUp.js":242,"react":232,"react-dom":51,"react-router":81}],237:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27074,6 +26982,147 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Recipes = function (_React$Component) {
+	_inherits(Recipes, _React$Component);
+
+	function Recipes(props, context) {
+		_classCallCheck(this, Recipes);
+
+		var _this = _possibleConstructorReturn(this, (Recipes.__proto__ || Object.getPrototypeOf(Recipes)).call(this));
+
+		_this.state = {
+			recipe: []
+		};
+		return _this;
+	}
+
+	_createClass(Recipes, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			firebase.database().ref('recipe').on('value', function (res) {
+				var data = res.val();
+				var recipe = [];
+				for (var key in data) {
+					data[key].key = key;
+					recipe.push(data[key]);
+				}
+				_this2.setState({ recipe: recipe });
+			});
+		}
+	}, {
+		key: 'removeRecipe',
+		value: function removeRecipe(recipeToRemove) {
+			recipeToRemove.key;
+			firebase.database().ref('recipe/' + recipeToRemove.key).remove();
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _this3 = this;
+
+			return _react2.default.createElement(
+				'section',
+				null,
+				_react2.default.createElement(
+					'h3',
+					null,
+					'Recipes:'
+				),
+				this.state.recipe.map(function (recipe, i) {
+					return _react2.default.createElement(
+						'div',
+						{ key: i, className: 'recipe' },
+						_react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
+								return _this3.removeRecipe.call(_this3, recipe);
+							} }),
+						_react2.default.createElement(
+							'h2',
+							null,
+							recipe.title
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							recipe.prepTime
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							recipe.totalTime
+						),
+						_react2.default.createElement(
+							'ul',
+							null,
+							function () {
+								if (recipe.ingredients !== "") {
+									return recipe.ingredients.map(function (recipeIngred, i) {
+										return _react2.default.createElement(
+											'li',
+											{ key: i },
+											recipeIngred
+										);
+									});
+								}
+							}()
+						),
+						_react2.default.createElement(
+							'ul',
+							null,
+							function () {
+								if (recipe.instructions !== "") {
+									return recipe.instructions.map(function (recipeInstruction, i) {
+										return _react2.default.createElement(
+											'li',
+											{ key: i },
+											recipeInstruction
+										);
+									});
+								}
+							}()
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							recipe.serves
+						)
+					);
+				})
+			);
+		}
+	}]);
+
+	return Recipes;
+}(_react2.default.Component);
+
+exports.default = Recipes;
+
+},{"react":232,"react-dom":51}],241:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27164,7 +27213,7 @@ var SignIn = function (_React$Component) {
 
 exports.default = SignIn;
 
-},{"react":232}],241:[function(require,module,exports){
+},{"react":232}],242:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
