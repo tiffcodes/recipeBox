@@ -88,6 +88,5 @@ ReactDom.render(
 		<Route path="/" component={App} />
 		<Route path="/recipes" component={AddRecipe} />
 		<Route path="*" component={NotFound} />
-	</Router>
-, document.getElementById('app'));
+	</Router>, document.getElementById('app'));
 

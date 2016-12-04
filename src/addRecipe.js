@@ -7,32 +7,197 @@ export default class AddRecipe extends React.Component {
 	constructor(props, context) {
 		super();
 		this.state = {
-			recipe: []
+			recipe: [],
+			ingredients: [],
+			instructions: [],
+			listFocus: false, 
+			titleValue: '', 
+			ingredientValue: '',
+			instructionValue: '', 
+			titleError: false, 
+			ingredientError: false,
+			instructionError: false
 		}
 	}
+
 	componentDidMount() {
 		firebase.database().ref('recipe').on('value', (res) => {
-			console.log(res.val());
 			const data = res.val();
 			const recipe = [];
 			for(let key in data) {
 				data[key].key = key;
 				recipe.push(data[key]);
 			}
-			this.setState({recipe}); 
+			this.setState({recipe});
 		});
 	}
-	createNewRecipe(e) {
+
+	listFocus() {
+		this.setState({
+			listFocus: true
+		});
+	}
+
+	listUnFocus() {
+		this.setState({
+			listFocus: false
+		});
+	}
+
+	createIngredient(e) {
+		if (e.keyCode === 13) {
+			let newIngredient = this.recipeIngredients.value;
+			if (newIngredient.length > 0 && newIngredient != " ") {
+				// make a new instance of the previous ingredient list from state
+				let ingredientArray = Array.from(this.state.ingredients);
+				// add new ingredient to that list
+				ingredientArray.push(newIngredient);
+				// reset the state with the new ingredient included on the list
+				this.setState({
+					ingredients: ingredientArray
+				});
+			}
+			// resent the value of input to be blank and ready for next ingredient 
+			console.log('should clear');
+			this.recipeIngredients.value= '';
+		}
+		
+	}
+
+	removeIngredient(ingredientToRemove){
+		// get the index of the ingredient to remove
+		var indexOfIngred = this.state.ingredients.indexOf(ingredientToRemove);
+		// make a new instance of the ingredientsArray from state
+		let ingredientsArray = Array.from(this.state.ingredients);
+		ingredientsArray.splice(indexOfIngred, 1);
+		// reset state to the new ingredientsArray without the removed ingredient
+		this.setState({
+			ingredients: ingredientsArray
+		});
+	}
+
+	createInstruction(e){
+		if (e.keyCode === 13) {
+			let newInstruction = this.recipeInstructions.value;
+			if (newInstruction.length > 0 && newInstruction != " ") {
+				// make a new instance of the previous ingredient list from state
+				let instructionArray = Array.from(this.state.instructions);
+				// add new ingredient to that list
+				instructionArray.push(newInstruction);
+				// reset the state with the new ingredient included on the list
+				this.setState({
+					instructions: instructionArray
+				});
+				// resent the value of input to be blank and ready for next ingredient 
+				this.recipeInstructions.value= '';
+			}
+		}
+	}
+
+	removeInstruction(instructionToRemove) {
+		// get the index of the ingredient to remove
+		var indexOfInstruction = this.state.instructions.indexOf(instructionToRemove);
+		// make a new instance of the ingredientsArray from state
+		let instructionArray = Array.from(this.state.instructions);
+		instructionArray.splice(indexOfInstruction, 1);
+		// reset state to the new ingredientsArray without the removed ingredient
+		this.setState({
+			instructions: instructionArray
+		});
+	}
+
+	handleTitleChange(e) {
+		// update state
+		this.setState({
+			titleValue: e.target.value
+		});
+
+		let titleVal = this.recipeTitle.value;
+		
+		// run validation 
+		if (titleVal.length <= 1) {
+			this.setState({
+				titleError: true
+			});
+		} else {
+			this.setState({
+				titleError: false
+			});
+		}
+	}
+
+	handleIngredientChange(e) {
+		this.setState({
+			ingredientValue: e.target.value
+		});
+
+		let ingredVal = e.target.value;
+		// let ingredList = this.state.ingredients;
+		// console.log('ingredList',ingredList);
+		
+		// run validation 
+		if (ingredVal.length <= 1) {
+			this.setState({
+				ingredientError: true
+			});
+		} else {
+			this.setState({
+				ingredientError: false
+			});
+		}
+	}
+
+	handleInstructionChange(e) {
+		this.setState({
+			instructionValue: e.target.value
+		});
+
+		let instructVal = e.target.value;
+		
+		// run validation 
+		if (instructVal.length <= 1) {
+			this.setState({
+				instructionError: true
+			});
+		} else {
+			this.setState({
+				instructionError: false
+			});
+		}
+	}
+
+	validateRecipeForm(e) {
 		e.preventDefault();
-		console.log('created');
+		if(this.state.listFocus === true) {
+			return false;
+		} else {
+			// save input values
+			const recipeTitle = this.recipeTitle.value;
+			const recipeIngredients = this.state.ingredients;
+			const recipeInstructions = this.state.instructions;
+
+			if(recipeTitle === '' 
+			|| this.state.titleError === true
+			|| recipeIngredients.length <= 0
+			|| recipeInstructions.length <= 0) {
+				alert('Please fill out the required fields');
+				return false;
+			} else {
+				// call createNewRecipe:
+				this.createNewRecipe();
+			}
+		}
+	}
+
+	createNewRecipe() {
 		// save input values
 		const recipeTitle = this.recipeTitle.value;
-		const recipePrepTime = this.recipePrepTime.value;
-		const recipeTotalTime = this.recipeTotalTime.value;
-		const recipeIngredients = this.recipeIngredients.value;
-		const recipeInstructions = this.recipeInstructions.value;
-		const recipeServes = this.recipeServes.value;
-		
+		const recipePrepTime = this.recipePrepTime.value ? this.recipePrepTime.value : 'unknown';
+		const recipeTotalTime = this.recipeTotalTime.value ? this.recipeTotalTime.value : 'unknown';
+		const recipeIngredients = this.state.ingredients;
+		const recipeInstructions = this.state.instructions;
+		const recipeServes = this.recipeServes.value ? this.recipeServes.value : 'unknown';
+
 		// add to recipe object:
 		const recipe = {
 			title: recipeTitle,
@@ -42,10 +207,9 @@ export default class AddRecipe extends React.Component {
 			instructions: recipeInstructions,
 			serves: recipeServes
 		};
-		console.log(recipe);
-		firebase.database().ref('recipe').push(recipe);
-		// Save to firebase:
 
+		// save to firebase db:
+		firebase.database().ref('recipe').push(recipe);
 
 		// clear the inputs
 		this.recipeTitle.value = '';
@@ -54,22 +218,37 @@ export default class AddRecipe extends React.Component {
 		this.recipeIngredients.value = '';
 		this.recipeInstructions.value = '';
 		this.recipeServes.value = '';
+
+		// reset the ingredients state:
+		this.setState({
+			ingredients: [], 
+			instructions: []
+		});
 	}
+
 	removeRecipe(recipeToRemove) {
 		recipeToRemove.key 
 		firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
 	}
+
 	render() {
 		return (
 			<section>
-				<form action="" onSubmit={(e) => this.createNewRecipe.call(this,e) } className="addRecipe">
+				<form action="" onSubmit={(e) => this.validateRecipeForm.call(this,e) } className="addRecipe">
 					<div className="flower">
 						<img src="src/assets/bud.svg" href="Water colour small pink bud"/>
 					</div>
 					<h2>Add a New Recipe:</h2>
 					<div>
-						<label>Enter your recipe title:</label>
-						<input type="text" ref={ref => this.recipeTitle = ref}/>
+						<label className={this.state.titleError ? 'errorLabel' : 'none'}>
+							Enter your recipe title:<span className="required">*</span>
+						</label>
+						
+						<input type="text" 
+							className={this.state.titleError ? 'error' : 'none'}
+							ref={ref => this.recipeTitle = ref}  
+							// value={this.state.titleValue} 
+							onChange={(e) => this.handleTitleChange.call(this, e) } />
 
 						<label>Enter the prep time:</label>
 						<input type="text" ref={ref => this.recipePrepTime = ref}/>
@@ -77,11 +256,66 @@ export default class AddRecipe extends React.Component {
 						<label>Enter the total time:</label>
 						<input type="text" ref={ref => this.recipeTotalTime = ref}/>
 
-						<label>Enter the ingredients:</label>
-						<input type="text" ref={ref => this.recipeIngredients = ref}/>
+						<label htmlFor="ingredient" className={this.state.ingredientError ? 'errorLabel newIngred' : 'newIngred'}>Enter the ingredients:<span className="required">*</span></label>
+						<div>
+							<label htmlFor="ingredient" className={this.state.ingredientError ? 'errorLabel newIngred' : 'newIngred'} >
+								<i className="fa fa-plus"></i>
+							</label>
+							<input 
+								className={this.state.ingredientError ? 'error enterIngred' : 'enterIngred'}
+								id="ingredient" type="text" 
+								ref={ref => this.recipeIngredients = ref} 
+								onKeyDown={(e) => this.createIngredient.call(this,e) } 
+								onFocus={(e) => this.listFocus.call(this, e) } 
+								onBlur={(e) => this.listUnFocus.call(this, e) } 
+								// value={this.state.ingredientValue} 
+								onChange={(e) => this.handleIngredientChange.call(this, e) } />
+						</div>
 
-						<label>Enter the instructions:</label>
-						<input type="text" ref={ref => this.recipeInstructions = ref}/>
+						<ul>
+							{
+								this.state.ingredients.map((ingredient, i) => {
+									return(
+										<li key={i} className="ingredientList">
+											<i className="fa fa-minus deleteIngred" onClick={(e) => this.removeIngredient.call(this, ingredient)}></i>
+											<span>{ingredient}</span>
+										</li>
+									)
+								
+							})}
+						</ul>
+
+						<label htmlFor="instruction" className={this.state.instructionError ? 'errorLabel newInstruct' : 'newInstruct'}>Enter the instructions:<span className="required">*</span></label>
+						<div>
+							<label htmlFor="instruction" 
+								className={this.state.instructionError ? 'errorLabel newInstruct' : 'newInstruct'} >
+								<i className="fa fa-plus"></i>
+							</label>
+							<input 
+								className={this.state.instructionError ? 'error enterIngred' : 'enterIngred'}
+								type="text" id="instruction" 
+								ref={ref => this.recipeInstructions = ref} 
+								onKeyDown={(e) => this.createInstruction.call(this,e) } 
+								onFocus={(e) => this.listFocus.call(this, e) } 
+								onBlur={(e) => this.listUnFocus.call(this, e) }
+								// value={this.state.instructionValue} 
+								onChange={(e) => this.handleInstructionChange.call(this, e) }
+								/>
+						</div>
+
+						<ul>
+							{
+								this.state.instructions.map((instruction, i) => {
+									return(
+										<li key={i} className="instructionList">
+											<i className="fa fa-minus deleteInstruction" onClick={(e) => this.removeInstruction.call(this, instruction)}></i>
+											<span>{instruction}</span>
+										</li>
+									)
+								
+							})}
+						</ul>
+
 
 						<label>Serves:</label>
 						<input type="text" ref={ref => this.recipeServes = ref}/>
@@ -96,11 +330,36 @@ export default class AddRecipe extends React.Component {
 							<div key={i} className="recipe">
 								<i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, recipe)}></i>
 								<h2>{recipe.title}</h2>
-								<p>{recipe.prepTime}</p>
-								<p>{recipe.totalTime}</p>
-								<p>{recipe.ingredients}</p>
-								<p>{recipe.instructions}</p>
-								<p>{recipe.serves}</p>
+								<p>{recipe.prepTime ? recipe.prepTime : 'Unknown'}</p>
+								<p>{recipe.totalTime ? recipe.totalTime : 'Unknown'}</p>
+								<ul>
+
+									{ (() => {
+										if(recipe.ingredients !== "") {
+											return recipe.ingredients.map((recipeIngred, i) => {
+													return (
+														<li key={i}>{recipeIngred}</li>
+													)
+												});
+											}
+
+										})()
+									}
+								</ul>
+								<ul>
+									{ (() => {
+										if(recipe.instructions !== "") {
+											return recipe.instructions.map((recipeInstruction, i) => {
+													return (
+														<li key={i}>{recipeInstruction}</li>
+													)
+												});
+											}
+
+										})()
+									}
+								</ul>
+								<p>{recipe.serves ? recipe.serves : 'Unknown'}</p>
 							</div>
 						)
 					})}
@@ -109,3 +368,5 @@ export default class AddRecipe extends React.Component {
 		);
 	};
 }
+
+// alphabetical (alphabet on the top click C to go to chicken) ??

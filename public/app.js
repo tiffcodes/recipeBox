@@ -26173,7 +26173,16 @@ var AddRecipe = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (AddRecipe.__proto__ || Object.getPrototypeOf(AddRecipe)).call(this));
 
 		_this.state = {
-			recipe: []
+			recipe: [],
+			ingredients: [],
+			instructions: [],
+			listFocus: false,
+			titleValue: '',
+			ingredientValue: '',
+			instructionValue: '',
+			titleError: false,
+			ingredientError: false,
+			instructionError: false
 		};
 		return _this;
 	}
@@ -26184,7 +26193,6 @@ var AddRecipe = function (_React$Component) {
 			var _this2 = this;
 
 			firebase.database().ref('recipe').on('value', function (res) {
-				console.log(res.val());
 				var data = res.val();
 				var recipe = [];
 				for (var key in data) {
@@ -26195,17 +26203,178 @@ var AddRecipe = function (_React$Component) {
 			});
 		}
 	}, {
-		key: 'createNewRecipe',
-		value: function createNewRecipe(e) {
+		key: 'listFocus',
+		value: function listFocus() {
+			this.setState({
+				listFocus: true
+			});
+		}
+	}, {
+		key: 'listUnFocus',
+		value: function listUnFocus() {
+			this.setState({
+				listFocus: false
+			});
+		}
+	}, {
+		key: 'createIngredient',
+		value: function createIngredient(e) {
+			if (e.keyCode === 13) {
+				var newIngredient = this.recipeIngredients.value;
+				if (newIngredient.length > 0 && newIngredient != " ") {
+					// make a new instance of the previous ingredient list from state
+					var ingredientArray = Array.from(this.state.ingredients);
+					// add new ingredient to that list
+					ingredientArray.push(newIngredient);
+					// reset the state with the new ingredient included on the list
+					this.setState({
+						ingredients: ingredientArray
+					});
+				}
+				// resent the value of input to be blank and ready for next ingredient 
+				console.log('should clear');
+				this.recipeIngredients.value = '';
+			}
+		}
+	}, {
+		key: 'removeIngredient',
+		value: function removeIngredient(ingredientToRemove) {
+			// get the index of the ingredient to remove
+			var indexOfIngred = this.state.ingredients.indexOf(ingredientToRemove);
+			// make a new instance of the ingredientsArray from state
+			var ingredientsArray = Array.from(this.state.ingredients);
+			ingredientsArray.splice(indexOfIngred, 1);
+			// reset state to the new ingredientsArray without the removed ingredient
+			this.setState({
+				ingredients: ingredientsArray
+			});
+		}
+	}, {
+		key: 'createInstruction',
+		value: function createInstruction(e) {
+			if (e.keyCode === 13) {
+				var newInstruction = this.recipeInstructions.value;
+				if (newInstruction.length > 0 && newInstruction != " ") {
+					// make a new instance of the previous ingredient list from state
+					var instructionArray = Array.from(this.state.instructions);
+					// add new ingredient to that list
+					instructionArray.push(newInstruction);
+					// reset the state with the new ingredient included on the list
+					this.setState({
+						instructions: instructionArray
+					});
+					// resent the value of input to be blank and ready for next ingredient 
+					this.recipeInstructions.value = '';
+				}
+			}
+		}
+	}, {
+		key: 'removeInstruction',
+		value: function removeInstruction(instructionToRemove) {
+			// get the index of the ingredient to remove
+			var indexOfInstruction = this.state.instructions.indexOf(instructionToRemove);
+			// make a new instance of the ingredientsArray from state
+			var instructionArray = Array.from(this.state.instructions);
+			instructionArray.splice(indexOfInstruction, 1);
+			// reset state to the new ingredientsArray without the removed ingredient
+			this.setState({
+				instructions: instructionArray
+			});
+		}
+	}, {
+		key: 'handleTitleChange',
+		value: function handleTitleChange(e) {
+			// update state
+			this.setState({
+				titleValue: e.target.value
+			});
+
+			var titleVal = this.recipeTitle.value;
+
+			// run validation 
+			if (titleVal.length <= 1) {
+				this.setState({
+					titleError: true
+				});
+			} else {
+				this.setState({
+					titleError: false
+				});
+			}
+		}
+	}, {
+		key: 'handleIngredientChange',
+		value: function handleIngredientChange(e) {
+			this.setState({
+				ingredientValue: e.target.value
+			});
+
+			var ingredVal = e.target.value;
+			// let ingredList = this.state.ingredients;
+			// console.log('ingredList',ingredList);
+
+			// run validation 
+			if (ingredVal.length <= 1) {
+				this.setState({
+					ingredientError: true
+				});
+			} else {
+				this.setState({
+					ingredientError: false
+				});
+			}
+		}
+	}, {
+		key: 'handleInstructionChange',
+		value: function handleInstructionChange(e) {
+			this.setState({
+				instructionValue: e.target.value
+			});
+
+			var instructVal = e.target.value;
+
+			// run validation 
+			if (instructVal.length <= 1) {
+				this.setState({
+					instructionError: true
+				});
+			} else {
+				this.setState({
+					instructionError: false
+				});
+			}
+		}
+	}, {
+		key: 'validateRecipeForm',
+		value: function validateRecipeForm(e) {
 			e.preventDefault();
-			console.log('created');
+			if (this.state.listFocus === true) {
+				return false;
+			} else {
+				// save input values
+				var recipeTitle = this.recipeTitle.value;
+				var recipeIngredients = this.state.ingredients;
+				var recipeInstructions = this.state.instructions;
+
+				if (recipeTitle === '' || this.state.titleError === true || recipeIngredients.length <= 0 || recipeInstructions.length <= 0) {
+					alert('Please fill out the required fields');
+					return false;
+				} else {
+					// call createNewRecipe:
+					this.createNewRecipe();
+				}
+			}
+		}
+	}, {
+		key: 'createNewRecipe',
+		value: function createNewRecipe() {
 			// save input values
 			var recipeTitle = this.recipeTitle.value;
-			var recipePrepTime = this.recipePrepTime.value;
-			var recipeTotalTime = this.recipeTotalTime.value;
-			var recipeIngredients = this.recipeIngredients.value;
-			var recipeInstructions = this.recipeInstructions.value;
-			var recipeServes = this.recipeServes.value;
+			var recipePrepTime = this.recipePrepTime.value ? this.recipePrepTime.value : 'unknown';
+			var recipeTotalTime = this.recipeTotalTime.value ? this.recipeTotalTime.value : 'unknown';
+			var recipeIngredients = this.state.ingredients;
+			var recipeInstructions = this.state.instructions;
+			var recipeServes = this.recipeServes.value ? this.recipeServes.value : 'unknown';
 
 			// add to recipe object:
 			var recipe = {
@@ -26216,10 +26385,9 @@ var AddRecipe = function (_React$Component) {
 				instructions: recipeInstructions,
 				serves: recipeServes
 			};
-			console.log(recipe);
-			firebase.database().ref('recipe').push(recipe);
-			// Save to firebase:
 
+			// save to firebase db:
+			firebase.database().ref('recipe').push(recipe);
 
 			// clear the inputs
 			this.recipeTitle.value = '';
@@ -26228,6 +26396,12 @@ var AddRecipe = function (_React$Component) {
 			this.recipeIngredients.value = '';
 			this.recipeInstructions.value = '';
 			this.recipeServes.value = '';
+
+			// reset the ingredients state:
+			this.setState({
+				ingredients: [],
+				instructions: []
+			});
 		}
 	}, {
 		key: 'removeRecipe',
@@ -26246,7 +26420,7 @@ var AddRecipe = function (_React$Component) {
 				_react2.default.createElement(
 					'form',
 					{ action: '', onSubmit: function onSubmit(e) {
-							return _this3.createNewRecipe.call(_this3, e);
+							return _this3.validateRecipeForm.call(_this3, e);
 						}, className: 'addRecipe' },
 					_react2.default.createElement(
 						'div',
@@ -26263,11 +26437,22 @@ var AddRecipe = function (_React$Component) {
 						null,
 						_react2.default.createElement(
 							'label',
-							null,
-							'Enter your recipe title:'
+							{ className: this.state.titleError ? 'errorLabel' : 'none' },
+							'Enter your recipe title:',
+							_react2.default.createElement(
+								'span',
+								{ className: 'required' },
+								'*'
+							)
 						),
-						_react2.default.createElement('input', { type: 'text', ref: function ref(_ref) {
+						_react2.default.createElement('input', { type: 'text',
+							className: this.state.titleError ? 'error' : 'none',
+							ref: function ref(_ref) {
 								return _this3.recipeTitle = _ref;
+							}
+							// value={this.state.titleValue} 
+							, onChange: function onChange(e) {
+								return _this3.handleTitleChange.call(_this3, e);
 							} }),
 						_react2.default.createElement(
 							'label',
@@ -26287,20 +26472,118 @@ var AddRecipe = function (_React$Component) {
 							} }),
 						_react2.default.createElement(
 							'label',
-							null,
-							'Enter the ingredients:'
+							{ htmlFor: 'ingredient', className: this.state.ingredientError ? 'errorLabel newIngred' : 'newIngred' },
+							'Enter the ingredients:',
+							_react2.default.createElement(
+								'span',
+								{ className: 'required' },
+								'*'
+							)
 						),
-						_react2.default.createElement('input', { type: 'text', ref: function ref(_ref4) {
-								return _this3.recipeIngredients = _ref4;
-							} }),
+						_react2.default.createElement(
+							'div',
+							null,
+							_react2.default.createElement(
+								'label',
+								{ htmlFor: 'ingredient', className: this.state.ingredientError ? 'errorLabel newIngred' : 'newIngred' },
+								_react2.default.createElement('i', { className: 'fa fa-plus' })
+							),
+							_react2.default.createElement('input', {
+								className: this.state.ingredientError ? 'error enterIngred' : 'enterIngred',
+								id: 'ingredient', type: 'text',
+								ref: function ref(_ref4) {
+									return _this3.recipeIngredients = _ref4;
+								},
+								onKeyDown: function onKeyDown(e) {
+									return _this3.createIngredient.call(_this3, e);
+								},
+								onFocus: function onFocus(e) {
+									return _this3.listFocus.call(_this3, e);
+								},
+								onBlur: function onBlur(e) {
+									return _this3.listUnFocus.call(_this3, e);
+								}
+								// value={this.state.ingredientValue} 
+								, onChange: function onChange(e) {
+									return _this3.handleIngredientChange.call(_this3, e);
+								} })
+						),
+						_react2.default.createElement(
+							'ul',
+							null,
+							this.state.ingredients.map(function (ingredient, i) {
+								return _react2.default.createElement(
+									'li',
+									{ key: i, className: 'ingredientList' },
+									_react2.default.createElement('i', { className: 'fa fa-minus deleteIngred', onClick: function onClick(e) {
+											return _this3.removeIngredient.call(_this3, ingredient);
+										} }),
+									_react2.default.createElement(
+										'span',
+										null,
+										ingredient
+									)
+								);
+							})
+						),
 						_react2.default.createElement(
 							'label',
-							null,
-							'Enter the instructions:'
+							{ htmlFor: 'instruction', className: this.state.instructionError ? 'errorLabel newInstruct' : 'newInstruct' },
+							'Enter the instructions:',
+							_react2.default.createElement(
+								'span',
+								{ className: 'required' },
+								'*'
+							)
 						),
-						_react2.default.createElement('input', { type: 'text', ref: function ref(_ref5) {
-								return _this3.recipeInstructions = _ref5;
-							} }),
+						_react2.default.createElement(
+							'div',
+							null,
+							_react2.default.createElement(
+								'label',
+								{ htmlFor: 'instruction',
+									className: this.state.instructionError ? 'errorLabel newInstruct' : 'newInstruct' },
+								_react2.default.createElement('i', { className: 'fa fa-plus' })
+							),
+							_react2.default.createElement('input', {
+								className: this.state.instructionError ? 'error enterIngred' : 'enterIngred',
+								type: 'text', id: 'instruction',
+								ref: function ref(_ref5) {
+									return _this3.recipeInstructions = _ref5;
+								},
+								onKeyDown: function onKeyDown(e) {
+									return _this3.createInstruction.call(_this3, e);
+								},
+								onFocus: function onFocus(e) {
+									return _this3.listFocus.call(_this3, e);
+								},
+								onBlur: function onBlur(e) {
+									return _this3.listUnFocus.call(_this3, e);
+								}
+								// value={this.state.instructionValue} 
+								, onChange: function onChange(e) {
+									return _this3.handleInstructionChange.call(_this3, e);
+								}
+							})
+						),
+						_react2.default.createElement(
+							'ul',
+							null,
+							this.state.instructions.map(function (instruction, i) {
+								return _react2.default.createElement(
+									'li',
+									{ key: i, className: 'instructionList' },
+									_react2.default.createElement('i', { className: 'fa fa-minus deleteInstruction', onClick: function onClick(e) {
+											return _this3.removeInstruction.call(_this3, instruction);
+										} }),
+									_react2.default.createElement(
+										'span',
+										null,
+										instruction
+									)
+								);
+							})
+						),
 						_react2.default.createElement(
 							'label',
 							null,
@@ -26335,27 +26618,47 @@ var AddRecipe = function (_React$Component) {
 							_react2.default.createElement(
 								'p',
 								null,
-								recipe.prepTime
+								recipe.prepTime ? recipe.prepTime : 'Unknown'
 							),
 							_react2.default.createElement(
 								'p',
 								null,
-								recipe.totalTime
+								recipe.totalTime ? recipe.totalTime : 'Unknown'
+							),
+							_react2.default.createElement(
+								'ul',
+								null,
+								function () {
+									if (recipe.ingredients !== "") {
+										return recipe.ingredients.map(function (recipeIngred, i) {
+											return _react2.default.createElement(
+												'li',
+												{ key: i },
+												recipeIngred
+											);
+										});
+									}
+								}()
+							),
+							_react2.default.createElement(
+								'ul',
+								null,
+								function () {
+									if (recipe.instructions !== "") {
+										return recipe.instructions.map(function (recipeInstruction, i) {
+											return _react2.default.createElement(
+												'li',
+												{ key: i },
+												recipeInstruction
+											);
+										});
+									}
+								}()
 							),
 							_react2.default.createElement(
 								'p',
 								null,
-								recipe.ingredients
-							),
-							_react2.default.createElement(
-								'p',
-								null,
-								recipe.instructions
-							),
-							_react2.default.createElement(
-								'p',
-								null,
-								recipe.serves
+								recipe.serves ? recipe.serves : 'Unknown'
 							)
 						);
 					})
@@ -26366,6 +26669,9 @@ var AddRecipe = function (_React$Component) {
 
 	return AddRecipe;
 }(_react2.default.Component);
+
+// alphabetical (alphabet on the top click C to go to chicken) ??
+
 
 exports.default = AddRecipe;
 

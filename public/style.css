@@ -70,6 +70,13 @@ div.leaf {
 	width: 75%;
 }
 
+.error {
+	border: 2px solid red;
+}
+.errorLabel {
+	color: red;
+}
+
 form div {
 	text-align: left;
 }
@@ -106,9 +113,14 @@ input, label {
 	border: none;
 }
 
+input.enterIngred {
+	width: 90%;
+}
+
 input {
+	border: 1px solid grey;
 	padding: 10px;
-	background: url(../src/assets/line2.svg) no-repeat bottom center;
+	/*background: url(../src/assets/line2.svg) no-repeat bottom center;*/
 }
 
 input[type=submit] {
@@ -141,4 +153,15 @@ footer {
 	text-align: center;
 	padding: 20px 0;
 	clear: both;
+}
+
+li.ingredientList {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.required {
+	color: red;
+	font-weight: bold;
 }
