@@ -81,7 +81,7 @@ form div {
 	text-align: left;
 }
 
-.signOut {
+.menu {
 	position: fixed;
 	top: 20px;
 	right: 20px;
@@ -163,5 +163,22 @@ li.ingredientList {
 
 .required {
 	color: red;
+	font-weight: bold;
+}
+
+.alphabet {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	list-style: none;
+	margin-top: 70px;
+}
+
+.alphabet li {
+	flex: 1 0 auto;
+	text-align: center;
+}
+.alphabet li a {
+	padding: 5px;
 	font-weight: bold;
 }

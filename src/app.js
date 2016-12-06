@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Route, Router, Link, browserHistory, IndexRoute } from 'react-router';
 
+let Fuse = require('fuse.js');
+
 // components:
 import SignUp from './signUp.js';
 import SignIn from './signIn.js';
@@ -16,7 +18,8 @@ class App extends React.Component {
 	constructor(props, context) {
 		super();
 		this.state = {
-			loggedIn: false
+			loggedIn: false,
+			search: ''
 		}
 
 		let config = {
@@ -54,11 +57,22 @@ class App extends React.Component {
 		});
 	}
 
+
 	render() {
 		let main;
 		if (this.state.loggedIn) {
 			main =  <div>
-						<div className="signOut"><a href="#" onClick={e => this.signout.call(this,e)}>Sign out</a></div>
+						<div className="menu">
+							<p>
+								<a href="#" onClick={e => this.signout.call(this,e)}>Sign out</a>
+							</p>
+							<p>
+								<a href="#addrecipe">Add Recipe</a>
+							</p>
+							<p>
+								<input placeholder="Search" onChange={e => this.handleSearch.call(this,e)}/>
+							</p>
+						</div>
 						<AddRecipe /> 
 						<Recipes />
 					</div>;

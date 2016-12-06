@@ -193,7 +193,8 @@ export default class AddRecipe extends React.Component {
 	render() {
 		return (
 			<section>
-				<form action="" onSubmit={(e) => this.validateRecipeForm.call(this,e) } className="addRecipe">
+				<form action="" onSubmit={(e) => this.validateRecipeForm.call(this,e) } className="addRecipe"
+					 id="addrecipe" >
 					<div className="flower">
 						<img src="src/assets/bud.svg" href="Water colour small pink bud"/>
 					</div>
@@ -286,4 +287,7 @@ export default class AddRecipe extends React.Component {
 	};
 }
 
-// alphabetical (alphabet on the top click C to go to chicken) ??
+
+// add conversion widget 
+// add search for ingredients
+// sticky alphabet once you scroll into recipes 
