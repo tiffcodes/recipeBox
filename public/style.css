@@ -172,6 +172,7 @@ li.ingredientList {
 	flex-wrap: wrap;
 	list-style: none;
 	margin-top: 70px;
+	padding: 0;
 }
 
 .alphabet li {

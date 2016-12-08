@@ -27782,6 +27782,26 @@ var App = function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'handleSearch',
+		value: function handleSearch(e) {
+			var options = {
+				shouldSort: true,
+				threshold: 0.3,
+				location: 0,
+				distance: 100,
+				minMatchCharLength: 1,
+				keys: ["title", "ingredients"]
+			};
+			var searchQuery = e.target.value;
+			console.log('searchQuery', searchQuery);
+
+			var list = this.state.recipe;
+			var fuse = new Fuse(list, options);
+			var result = fuse.search(searchQuery);
+
+			console.log('results from fuse', result);
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			var _this4 = this;
