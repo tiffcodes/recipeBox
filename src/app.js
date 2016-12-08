@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Route, Router, Link, browserHistory, IndexRoute } from 'react-router';
-
-let Fuse = require('fuse.js');
+import Fuse from 'fuse.js';
 
 // components:
 import SignUp from './signUp.js';
@@ -25,15 +24,15 @@ class App extends React.Component {
 		}
 
 		let config = {
-		  apiKey: "AIzaSyBvMwXsV0jsyGOy2laI6mUPdSo4irwT9hI",
-		  authDomain: "my-project-734e0.firebaseapp.com",
-		  databaseURL: "https://my-project-734e0.firebaseio.com",
-		  storageBucket: "my-project-734e0.appspot.com",
-		  messagingSenderId: "712734743751"
+			apiKey: "AIzaSyBvMwXsV0jsyGOy2laI6mUPdSo4irwT9hI",
+			authDomain: "my-project-734e0.firebaseapp.com",
+			databaseURL: "https://my-project-734e0.firebaseio.com",
+			storageBucket: "my-project-734e0.appspot.com",
+			messagingSenderId: "712734743751"
 		};
 		firebase.initializeApp(config);
 	}	
-
+	
 	componentDidMount() {
 		firebase.auth()
 			.onAuthStateChanged((res) => {
@@ -55,13 +54,9 @@ class App extends React.Component {
 			this.setState({recipe});
 		});
 	}
-
 	removeRecipe(recipeToRemove) {
-		recipeToRemove.key
 		firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
 	}
-
-
 	signout(e) {
 		e.preventDefault();
 		firebase.auth().signOut().then(() => {
