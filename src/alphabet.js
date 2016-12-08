@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 export default class Alphabet extends React.Component {
-	constructor(props, context) {
-		super();
-		// this.state = {
+	// constructor(props, context) {
+	// 	super();
+	// 	// this.state = {
 			
-		// }
-	}
+	// 	// }
+	// }
 	render() {
 		return (
 			<ul className="alphabet">

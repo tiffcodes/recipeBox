@@ -12,6 +12,7 @@ import NotFound from './notFound.js';
 import AddRecipe from './addRecipe.js';
 import Header from './header.js';
 import Recipes from './recipes.js';
+import Alphabet from './alphabet.js';
 
 
 class App extends React.Component {
@@ -19,7 +20,8 @@ class App extends React.Component {
 		super();
 		this.state = {
 			loggedIn: false,
-			search: ''
+			search: '', 
+			recipe: []
 		}
 
 		let config = {
@@ -42,7 +44,23 @@ class App extends React.Component {
 					});
 				}
 		});
+
+		firebase.database().ref('recipe').on('value', (res) => {
+			const data = res.val();
+			const recipe = [];
+			for(let key in data) {
+				data[key].key = key;
+				recipe.push(data[key]);
+			}
+			this.setState({recipe});
+		});
 	}
+
+	removeRecipe(recipeToRemove) {
+		recipeToRemove.key
+		firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
+	}
+
 
 	signout(e) {
 		e.preventDefault();
@@ -74,7 +92,11 @@ class App extends React.Component {
 							</p>
 						</div>
 						<AddRecipe /> 
-						<Recipes />
+						<section>
+							<h3>Recipes:</h3>
+							<Alphabet />
+							<Recipes recipe={this.state.recipe} removeRecipe={this.removeRecipe}/>
+						</section>
 					</div>;
 
 		} else {

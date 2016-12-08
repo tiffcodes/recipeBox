@@ -27389,17 +27389,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Alphabet = function (_React$Component) {
 	_inherits(Alphabet, _React$Component);
 
-	function Alphabet(props, context) {
+	function Alphabet() {
 		_classCallCheck(this, Alphabet);
 
-		return _possibleConstructorReturn(this, (Alphabet.__proto__ || Object.getPrototypeOf(Alphabet)).call(this));
-		// this.state = {
-
-		// }
+		return _possibleConstructorReturn(this, (Alphabet.__proto__ || Object.getPrototypeOf(Alphabet)).apply(this, arguments));
 	}
 
 	_createClass(Alphabet, [{
 		key: 'render',
+
+		// constructor(props, context) {
+		// 	super();
+		// 	// this.state = {
+
+		// 	// }
+		// }
 		value: function render() {
 			return _react2.default.createElement(
 				'ul',
@@ -27690,6 +27694,10 @@ var _recipes = require('./recipes.js');
 
 var _recipes2 = _interopRequireDefault(_recipes);
 
+var _alphabet = require('./alphabet.js');
+
+var _alphabet2 = _interopRequireDefault(_alphabet);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27712,7 +27720,8 @@ var App = function (_React$Component) {
 
 		_this.state = {
 			loggedIn: false,
-			search: ''
+			search: '',
+			recipe: []
 		};
 
 		var config = {
@@ -27739,6 +27748,22 @@ var App = function (_React$Component) {
 					});
 				}
 			});
+
+			firebase.database().ref('recipe').on('value', function (res) {
+				var data = res.val();
+				var recipe = [];
+				for (var key in data) {
+					data[key].key = key;
+					recipe.push(data[key]);
+				}
+				_this2.setState({ recipe: recipe });
+			});
+		}
+	}, {
+		key: 'removeRecipe',
+		value: function removeRecipe(recipeToRemove) {
+			recipeToRemove.key;
+			firebase.database().ref('recipe/' + recipeToRemove.key).remove();
 		}
 	}, {
 		key: 'signout',
@@ -27798,7 +27823,17 @@ var App = function (_React$Component) {
 						)
 					),
 					_react2.default.createElement(_addRecipe2.default, null),
-					_react2.default.createElement(_recipes2.default, null)
+					_react2.default.createElement(
+						'section',
+						null,
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Recipes:'
+						),
+						_react2.default.createElement(_alphabet2.default, null),
+						_react2.default.createElement(_recipes2.default, { recipe: this.state.recipe, removeRecipe: this.removeRecipe })
+					)
 				);
 			} else {
 				main = _react2.default.createElement(
@@ -27838,7 +27873,7 @@ _reactDom2.default.render(_react2.default.createElement(
 	_react2.default.createElement(_reactRouter.Route, { path: '*', component: _notFound2.default })
 ), document.getElementById('app'));
 
-},{"./addRecipe.js":236,"./footer.js":239,"./header.js":240,"./notFound.js":241,"./recipes.js":242,"./signIn.js":243,"./signUp.js":244,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],239:[function(require,module,exports){
+},{"./addRecipe.js":236,"./alphabet.js":237,"./footer.js":239,"./header.js":240,"./notFound.js":241,"./recipes.js":242,"./signIn.js":243,"./signUp.js":244,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28024,11 +28059,7 @@ var NotFound = function (_React$Component) {
 	function NotFound() {
 		_classCallCheck(this, NotFound);
 
-		var _this = _possibleConstructorReturn(this, (NotFound.__proto__ || Object.getPrototypeOf(NotFound)).call(this));
-
-		_this.state = {};
-
-		return _this;
+		return _possibleConstructorReturn(this, (NotFound.__proto__ || Object.getPrototypeOf(NotFound)).apply(this, arguments));
 	}
 
 	_createClass(NotFound, [{
@@ -28078,10 +28109,6 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _alphabet = require('./alphabet.js');
-
-var _alphabet2 = _interopRequireDefault(_alphabet);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28093,42 +28120,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Recipes = function (_React$Component) {
 	_inherits(Recipes, _React$Component);
 
-	function Recipes(props, context) {
+	function Recipes() {
 		_classCallCheck(this, Recipes);
 
-		var _this = _possibleConstructorReturn(this, (Recipes.__proto__ || Object.getPrototypeOf(Recipes)).call(this));
-
-		_this.state = {
-			recipe: []
-		};
-		return _this;
+		return _possibleConstructorReturn(this, (Recipes.__proto__ || Object.getPrototypeOf(Recipes)).apply(this, arguments));
 	}
 
-	// dont use state
-
-
 	_createClass(Recipes, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			var _this2 = this;
-
-			firebase.database().ref('recipe').on('value', function (res) {
-				var data = res.val();
-				var recipe = [];
-				for (var key in data) {
-					data[key].key = key;
-					recipe.push(data[key]);
-				}
-				_this2.setState({ recipe: recipe });
-			});
-		}
-	}, {
-		key: 'removeRecipe',
-		value: function removeRecipe(recipeToRemove) {
-			recipeToRemove.key;
-			firebase.database().ref('recipe/' + recipeToRemove.key).remove();
-		}
-	}, {
 		key: 'checkAlphabet',
 		value: function checkAlphabet(letter, alphabet) {
 			// for each recipe, check to see if the first letter in the title is in the alphabet state
@@ -28144,19 +28142,13 @@ var Recipes = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			var _this3 = this;
+			var _this2 = this;
 
 			var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 			return _react2.default.createElement(
-				'section',
+				'div',
 				null,
-				_react2.default.createElement(
-					'h3',
-					null,
-					'Recipes:'
-				),
-				_react2.default.createElement(_alphabet2.default, null),
-				this.state.recipe.sort(function (a, b) {
+				this.props.recipe.sort(function (a, b) {
 					var titleA = a.title.toLowerCase();
 					var titleB = b.title.toLowerCase();
 					if (titleA < titleB) return -1;
@@ -28168,9 +28160,9 @@ var Recipes = function (_React$Component) {
 
 					return _react2.default.createElement(
 						'div',
-						{ key: i, className: 'recipe', id: _this3.checkAlphabet(firstLetter, alphabet) },
+						{ key: i, className: 'recipe', id: _this2.checkAlphabet(firstLetter, alphabet) },
 						_react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
-								return _this3.removeRecipe.call(_this3, recipe);
+								return _this2.props.removeRecipe.call(_this2, recipe);
 							} }),
 						_react2.default.createElement(
 							'h2',
@@ -28244,9 +28236,12 @@ var Recipes = function (_React$Component) {
 	return Recipes;
 }(_react2.default.Component);
 
+// map in the app component, and have the recipe be just the individ recipe which can work off of props 
+
+
 exports.default = Recipes;
 
-},{"./alphabet.js":237,"react":233,"react-dom":52}],243:[function(require,module,exports){
+},{"react":233,"react-dom":52}],243:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

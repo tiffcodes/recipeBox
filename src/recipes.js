@@ -1,32 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Alphabet from './alphabet.js';
 
 export default class Recipes extends React.Component {
-	constructor(props, context) {
-		super();
-		this.state = {
-			recipe: []
-		}
-	}
-
-	// dont use state
-	componentDidMount() {
-		firebase.database().ref('recipe').on('value', (res) => {
-			const data = res.val();
-			const recipe = [];
-			for(let key in data) {
-				data[key].key = key;
-				recipe.push(data[key]);
-			}
-			this.setState({recipe});
-		});
-	}
-
-	removeRecipe(recipeToRemove) {
-		recipeToRemove.key
-		firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
-	}
 
 	checkAlphabet(letter, alphabet) {
 		// for each recipe, check to see if the first letter in the title is in the alphabet state
@@ -44,11 +19,9 @@ export default class Recipes extends React.Component {
 	render() {
 		const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 		return (
-			<section>
-				<h3>Recipes:</h3>
-				<Alphabet />
+				<div>
 				{
-					this.state.recipe.sort(function(a, b){
+					this.props.recipe.sort(function(a, b){
 						let titleA = a.title.toLowerCase();
 						let titleB = b.title.toLowerCase();
 					    if(titleA < titleB) return -1;
@@ -60,7 +33,7 @@ export default class Recipes extends React.Component {
 						
 						return (
 							<div key={i} className="recipe" id={this.checkAlphabet(firstLetter, alphabet)} >
-								<i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, recipe)}></i>
+								<i className="fa fa-times" onClick={(e) => this.props.removeRecipe.call(this, recipe)}></i>
 								<h2>{recipe.title}</h2>
 								<p>Prep Time: {recipe.prepTime}</p>
 								<p>Total Time: {recipe.totalTime}</p>
@@ -97,8 +70,10 @@ export default class Recipes extends React.Component {
 							</div>
 						)
 				})}
-			</section>
+				</div>
 		)
 
 	};
 }
+
+// map in the app component, and have the recipe be just the individ recipe which can work off of props 

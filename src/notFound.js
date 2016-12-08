@@ -3,13 +3,6 @@ import ReactDom from 'react-dom';
 
 
 export default class NotFound extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-		}
-		
-	}	
-	
 	render() {
 		return (
 			<div className="notFound">
