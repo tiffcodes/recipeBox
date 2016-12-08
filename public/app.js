@@ -27720,8 +27720,8 @@ var App = function (_React$Component) {
 
 		_this.state = {
 			loggedIn: false,
-			search: '',
-			recipe: []
+			recipe: [],
+			filteredRecipes: []
 		};
 
 		var config = {
@@ -27800,6 +27800,10 @@ var App = function (_React$Component) {
 			var result = fuse.search(searchQuery);
 
 			console.log('results from fuse', result);
+
+			this.setState({
+				filteredRecipes: result
+			});
 		}
 	}, {
 		key: 'render',
@@ -27852,7 +27856,7 @@ var App = function (_React$Component) {
 							'Recipes:'
 						),
 						_react2.default.createElement(_alphabet2.default, null),
-						_react2.default.createElement(_recipes2.default, { recipe: this.state.recipe, removeRecipe: this.removeRecipe })
+						_react2.default.createElement(_recipes2.default, { recipe: this.state.filteredRecipes.length > 0 ? this.state.filteredRecipes : this.state.recipe, removeRecipe: this.removeRecipe })
 					)
 				);
 			} else {
@@ -28186,7 +28190,7 @@ var Recipes = function (_React$Component) {
 							} }),
 						_react2.default.createElement(
 							'h2',
-							null,
+							{ id: recipe.title },
 							recipe.title
 						),
 						_react2.default.createElement(

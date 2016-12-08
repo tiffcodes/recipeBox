@@ -20,8 +20,8 @@ class App extends React.Component {
 		super();
 		this.state = {
 			loggedIn: false,
-			search: '', 
-			recipe: []
+			recipe: [], 
+			filteredRecipes: []
 		}
 
 		let config = {
@@ -95,6 +95,10 @@ class App extends React.Component {
 		let result = fuse.search(searchQuery);
 
 		console.log('results from fuse', result);
+		
+		this.setState({
+			filteredRecipes: result
+		});
 	}
 
 	render() {
@@ -116,7 +120,7 @@ class App extends React.Component {
 						<section>
 							<h3>Recipes:</h3>
 							<Alphabet />
-							<Recipes recipe={this.state.recipe} removeRecipe={this.removeRecipe}/>
+							<Recipes recipe={this.state.filteredRecipes.length > 0 ? this.state.filteredRecipes : this.state.recipe} removeRecipe={this.removeRecipe}/>
 						</section>
 					</div>;
 

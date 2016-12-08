@@ -34,7 +34,7 @@ export default class Recipes extends React.Component {
 						return (
 							<div key={i} className="recipe" id={this.checkAlphabet(firstLetter, alphabet)} >
 								<i className="fa fa-times" onClick={(e) => this.props.removeRecipe.call(this, recipe)}></i>
-								<h2>{recipe.title}</h2>
+								<h2 id={recipe.title}>{recipe.title}</h2>
 								<p>Prep Time: {recipe.prepTime}</p>
 								<p>Total Time: {recipe.totalTime}</p>
 								<p>Ingredients:</p>
