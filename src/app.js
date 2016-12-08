@@ -7,10 +7,10 @@ let Fuse = require('fuse.js');
 // components:
 import SignUp from './signUp.js';
 import SignIn from './signIn.js';
+import Header from './header.js';
 import Footer from './footer.js';
 import NotFound from './notFound.js';
 import AddRecipe from './addRecipe.js';
-import Header from './header.js';
 import Recipes from './recipes.js';
 import Alphabet from './alphabet.js';
 

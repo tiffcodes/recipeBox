@@ -27674,6 +27674,10 @@ var _signIn = require('./signIn.js');
 
 var _signIn2 = _interopRequireDefault(_signIn);
 
+var _header = require('./header.js');
+
+var _header2 = _interopRequireDefault(_header);
+
 var _footer = require('./footer.js');
 
 var _footer2 = _interopRequireDefault(_footer);
@@ -27685,10 +27689,6 @@ var _notFound2 = _interopRequireDefault(_notFound);
 var _addRecipe = require('./addRecipe.js');
 
 var _addRecipe2 = _interopRequireDefault(_addRecipe);
-
-var _header = require('./header.js');
-
-var _header2 = _interopRequireDefault(_header);
 
 var _recipes = require('./recipes.js');
 
