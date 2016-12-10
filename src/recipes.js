@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import RecipeCard from './recipeCard';
 
 export default class Recipes extends React.Component {
 
@@ -30,45 +30,12 @@ export default class Recipes extends React.Component {
 					}).map((recipe, i) => {
 						// grab first letter of title:
 						let firstLetter = recipe.title.charAt(0).toLowerCase();
-						
-						return (
-							<div key={i} className="recipe" id={this.checkAlphabet(firstLetter, alphabet)} >
-								<i className="fa fa-times" onClick={(e) => this.props.removeRecipe.call(this, recipe)}></i>
-								<h2 id={recipe.title}>{recipe.title}</h2>
-								<p>Prep Time: {recipe.prepTime}</p>
-								<p>Total Time: {recipe.totalTime}</p>
-								<p>Ingredients:</p>
-								<ul>
-
-									{ (() => {
-										if(recipe.ingredients !== "") {
-											return recipe.ingredients.map((recipeIngred, i) => {
-													return (
-														<li key={i}>{recipeIngred}</li>
-													)
-												});
-											}
-
-										})()
-									}
-								</ul>
-								<p>Instructions:</p>
-								<ul>
-									{ (() => {
-										if(recipe.instructions !== "") {
-											return recipe.instructions.map((recipeInstruction, i) => {
-													return (
-														<li key={i}>{recipeInstruction}</li>
-													)
-												});
-											}
-
-										})()
-									}
-								</ul>
-								<p>Serves: {recipe.serves}</p>
-							</div>
-						)
+						return <RecipeCard key={`card-${i}`} 
+							recipe={recipe} 
+							alphabet={alphabet}
+							checkAlphabet={this.checkAlphabet} 
+							firstLetter={firstLetter} 
+							removeRecipe={this.props.removeRecipe}/>
 				})}
 				</div>
 		)
