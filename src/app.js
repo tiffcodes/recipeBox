@@ -20,7 +20,8 @@ class App extends React.Component {
 		this.state = {
 			loggedIn: false,
 			recipe: [], 
-			filteredRecipes: []
+			filteredRecipes: [], 
+			showFiltered: false
 		}
 
 		let config = {
@@ -89,8 +90,27 @@ class App extends React.Component {
 		let result = fuse.search(searchQuery);
 		
 		this.setState({
-			filteredRecipes: result
+			filteredRecipes: result,
+			showFiltered: true
 		});
+
+		// if (this.state.filteredRecipes.length === 0) {
+		// 	this.setState({
+		// 		showFiltered: true
+		// 	})
+		// }	
+	}
+
+	renderRecipes() {
+		const recipeRender = (recipes) => {
+			return <Recipes recipe={recipes} removeRecipe={this.removeRecipe}/>
+		};
+		if(this.state.showFiltered) {
+			return recipeRender(this.state.filteredRecipes);
+		}
+		else {
+			return recipeRender(this.state.recipe);
+		}
 	}
 
 	render() {
@@ -112,7 +132,7 @@ class App extends React.Component {
 						<section>
 							<h3>Recipes:</h3>
 							<Alphabet />
-							<Recipes recipe={this.state.filteredRecipes.length > 0 ? this.state.filteredRecipes : this.state.recipe} removeRecipe={this.removeRecipe}/>
+							{this.renderRecipes()}
 						</section>
 					</div>;
 
