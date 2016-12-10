@@ -26934,6 +26934,38 @@ module.exports = function (str) {
 },{}],235:[function(require,module,exports){
 arguments[4][46][0].apply(exports,arguments)
 },{"_process":50,"dup":46}],236:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+exports.default = function (props) {
+	return _react2.default.createElement(
+		"section",
+		{ className: "recipe" },
+		_react2.default.createElement(
+			"h2",
+			null,
+			"Sorry, no recipes match your search."
+		),
+		_react2.default.createElement(
+			"h2",
+			null,
+			"Try something else!"
+		)
+	);
+};
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+;
+
+},{"react":233}],237:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27361,7 +27393,7 @@ var AddRecipe = function (_React$Component) {
 
 exports.default = AddRecipe;
 
-},{"react":233,"react-dom":52}],237:[function(require,module,exports){
+},{"react":233,"react-dom":52}],238:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27615,7 +27647,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],238:[function(require,module,exports){
+},{"react":233}],239:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -27665,6 +27697,10 @@ var _recipes2 = _interopRequireDefault(_recipes);
 var _alphabet = require('./alphabet.js');
 
 var _alphabet2 = _interopRequireDefault(_alphabet);
+
+var _NoRecipesFound = require('./NoRecipesFound');
+
+var _NoRecipesFound2 = _interopRequireDefault(_NoRecipesFound);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27765,16 +27801,16 @@ var App = function (_React$Component) {
 			var fuse = new _fuse2.default(list, options);
 			var result = fuse.search(searchQuery);
 
-			this.setState({
-				filteredRecipes: result,
-				showFiltered: true
-			});
-
-			// if (this.state.filteredRecipes.length === 0) {
-			// 	this.setState({
-			// 		showFiltered: true
-			// 	})
-			// }	
+			if (searchQuery.length > 0) {
+				this.setState({
+					filteredRecipes: result,
+					showFiltered: true
+				});
+			} else {
+				this.setState({
+					showFiltered: false
+				});
+			}
 		}
 	}, {
 		key: 'renderRecipes',
@@ -27785,6 +27821,9 @@ var App = function (_React$Component) {
 				return _react2.default.createElement(_recipes2.default, { recipe: recipes, removeRecipe: _this4.removeRecipe });
 			};
 			if (this.state.showFiltered) {
+				if (this.state.filteredRecipes.length === 0) {
+					return _react2.default.createElement(_NoRecipesFound2.default, null);
+				}
 				return recipeRender(this.state.filteredRecipes);
 			} else {
 				return recipeRender(this.state.recipe);
@@ -27826,7 +27865,9 @@ var App = function (_React$Component) {
 						_react2.default.createElement(
 							'p',
 							null,
-							_react2.default.createElement('input', { placeholder: 'Search', onChange: function onChange(e) {
+							_react2.default.createElement('input', { placeholder: 'Search', ref: function ref(_ref) {
+									return _this5.search = _ref;
+								}, onChange: function onChange(e) {
 									return _this5.handleSearch.call(_this5, e);
 								} })
 						)
@@ -27882,7 +27923,7 @@ _reactDom2.default.render(_react2.default.createElement(
 	_react2.default.createElement(_reactRouter.Route, { path: '*', component: _notFound2.default })
 ), document.getElementById('app'));
 
-},{"./addRecipe.js":236,"./alphabet.js":237,"./footer.js":239,"./header.js":240,"./notFound.js":241,"./recipes.js":243,"./signIn.js":244,"./signUp.js":245,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],239:[function(require,module,exports){
+},{"./NoRecipesFound":236,"./addRecipe.js":237,"./alphabet.js":238,"./footer.js":240,"./header.js":241,"./notFound.js":242,"./recipes.js":244,"./signIn.js":245,"./signUp.js":246,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],240:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27948,7 +27989,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],240:[function(require,module,exports){
+},{"react":233}],241:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27973,7 +28014,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],241:[function(require,module,exports){
+},{"react":233}],242:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28008,7 +28049,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],242:[function(require,module,exports){
+},{"react":233}],243:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28098,7 +28139,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 ;
 
-},{"react":233}],243:[function(require,module,exports){
+},{"react":233}],244:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28181,7 +28222,7 @@ var Recipes = function (_React$Component) {
 
 exports.default = Recipes;
 
-},{"./recipeCard":242,"react":233}],244:[function(require,module,exports){
+},{"./recipeCard":243,"react":233}],245:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28284,7 +28325,7 @@ var SignIn = function (_React$Component) {
 
 exports.default = SignIn;
 
-},{"react":233}],245:[function(require,module,exports){
+},{"react":233}],246:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28420,4 +28461,4 @@ var SignUp = function (_React$Component) {
 
 exports.default = SignUp;
 
-},{"react":233}]},{},[238]);
+},{"react":233}]},{},[239]);

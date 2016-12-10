@@ -12,6 +12,7 @@ import NotFound from './notFound.js';
 import AddRecipe from './addRecipe.js';
 import Recipes from './recipes.js';
 import Alphabet from './alphabet.js';
+import NoRecipesFound from './NoRecipesFound';
 
 
 class App extends React.Component {
@@ -89,16 +90,17 @@ class App extends React.Component {
 		let fuse = new Fuse(list, options); 
 		let result = fuse.search(searchQuery);
 		
-		this.setState({
-			filteredRecipes: result,
-			showFiltered: true
-		});
+		if (searchQuery.length > 0) {
+			this.setState({
+				filteredRecipes: result,
+				showFiltered: true
+			});
+		} else {
+			this.setState({
+				showFiltered: false
+			});
+		}
 
-		// if (this.state.filteredRecipes.length === 0) {
-		// 	this.setState({
-		// 		showFiltered: true
-		// 	})
-		// }	
 	}
 
 	renderRecipes() {
@@ -106,6 +108,9 @@ class App extends React.Component {
 			return <Recipes recipe={recipes} removeRecipe={this.removeRecipe}/>
 		};
 		if(this.state.showFiltered) {
+			if(this.state.filteredRecipes.length === 0) {
+				return <NoRecipesFound />
+			}
 			return recipeRender(this.state.filteredRecipes);
 		}
 		else {
@@ -125,7 +130,7 @@ class App extends React.Component {
 								<a href="#addrecipe">Add Recipe</a>
 							</p>
 							<p>
-								<input placeholder="Search" onChange={e => this.handleSearch.call(this,e)}/>
+								<input placeholder="Search" ref={ref => this.search = ref} onChange={e => this.handleSearch.call(this,e)}/>
 							</p>
 						</div>
 						<AddRecipe /> 
