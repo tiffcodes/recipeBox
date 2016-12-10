@@ -27793,13 +27793,10 @@ var App = function (_React$Component) {
 				keys: ["title", "ingredients"]
 			};
 			var searchQuery = e.target.value;
-			console.log('searchQuery', searchQuery);
 
 			var list = this.state.recipe;
 			var fuse = new Fuse(list, options);
 			var result = fuse.search(searchQuery);
-
-			console.log('results from fuse', result);
 
 			this.setState({
 				filteredRecipes: result
@@ -28259,9 +28256,6 @@ var Recipes = function (_React$Component) {
 
 	return Recipes;
 }(_react2.default.Component);
-
-// map in the app component, and have the recipe be just the individ recipe which can work off of props 
-
 
 exports.default = Recipes;
 

@@ -76,7 +76,7 @@ class App extends React.Component {
 	}
 
 	handleSearch(e) {
-		var options = {
+		let options = {
 			shouldSort: true,
 			threshold: 0.3,
 			location: 0,
@@ -88,13 +88,10 @@ class App extends React.Component {
 			]
 		};
 		let searchQuery = e.target.value;
-		console.log('searchQuery', searchQuery);
 
 		let list = this.state.recipe;
 		let fuse = new Fuse(list, options); 
 		let result = fuse.search(searchQuery);
-
-		console.log('results from fuse', result);
 		
 		this.setState({
 			filteredRecipes: result

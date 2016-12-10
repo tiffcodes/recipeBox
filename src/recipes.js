@@ -75,5 +75,3 @@ export default class Recipes extends React.Component {
 
 	};
 }
-
-// map in the app component, and have the recipe be just the individ recipe which can work off of props 
