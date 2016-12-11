@@ -27039,7 +27039,6 @@ var AddRecipe = function (_React$Component) {
 				});
 			}
 			// resent the value of input to be blank and ready for next ingredient 
-			console.log('should clear');
 			this.recipeIngredients.value = '';
 		}
 	}, {
@@ -27065,9 +27064,7 @@ var AddRecipe = function (_React$Component) {
 	}, {
 		key: 'addInstruction',
 		value: function addInstruction(e) {
-			console.log('add instruction called');
 			e.preventDefault();
-			console.log('prevented and adding');
 			var newInstruction = this.recipeInstructions.value;
 			if (newInstruction.length > 0 && newInstruction != " ") {
 				// make a new instance of the previous ingredient list from state
@@ -27085,9 +27082,7 @@ var AddRecipe = function (_React$Component) {
 	}, {
 		key: 'createInstruction',
 		value: function createInstruction(e) {
-			console.log('createInstruction called');
 			if (e.keyCode === 13) {
-				console.log('keycode pressed');
 				this.addInstruction(e);
 			}
 		}
@@ -27256,10 +27251,11 @@ var AddRecipe = function (_React$Component) {
 				serves: recipeServes
 			};
 
-			console.log('new recipe', recipe);
+			// console.log('new recipe', recipe);
+			// console.log('user on add recipe', this.props.currentUser);
 
 			// save to firebase db:
-			firebase.database().ref('recipe').push(recipe);
+			firebase.database().ref(this.props.currentUser + '/recipe').push(recipe);
 
 			// clear the inputs
 			this.recipeTitle.value = '';
@@ -27833,6 +27829,7 @@ var App = function (_React$Component) {
 			messagingSenderId: "712734743751"
 		};
 		firebase.initializeApp(config);
+		var currentUser = '';
 		return _this;
 	}
 
@@ -27841,42 +27838,58 @@ var App = function (_React$Component) {
 		value: function componentDidMount() {
 			var _this2 = this;
 
-			firebase.auth().onAuthStateChanged(function (res) {
-				if (res) {
-					console.log('logged In? ', res.Xb);
+			firebase.auth().onAuthStateChanged(function (user) {
+				if (user) {
+					_this2.currentUser = user.uid;
+					console.log(_this2.currentUser);
+					console.log('logged In? ', user.Xb);
 					_this2.setState({
 						loggedIn: true
 					});
+					_this2.loadDatabase();
 				}
 			});
+		}
+	}, {
+		key: 'loadDatabase',
+		value: function loadDatabase() {
+			var _this3 = this;
 
-			firebase.database().ref('recipe').on('value', function (res) {
+			console.log('currentUser:', this.currentUser);
+
+			firebase.database().ref(this.currentUser + '/recipe').on('value', function (res) {
+				console.log('res', res);
 				var data = res.val();
+				console.log('data', data);
+
 				var recipe = [];
 				for (var key in data) {
+					console.log('key', key);
+					console.log('data', data);
 					data[key].key = key;
 					recipe.push(data[key]);
 				}
-				_this2.setState({ recipe: recipe });
+				console.log('recipes', recipe);
+				_this3.setState({ recipe: recipe });
 			});
 		}
 	}, {
 		key: 'removeRecipe',
 		value: function removeRecipe(recipeToRemove) {
-			firebase.database().ref('recipe/' + recipeToRemove.key).remove();
+			firebase.database().ref(this.currentUser + '/recipe/' + recipeToRemove.key).remove();
 		}
 	}, {
 		key: 'signout',
 		value: function signout(e) {
-			var _this3 = this;
+			var _this4 = this;
 
 			e.preventDefault();
 			firebase.auth().signOut().then(function () {
 				// Sign-out successful change state to not logged in:
-				_this3.setState({
+				_this4.setState({
 					loggedIn: false
 				});
-				_this3.context.router.push('/');
+				_this4.context.router.push('/');
 			}, function (error) {
 				console.log(error);
 			});
@@ -27912,10 +27925,10 @@ var App = function (_React$Component) {
 	}, {
 		key: 'renderRecipes',
 		value: function renderRecipes() {
-			var _this4 = this;
+			var _this5 = this;
 
 			var recipeRender = function recipeRender(recipes) {
-				return _react2.default.createElement(_recipes2.default, { recipe: recipes, removeRecipe: _this4.removeRecipe });
+				return _react2.default.createElement(_recipes2.default, { recipe: recipes, removeRecipe: _this5.removeRecipe });
 			};
 			if (this.state.showFiltered) {
 				if (this.state.filteredRecipes.length === 0) {
@@ -27929,7 +27942,7 @@ var App = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			var _this5 = this;
+			var _this6 = this;
 
 			var main = void 0;
 			if (this.state.loggedIn) {
@@ -27945,7 +27958,7 @@ var App = function (_React$Component) {
 							_react2.default.createElement(
 								'a',
 								{ href: '#', onClick: function onClick(e) {
-										return _this5.signout.call(_this5, e);
+										return _this6.signout.call(_this6, e);
 									} },
 								'Sign out'
 							)
@@ -27963,13 +27976,13 @@ var App = function (_React$Component) {
 							'p',
 							null,
 							_react2.default.createElement('input', { placeholder: 'Search', ref: function ref(_ref) {
-									return _this5.search = _ref;
+									return _this6.search = _ref;
 								}, onChange: function onChange(e) {
-									return _this5.handleSearch.call(_this5, e);
+									return _this6.handleSearch.call(_this6, e);
 								} })
 						)
 					),
-					_react2.default.createElement(_addRecipe2.default, null),
+					_react2.default.createElement(_addRecipe2.default, { currentUser: this.currentUser }),
 					_react2.default.createElement(
 						'section',
 						null,

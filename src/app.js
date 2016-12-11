@@ -22,7 +22,7 @@ class App extends React.Component {
 			loggedIn: false,
 			recipe: [], 
 			filteredRecipes: [], 
-			showFiltered: false
+			showFiltered: false,
 		}
 
 		let config = {
@@ -33,32 +33,48 @@ class App extends React.Component {
 			messagingSenderId: "712734743751"
 		};
 		firebase.initializeApp(config);
+		let currentUser = '';
 	}	
 	
 	componentDidMount() {
 		firebase.auth()
-			.onAuthStateChanged((res) => {
-				if(res) {
-					console.log('logged In? ', res.Xb);
+			.onAuthStateChanged((user) => {
+				if(user) {
+					this.currentUser = user.uid;
+					console.log(this.currentUser);
+					console.log('logged In? ', user.Xb);
 					this.setState({
 						loggedIn: true
 					});
+					this.loadDatabase();
 				}
 		});
+	}
 
-		firebase.database().ref('recipe').on('value', (res) => {
+	loadDatabase() {
+		console.log('currentUser:', this.currentUser);
+
+		firebase.database().ref(`${this.currentUser}/recipe`).on('value', (res) => {
+			console.log('res', res);
 			const data = res.val();
+			console.log('data', data);
+
 			const recipe = [];
 			for(let key in data) {
+				console.log('key', key);
+				console.log('data', data);
 				data[key].key = key;
 				recipe.push(data[key]);
 			}
+			console.log('recipes', recipe);
 			this.setState({recipe});
 		});
 	}
+
 	removeRecipe(recipeToRemove) {
-		firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
+		firebase.database().ref(`${this.currentUser}/recipe/${recipeToRemove.key}`).remove();
 	}
+
 	signout(e) {
 		e.preventDefault();
 		firebase.auth().signOut().then(() => {
@@ -133,7 +149,7 @@ class App extends React.Component {
 								<input placeholder="Search" ref={ref => this.search = ref} onChange={e => this.handleSearch.call(this,e)}/>
 							</p>
 						</div>
-						<AddRecipe /> 
+						<AddRecipe currentUser={this.currentUser} /> 
 						<section>
 							<h3>Recipes:</h3>
 							<Alphabet />

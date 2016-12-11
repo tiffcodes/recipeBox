@@ -243,13 +243,11 @@ export default class AddRecipe extends React.Component {
 			serves: recipeServes
 		};
 
-
-		console.log('new recipe', recipe);
-
-
+		// console.log('new recipe', recipe);
+		// console.log('user on add recipe', this.props.currentUser);
 
 		// save to firebase db:
-		firebase.database().ref('recipe').push(recipe);
+		firebase.database().ref(`${this.props.currentUser}/recipe`).push(recipe);
 
 		// clear the inputs
 		this.recipeTitle.value = '';
