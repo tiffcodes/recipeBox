@@ -139,13 +139,13 @@ class App extends React.Component {
 							<Alphabet />
 							{this.renderRecipes()}
 						</section>
-					</div>;
+					</div>
 
 		} else {
 			main =  <div>
 						<SignIn />
 						<SignUp />
-					</div>;
+					</div>
 		}
 		return (
 			<div className="clearfix app">

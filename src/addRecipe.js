@@ -26,22 +26,26 @@ export default class AddRecipe extends React.Component {
 		});
 	}
 
+	addIngredient(e) {
+		e.preventDefault();
+		let newIngredient = this.recipeIngredients.value;
+		if (newIngredient.length > 0 && newIngredient != " ") {
+			// make a new instance of the previous ingredient list from state
+			let ingredientArray = Array.from(this.state.ingredients);
+			// add new ingredient to that list
+			ingredientArray.push(newIngredient);
+			// reset the state with the new ingredient included on the list
+			this.setState({
+				ingredients: ingredientArray
+			});
+		}
+		// resent the value of input to be blank and ready for next ingredient 
+		this.recipeIngredients.value= '';
+	}
+
 	createIngredient(e) {
 		if (e.keyCode === 13) {
-			let newIngredient = this.recipeIngredients.value;
-			if (newIngredient.length > 0 && newIngredient != " ") {
-				// make a new instance of the previous ingredient list from state
-				let ingredientArray = Array.from(this.state.ingredients);
-				// add new ingredient to that list
-				ingredientArray.push(newIngredient);
-				// reset the state with the new ingredient included on the list
-				this.setState({
-					ingredients: ingredientArray
-				});
-			}
-			// resent the value of input to be blank and ready for next ingredient 
-			console.log('should clear');
-			this.recipeIngredients.value= '';
+			this.addIngredient(e);
 		}
 		
 	}
@@ -58,21 +62,25 @@ export default class AddRecipe extends React.Component {
 		});
 	}
 
+	addInstruction(e) {
+		e.preventDefault();
+		let newInstruction = this.recipeInstructions.value;
+		if (newInstruction.length > 0 && newInstruction != " ") {
+			// make a new instance of the previous ingredient list from state
+			let instructionArray = Array.from(this.state.instructions);
+			// add new ingredient to that list
+			instructionArray.push(newInstruction);
+			// reset the state with the new ingredient included on the list
+			this.setState({
+				instructions: instructionArray
+			});
+			// resent the value of input to be blank and ready for next ingredient 
+			this.recipeInstructions.value= '';
+		}
+	}
 	createInstruction(e){
 		if (e.keyCode === 13) {
-			let newInstruction = this.recipeInstructions.value;
-			if (newInstruction.length > 0 && newInstruction != " ") {
-				// make a new instance of the previous ingredient list from state
-				let instructionArray = Array.from(this.state.instructions);
-				// add new ingredient to that list
-				instructionArray.push(newInstruction);
-				// reset the state with the new ingredient included on the list
-				this.setState({
-					instructions: instructionArray
-				});
-				// resent the value of input to be blank and ready for next ingredient 
-				this.recipeInstructions.value= '';
-			}
+			this.addInstruction(e);
 		}
 	}
 
@@ -129,23 +137,86 @@ export default class AddRecipe extends React.Component {
 			});
 		}
 	}
+	// checkIngredientInput() {
+	// 	const newIngredient = this.recipeIngredients.value;
+	// 	if (newIngredient.length !== 0) {
+	// 		let ingredientArray = [newIngredient];
+	// 		// add new ingredient to that list
+			
+	// 		// console.log('ingredientArray', ingredientArray);
+	// 		// console.log(ingredientArray);
+	// 		// reset the state with the new ingredient included on the list
+	// 		this.setState({
+	// 			ingredients: ingredientArray
+	// 		});
+	// 		// console.log('ingredients thing good', this.state.ingredients);
+	// 		// return ingredientArray;
 
+	// 		this.checkInstructionInput();
+	// 	} else {
+	// 		alert('Please fill out the required fields');
+	// 	}
+	// }
+
+	// checkInstructionInput() {
+	// 	const newInstruction = this.recipeInstructions.value;
+	// 	if (newInstruction.length !== 0) {
+	// 		// add new ingredient to that list
+	// 		let instructionArray = [newInstruction];
+
+	// 		// reset the state with the new ingredient included on the list
+	// 		this.setState({
+	// 			instructions: instructionArray
+	// 		});
+	// 		// console.log('instructing thing good', this.state.instructions);
+	// 		this.createNewRecipe();
+	// 	} else {
+	// 		alert('Please fill out the required fields');
+	// 	}
+	// }
 	validateRecipeForm(e) {
 		e.preventDefault();
-		if(this.state.listFocus === true) {
+		if(this.state.listFocus === true ) {
 			return false;
 		} else {
+			
+			// const newIngredient = this.recipeIngredients.value;
+			// if (newIngredient.length !== 0) {
+			// 	// add new ingredient to new arr
+			// 	let ingredientArray = [newIngredient];
+			// 	// reset the state with the new ingredient included on the list
+			// 	this.setState({
+			// 		ingredients: ingredientArray
+			// 	});
+			// } else {
+			// 	alert('Please fill out the required ingredient field');
+			// 	return false;
+			// }
+
+			// const newInstruction = this.recipeInstructions.value;
+			// if (newInstruction.length !== 0) {
+			// 	// add new ingredient to new array
+			// 	let instructionArray = [newInstruction];
+			// 	// reset the state with the new ingredient included on the list
+			// 	this.setState({
+			// 		instructions: instructionArray
+			// 	});				
+			// } else {
+			// 	alert('Please fill out the required instruction field');
+			// 	return false;
+			// }
+
 			// save input values
 			const recipeTitle = this.recipeTitle.value;
-			const recipeIngredients = this.state.ingredients;
-			const recipeInstructions = this.state.instructions;
+			let recipeIngredients = this.state.ingredients;
+			let recipeInstructions = this.state.instructions;
 
 			if(recipeTitle === '' 
-			|| this.state.titleError === true
-			|| recipeIngredients.length <= 0
-			|| recipeInstructions.length <= 0) {
-				alert('Please fill out the required fields');
-				return false;
+				|| this.state.titleError === true
+				|| recipeIngredients.length <= 0
+				|| recipeInstructions.length <= 0) {
+					alert('Please fill out the required fields');
+					return false;
 			} else {
 				// call createNewRecipe:
 				this.createNewRecipe();
@@ -171,6 +242,11 @@ export default class AddRecipe extends React.Component {
 			instructions: recipeInstructions,
 			serves: recipeServes
 		};
+
+
+		console.log('new recipe', recipe);
+
+
 
 		// save to firebase db:
 		firebase.database().ref('recipe').push(recipe);
@@ -218,7 +294,7 @@ export default class AddRecipe extends React.Component {
 
 						<label htmlFor="ingredient" className={this.state.ingredientError ? 'errorLabel newIngred' : 'newIngred'}>Enter the ingredients:<span className="required">*</span></label>
 						<div>
-							<label htmlFor="ingredient" className={this.state.ingredientError ? 'errorLabel newIngred' : 'newIngred'} >
+							<label htmlFor="ingredient" className={this.state.ingredientError ? 'errorLabel plus' : 'plus'} >
 								<i className="fa fa-plus"></i>
 							</label>
 							<input 
@@ -230,6 +306,7 @@ export default class AddRecipe extends React.Component {
 								onBlur={(e) => this.listUnFocus.call(this, e) } 
 								// value={this.state.ingredientValue} 
 								onChange={(e) => this.handleIngredientChange.call(this, e) } />
+							<button className="add" onClick={(e) => this.addIngredient.call(this,e) }>add</button>
 						</div>
 
 						<ul>
@@ -248,7 +325,7 @@ export default class AddRecipe extends React.Component {
 						<label htmlFor="instruction" className={this.state.instructionError ? 'errorLabel newInstruct' : 'newInstruct'}>Enter the instructions:<span className="required">*</span></label>
 						<div>
 							<label htmlFor="instruction" 
-								className={this.state.instructionError ? 'errorLabel newInstruct' : 'newInstruct'} >
+								className={this.state.instructionError ? 'errorLabel plus' : 'plus'} >
 								<i className="fa fa-plus"></i>
 							</label>
 							<input 
@@ -261,6 +338,7 @@ export default class AddRecipe extends React.Component {
 								// value={this.state.instructionValue} 
 								onChange={(e) => this.handleInstructionChange.call(this, e) }
 								/>
+								<button className="add" onClick={(e) => this.addInstruction.call(this,e) }>add</button>
 						</div>
 
 						<ul>

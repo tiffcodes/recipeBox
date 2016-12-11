@@ -27024,23 +27024,29 @@ var AddRecipe = function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'addIngredient',
+		value: function addIngredient(e) {
+			e.preventDefault();
+			var newIngredient = this.recipeIngredients.value;
+			if (newIngredient.length > 0 && newIngredient != " ") {
+				// make a new instance of the previous ingredient list from state
+				var ingredientArray = Array.from(this.state.ingredients);
+				// add new ingredient to that list
+				ingredientArray.push(newIngredient);
+				// reset the state with the new ingredient included on the list
+				this.setState({
+					ingredients: ingredientArray
+				});
+			}
+			// resent the value of input to be blank and ready for next ingredient 
+			console.log('should clear');
+			this.recipeIngredients.value = '';
+		}
+	}, {
 		key: 'createIngredient',
 		value: function createIngredient(e) {
 			if (e.keyCode === 13) {
-				var newIngredient = this.recipeIngredients.value;
-				if (newIngredient.length > 0 && newIngredient != " ") {
-					// make a new instance of the previous ingredient list from state
-					var ingredientArray = Array.from(this.state.ingredients);
-					// add new ingredient to that list
-					ingredientArray.push(newIngredient);
-					// reset the state with the new ingredient included on the list
-					this.setState({
-						ingredients: ingredientArray
-					});
-				}
-				// resent the value of input to be blank and ready for next ingredient 
-				console.log('should clear');
-				this.recipeIngredients.value = '';
+				this.addIngredient(e);
 			}
 		}
 	}, {
@@ -27057,22 +27063,32 @@ var AddRecipe = function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'addInstruction',
+		value: function addInstruction(e) {
+			console.log('add instruction called');
+			e.preventDefault();
+			console.log('prevented and adding');
+			var newInstruction = this.recipeInstructions.value;
+			if (newInstruction.length > 0 && newInstruction != " ") {
+				// make a new instance of the previous ingredient list from state
+				var instructionArray = Array.from(this.state.instructions);
+				// add new ingredient to that list
+				instructionArray.push(newInstruction);
+				// reset the state with the new ingredient included on the list
+				this.setState({
+					instructions: instructionArray
+				});
+				// resent the value of input to be blank and ready for next ingredient 
+				this.recipeInstructions.value = '';
+			}
+		}
+	}, {
 		key: 'createInstruction',
 		value: function createInstruction(e) {
+			console.log('createInstruction called');
 			if (e.keyCode === 13) {
-				var newInstruction = this.recipeInstructions.value;
-				if (newInstruction.length > 0 && newInstruction != " ") {
-					// make a new instance of the previous ingredient list from state
-					var instructionArray = Array.from(this.state.instructions);
-					// add new ingredient to that list
-					instructionArray.push(newInstruction);
-					// reset the state with the new ingredient included on the list
-					this.setState({
-						instructions: instructionArray
-					});
-					// resent the value of input to be blank and ready for next ingredient 
-					this.recipeInstructions.value = '';
-				}
+				console.log('keycode pressed');
+				this.addInstruction(e);
 			}
 		}
 	}, {
@@ -27133,6 +27149,44 @@ var AddRecipe = function (_React$Component) {
 				});
 			}
 		}
+		// checkIngredientInput() {
+		// 	const newIngredient = this.recipeIngredients.value;
+		// 	if (newIngredient.length !== 0) {
+		// 		let ingredientArray = [newIngredient];
+		// 		// add new ingredient to that list
+
+		// 		// console.log('ingredientArray', ingredientArray);
+		// 		// console.log(ingredientArray);
+		// 		// reset the state with the new ingredient included on the list
+		// 		this.setState({
+		// 			ingredients: ingredientArray
+		// 		});
+		// 		// console.log('ingredients thing good', this.state.ingredients);
+		// 		// return ingredientArray;
+
+		// 		this.checkInstructionInput();
+		// 	} else {
+		// 		alert('Please fill out the required fields');
+		// 	}
+		// }
+
+		// checkInstructionInput() {
+		// 	const newInstruction = this.recipeInstructions.value;
+		// 	if (newInstruction.length !== 0) {
+		// 		// add new ingredient to that list
+		// 		let instructionArray = [newInstruction];
+
+		// 		// reset the state with the new ingredient included on the list
+		// 		this.setState({
+		// 			instructions: instructionArray
+		// 		});
+		// 		// console.log('instructing thing good', this.state.instructions);
+		// 		this.createNewRecipe();
+		// 	} else {
+		// 		alert('Please fill out the required fields');
+		// 	}
+		// }
+
 	}, {
 		key: 'validateRecipeForm',
 		value: function validateRecipeForm(e) {
@@ -27140,6 +27194,33 @@ var AddRecipe = function (_React$Component) {
 			if (this.state.listFocus === true) {
 				return false;
 			} else {
+
+				// const newIngredient = this.recipeIngredients.value;
+				// if (newIngredient.length !== 0) {
+				// 	// add new ingredient to new arr
+				// 	let ingredientArray = [newIngredient];
+				// 	// reset the state with the new ingredient included on the list
+				// 	this.setState({
+				// 		ingredients: ingredientArray
+				// 	});
+				// } else {
+				// 	alert('Please fill out the required ingredient field');
+				// 	return false;
+				// }
+
+				// const newInstruction = this.recipeInstructions.value;
+				// if (newInstruction.length !== 0) {
+				// 	// add new ingredient to new array
+				// 	let instructionArray = [newInstruction];
+				// 	// reset the state with the new ingredient included on the list
+				// 	this.setState({
+				// 		instructions: instructionArray
+				// 	});				
+				// } else {
+				// 	alert('Please fill out the required instruction field');
+				// 	return false;
+				// }
+
 				// save input values
 				var recipeTitle = this.recipeTitle.value;
 				var recipeIngredients = this.state.ingredients;
@@ -27174,6 +27255,8 @@ var AddRecipe = function (_React$Component) {
 				instructions: recipeInstructions,
 				serves: recipeServes
 			};
+
+			console.log('new recipe', recipe);
 
 			// save to firebase db:
 			firebase.database().ref('recipe').push(recipe);
@@ -27269,7 +27352,7 @@ var AddRecipe = function (_React$Component) {
 							null,
 							_react2.default.createElement(
 								'label',
-								{ htmlFor: 'ingredient', className: this.state.ingredientError ? 'errorLabel newIngred' : 'newIngred' },
+								{ htmlFor: 'ingredient', className: this.state.ingredientError ? 'errorLabel plus' : 'plus' },
 								_react2.default.createElement('i', { className: 'fa fa-plus' })
 							),
 							_react2.default.createElement('input', {
@@ -27290,7 +27373,14 @@ var AddRecipe = function (_React$Component) {
 								// value={this.state.ingredientValue} 
 								, onChange: function onChange(e) {
 									return _this2.handleIngredientChange.call(_this2, e);
-								} })
+								} }),
+							_react2.default.createElement(
+								'button',
+								{ className: 'add', onClick: function onClick(e) {
+										return _this2.addIngredient.call(_this2, e);
+									} },
+								'add'
+							)
 						),
 						_react2.default.createElement(
 							'ul',
@@ -27326,7 +27416,7 @@ var AddRecipe = function (_React$Component) {
 							_react2.default.createElement(
 								'label',
 								{ htmlFor: 'instruction',
-									className: this.state.instructionError ? 'errorLabel newInstruct' : 'newInstruct' },
+									className: this.state.instructionError ? 'errorLabel plus' : 'plus' },
 								_react2.default.createElement('i', { className: 'fa fa-plus' })
 							),
 							_react2.default.createElement('input', {
@@ -27348,7 +27438,14 @@ var AddRecipe = function (_React$Component) {
 								, onChange: function onChange(e) {
 									return _this2.handleInstructionChange.call(_this2, e);
 								}
-							})
+							}),
+							_react2.default.createElement(
+								'button',
+								{ className: 'add', onClick: function onClick(e) {
+										return _this2.addInstruction.call(_this2, e);
+									} },
+								'add'
+							)
 						),
 						_react2.default.createElement(
 							'ul',
@@ -28192,7 +28289,6 @@ var Recipes = function (_React$Component) {
 			var _this2 = this;
 
 			var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-			console.log('getting ready to render recipes');
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -28203,7 +28299,6 @@ var Recipes = function (_React$Component) {
 					if (titleA > titleB) return 1;
 					return 0;
 				}).map(function (recipe, i) {
-					console.log('mapping over recipes');
 					// grab first letter of title:
 					var firstLetter = recipe.title.charAt(0).toLowerCase();
 					return _react2.default.createElement(_recipeCard2.default, { key: 'card-' + i,
