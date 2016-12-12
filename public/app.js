@@ -27851,7 +27851,6 @@ var App = function (_React$Component) {
 			firebase.auth().onAuthStateChanged(function (user) {
 				if (user) {
 					_this2.currentUser = user.uid;
-					console.log(_this2.currentUser);
 					console.log('logged In? ', user.Xb);
 					_this2.setState({
 						loggedIn: true
@@ -27865,7 +27864,7 @@ var App = function (_React$Component) {
 		value: function loadUserRecipes() {
 			var _this3 = this;
 
-			console.log('currentUser:', this.currentUser);
+			// console.log('currentUser:', this.currentUser);
 			firebase.database().ref(this.currentUser + '/recipe').on('value', function (res) {
 				var data = res.val();
 				var recipe = [];
@@ -27921,10 +27920,8 @@ var App = function (_React$Component) {
 			}
 		}
 	}, {
-		key: 'recipeRender',
-		value: function recipeRender(recipes) {
-			console.log('recipe render called');
-			console.log('recipes to render: ', recipes);
+		key: 'renderRecipes',
+		value: function renderRecipes(recipes) {
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -27933,23 +27930,22 @@ var App = function (_React$Component) {
 			);
 		}
 	}, {
-		key: 'renderRecipes',
-		value: function renderRecipes() {
+		key: 'getRecipes',
+		value: function getRecipes() {
 			if (this.state.showFiltered) {
 				if (this.state.filteredRecipes.length === 0) {
 					return _react2.default.createElement(_NoRecipesFound2.default, null);
 				}
-				return this.recipeRender(this.state.filteredRecipes);
+				return this.renderRecipes(this.state.filteredRecipes);
 			} else if (this.state.recipe.length === 0) {
-				console.log('else if called');
-				return this.getAllRecipes();
+				return this.getGlobalRecipes();
 			} else {
-				return this.recipeRender(this.state.recipe);
+				return this.renderRecipes(this.state.recipe);
 			}
 		}
 	}, {
-		key: 'getAllRecipes',
-		value: function getAllRecipes() {
+		key: 'getGlobalRecipes',
+		value: function getGlobalRecipes() {
 			var _this5 = this;
 
 			firebase.database().ref('recipe').on('value', function (res) {
@@ -27959,7 +27955,7 @@ var App = function (_React$Component) {
 					data[key].key = key;
 					allRecipes.push(data[key]);
 				}
-				return _this5.recipeRender(allRecipes);
+				return _this5.renderRecipes(allRecipes);
 			});
 		}
 	}, {
@@ -28009,7 +28005,7 @@ var App = function (_React$Component) {
 					_react2.default.createElement(
 						'section',
 						null,
-						this.renderRecipes()
+						this.getRecipes()
 					)
 				);
 			} else {
@@ -28046,7 +28042,6 @@ _reactDom2.default.render(_react2.default.createElement(
 	{ history: _reactRouter.browserHistory },
 	_react2.default.createElement(_reactRouter.Route, { path: '/', component: App }),
 	_react2.default.createElement(_reactRouter.Route, { path: '/addrecipes', component: _addRecipe2.default }),
-	_react2.default.createElement(_reactRouter.Route, { path: '/recipes', component: _recipes2.default }),
 	_react2.default.createElement(_reactRouter.Route, { path: '*', component: _notFound2.default })
 ), document.getElementById('app'));
 
@@ -28347,6 +28342,8 @@ var Recipes = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
+			debugger;
+			console.log('rec comp called');
 			var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 			return _react2.default.createElement(
 				'div',

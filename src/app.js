@@ -42,7 +42,6 @@ class App extends React.Component {
 			.onAuthStateChanged((user) => {
 				if(user) {
 					this.currentUser = user.uid;
-					console.log(this.currentUser);
 					console.log('logged In? ', user.Xb);
 					this.setState({
 						loggedIn: true
@@ -53,7 +52,7 @@ class App extends React.Component {
 	}
 
 	loadUserRecipes() {
-		console.log('currentUser:', this.currentUser);
+		// console.log('currentUser:', this.currentUser);
 		firebase.database().ref(`${this.currentUser}/recipe`).on('value', (res) => {
 			const data = res.val();
 			const recipe = [];
@@ -109,9 +108,7 @@ class App extends React.Component {
 
 	}
 
-	recipeRender(recipes) {
-		console.log('recipe render called');
-		console.log('recipes to render: ', recipes);
+	renderRecipes(recipes) {
 		return (
 			<div>
 				<Alphabet />
@@ -120,23 +117,22 @@ class App extends React.Component {
 		)
 	}
 
-	renderRecipes() {
+	getRecipes() {
 		if(this.state.showFiltered) {
 			if(this.state.filteredRecipes.length === 0) {
 				return <NoRecipesFound />
 			}
-			return this.recipeRender(this.state.filteredRecipes);
+			return this.renderRecipes(this.state.filteredRecipes);
 		}
 		else if (this.state.recipe.length === 0 ) {
-			console.log('else if called');
-			return this.getAllRecipes();
+			return this.getGlobalRecipes();
 		}
 		else {
-			return this.recipeRender(this.state.recipe);
+			return this.renderRecipes(this.state.recipe);
 		}
 	}
 
-	getAllRecipes() {
+	getGlobalRecipes() {
 		firebase.database().ref('recipe').on('value', (res) => {
  			const data = res.val();
  			const allRecipes = [];
@@ -144,7 +140,7 @@ class App extends React.Component {
  				data[key].key = key;
  				allRecipes.push(data[key]);
  			}
- 			return this.recipeRender(allRecipes);
+ 			return this.renderRecipes(allRecipes);
  		});
 	}
 
@@ -165,7 +161,7 @@ class App extends React.Component {
 						</div>
 						<AddRecipe currentUser={this.currentUser} /> 
 						<section>
-							{this.renderRecipes()}
+							{this.getRecipes()}
 						</section>
 					</div>
 
@@ -195,7 +191,6 @@ ReactDom.render(
 	<Router history={browserHistory}>
 		<Route path="/" component={App} />
 		<Route path="/addrecipes" component={AddRecipe} />
-		<Route path="/recipes" component={Recipes} />
 		<Route path="*" component={NotFound} />
 	</Router>, document.getElementById('app'));
 
