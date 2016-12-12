@@ -4,9 +4,14 @@ export default class RecipeCard extends React.Component {
 	constructor(props, context) {
 		super();
 		this.state = {
-			recipeSaved: false
+			recipeSaved: false,
+			recipeShared: false
 		}
 	}	
+
+	componentWillMount() {
+
+	}
 
 	removeRecipe(recipeToRemove) {
 		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();
@@ -24,6 +29,17 @@ export default class RecipeCard extends React.Component {
 		
 	}
 
+	shareRecipe(recipeToShare) {
+		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToShare.key}`).on('value',  (res) => {
+			const data = res.val();
+			// save to firebase db:
+			firebase.database().ref('recipe').push(data);
+			this.setState({
+				recipeShared: true
+			})
+		});
+	}
+
 	render() {
 		return (
 			<div className="recipe" id={this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet)} >
@@ -34,6 +50,21 @@ export default class RecipeCard extends React.Component {
 						return <i className="fa fa-bookmark"></i>
 					} else {
 						return <i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, this.props.recipe)}></i>
+					}
+					})()
+				}
+
+				{ (() => {
+					if(this.props.isGlobal === false 
+						&& this.state.recipeShared === false) {
+
+						return <i className="fa fa-share" onClick={(e) => this.shareRecipe.call(this, this.props.recipe)}></i>
+
+					} else if (this.props.isGlobal === false 
+						&& this.state.recipeShared){
+						
+						return <i className="fa fa-share green"></i>
+
 					}
 					})()
 				}

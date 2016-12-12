@@ -129,7 +129,7 @@ class App extends React.Component {
 		// console.log('calling the render function');
 		return (
 			<div>
-				<Alphabet />
+				<Alphabet isGlobal={this.state.viewGlobal} />
 				<Recipes recipe={recipes} currentUser={this.currentUser} isGlobal={this.state.viewGlobal} />
 			</div>
 		)

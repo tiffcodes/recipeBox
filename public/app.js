@@ -27487,263 +27487,263 @@ var AddRecipe = function (_React$Component) {
 exports.default = AddRecipe;
 
 },{"react":233,"react-dom":52}],238:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-exports.default = function () {
+exports.default = function (props) {
 	return _react2.default.createElement(
-		"div",
+		'div',
 		null,
 		_react2.default.createElement(
-			"h3",
+			'h3',
 			null,
-			"Recipes:"
+			props.isGlobal ? 'All Shared Recipes:' : 'My Recipes:'
 		),
 		_react2.default.createElement(
-			"ul",
-			{ className: "alphabet" },
+			'ul',
+			{ className: 'alphabet' },
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#a" },
-					"A"
+					'a',
+					{ href: '#a' },
+					'A'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#b" },
-					"B"
+					'a',
+					{ href: '#b' },
+					'B'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#c" },
-					"C"
+					'a',
+					{ href: '#c' },
+					'C'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#d" },
-					"D"
+					'a',
+					{ href: '#d' },
+					'D'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#e" },
-					"E"
+					'a',
+					{ href: '#e' },
+					'E'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#f" },
-					"F"
+					'a',
+					{ href: '#f' },
+					'F'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#g" },
-					"G"
+					'a',
+					{ href: '#g' },
+					'G'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#h" },
-					"H"
+					'a',
+					{ href: '#h' },
+					'H'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#i" },
-					"I"
+					'a',
+					{ href: '#i' },
+					'I'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#j" },
-					"J"
+					'a',
+					{ href: '#j' },
+					'J'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#k" },
-					"K"
+					'a',
+					{ href: '#k' },
+					'K'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#l" },
-					"L"
+					'a',
+					{ href: '#l' },
+					'L'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#m" },
-					"M"
+					'a',
+					{ href: '#m' },
+					'M'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#n" },
-					"N"
+					'a',
+					{ href: '#n' },
+					'N'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#o" },
-					"O"
+					'a',
+					{ href: '#o' },
+					'O'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#p" },
-					"P"
+					'a',
+					{ href: '#p' },
+					'P'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#q" },
-					"Q"
+					'a',
+					{ href: '#q' },
+					'Q'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#r" },
-					"R"
+					'a',
+					{ href: '#r' },
+					'R'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#s" },
-					"S"
+					'a',
+					{ href: '#s' },
+					'S'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#t" },
-					"T"
+					'a',
+					{ href: '#t' },
+					'T'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#u" },
-					"U"
+					'a',
+					{ href: '#u' },
+					'U'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#v" },
-					"V"
+					'a',
+					{ href: '#v' },
+					'V'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#w" },
-					"W"
+					'a',
+					{ href: '#w' },
+					'W'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#x" },
-					"X"
+					'a',
+					{ href: '#x' },
+					'X'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#y" },
-					"Y"
+					'a',
+					{ href: '#y' },
+					'Y'
 				)
 			),
 			_react2.default.createElement(
-				"li",
+				'li',
 				null,
 				_react2.default.createElement(
-					"a",
-					{ href: "#z" },
-					"Z"
+					'a',
+					{ href: '#z' },
+					'Z'
 				)
 			)
 		)
 	);
 };
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -27949,7 +27949,7 @@ var App = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_alphabet2.default, null),
+				_react2.default.createElement(_alphabet2.default, { isGlobal: this.state.viewGlobal }),
 				_react2.default.createElement(_recipes2.default, { recipe: recipes, currentUser: this.currentUser, isGlobal: this.state.viewGlobal })
 			);
 		}
@@ -28331,12 +28331,16 @@ var RecipeCard = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (RecipeCard.__proto__ || Object.getPrototypeOf(RecipeCard)).call(this));
 
 		_this.state = {
-			recipeSaved: false
+			recipeSaved: false,
+			recipeShared: false
 		};
 		return _this;
 	}
 
 	_createClass(RecipeCard, [{
+		key: 'componentWillMount',
+		value: function componentWillMount() {}
+	}, {
 		key: 'removeRecipe',
 		value: function removeRecipe(recipeToRemove) {
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToRemove.key).remove();
@@ -28356,24 +28360,49 @@ var RecipeCard = function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'shareRecipe',
+		value: function shareRecipe(recipeToShare) {
+			var _this3 = this;
+
+			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToShare.key).on('value', function (res) {
+				var data = res.val();
+				// save to firebase db:
+				firebase.database().ref('recipe').push(data);
+				_this3.setState({
+					recipeShared: true
+				});
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			var _this3 = this;
+			var _this4 = this;
 
 			return _react2.default.createElement(
 				'div',
 				{ className: 'recipe', id: this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet) },
 				function () {
-					if (_this3.props.isGlobal && _this3.state.recipeSaved === false) {
+					if (_this4.props.isGlobal && _this4.state.recipeSaved === false) {
 						return _react2.default.createElement('i', { className: 'fa fa-bookmark-o', onClick: function onClick(e) {
-								return _this3.saveToMyRecipes.call(_this3, _this3.props.recipe);
+								return _this4.saveToMyRecipes.call(_this4, _this4.props.recipe);
 							} });
-					} else if (_this3.props.isGlobal && _this3.state.recipeSaved) {
+					} else if (_this4.props.isGlobal && _this4.state.recipeSaved) {
 						return _react2.default.createElement('i', { className: 'fa fa-bookmark' });
 					} else {
 						return _react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
-								return _this3.removeRecipe.call(_this3, _this3.props.recipe);
+								return _this4.removeRecipe.call(_this4, _this4.props.recipe);
 							} });
+					}
+				}(),
+				function () {
+					if (_this4.props.isGlobal === false && _this4.state.recipeShared === false) {
+
+						return _react2.default.createElement('i', { className: 'fa fa-share', onClick: function onClick(e) {
+								return _this4.shareRecipe.call(_this4, _this4.props.recipe);
+							} });
+					} else if (_this4.props.isGlobal === false && _this4.state.recipeShared) {
+
+						return _react2.default.createElement('i', { className: 'fa fa-share green' });
 					}
 				}(),
 				_react2.default.createElement(
@@ -28402,8 +28431,8 @@ var RecipeCard = function (_React$Component) {
 					'ul',
 					null,
 					function () {
-						if (_this3.props.recipe.ingredients !== "") {
-							return _this3.props.recipe.ingredients.map(function (recipeIngred, i) {
+						if (_this4.props.recipe.ingredients !== "") {
+							return _this4.props.recipe.ingredients.map(function (recipeIngred, i) {
 								return _react2.default.createElement(
 									'li',
 									{ key: i },
@@ -28422,8 +28451,8 @@ var RecipeCard = function (_React$Component) {
 					'ul',
 					null,
 					function () {
-						if (_this3.props.recipe.instructions !== "") {
-							return _this3.props.recipe.instructions.map(function (recipeInstruction, i) {
+						if (_this4.props.recipe.instructions !== "") {
+							return _this4.props.recipe.instructions.map(function (recipeInstruction, i) {
 								return _react2.default.createElement(
 									'li',
 									{ key: i },
