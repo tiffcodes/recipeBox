@@ -71,10 +71,6 @@ class App extends React.Component {
 		});
 	}
 
-	removeRecipe(recipeToRemove) {
-		firebase.database().ref(`${this.currentUser}/recipe/${recipeToRemove.key}`).remove();
-	}
-
 	signout(e) {
 		e.preventDefault();
 		firebase.auth().signOut().then(() => {
@@ -121,7 +117,9 @@ class App extends React.Component {
 
 	renderRecipes() {
 		const recipeRender = (recipes) => {
-			return <Recipes recipe={recipes} removeRecipe={this.removeRecipe}/>
+			return <Recipes recipe={recipes} 
+					
+					currentUser={this.currentUser} />
 		};
 		if(this.state.showFiltered) {
 			if(this.state.filteredRecipes.length === 0) {

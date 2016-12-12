@@ -27874,11 +27874,6 @@ var App = function (_React$Component) {
 			});
 		}
 	}, {
-		key: 'removeRecipe',
-		value: function removeRecipe(recipeToRemove) {
-			firebase.database().ref(this.currentUser + '/recipe/' + recipeToRemove.key).remove();
-		}
-	}, {
 		key: 'signout',
 		value: function signout(e) {
 			var _this4 = this;
@@ -27928,7 +27923,9 @@ var App = function (_React$Component) {
 			var _this5 = this;
 
 			var recipeRender = function recipeRender(recipes) {
-				return _react2.default.createElement(_recipes2.default, { recipe: recipes, removeRecipe: _this5.removeRecipe });
+				return _react2.default.createElement(_recipes2.default, { recipe: recipes,
+
+					currentUser: _this5.currentUser });
 			};
 			if (this.state.showFiltered) {
 				if (this.state.filteredRecipes.length === 0) {
@@ -28166,80 +28163,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-exports.default = function (props) {
-	var _this = this;
-
-	return _react2.default.createElement(
-		"div",
-		{ className: "recipe", id: props.checkAlphabet(props.firstLetter, props.alphabet) },
-		_react2.default.createElement("i", { className: "fa fa-times", onClick: function onClick(e) {
-				return props.removeRecipe.call(_this, props.recipe);
-			} }),
-		_react2.default.createElement(
-			"h2",
-			{ id: props.recipe.title },
-			props.recipe.title
-		),
-		_react2.default.createElement(
-			"p",
-			null,
-			"Prep Time: ",
-			props.recipe.prepTime
-		),
-		_react2.default.createElement(
-			"p",
-			null,
-			"Total Time: ",
-			props.recipe.totalTime
-		),
-		_react2.default.createElement(
-			"p",
-			null,
-			"Ingredients:"
-		),
-		_react2.default.createElement(
-			"ul",
-			null,
-			function () {
-				if (props.recipe.ingredients !== "") {
-					return props.recipe.ingredients.map(function (recipeIngred, i) {
-						return _react2.default.createElement(
-							"li",
-							{ key: i },
-							recipeIngred
-						);
-					});
-				}
-			}()
-		),
-		_react2.default.createElement(
-			"p",
-			null,
-			"Instructions:"
-		),
-		_react2.default.createElement(
-			"ul",
-			null,
-			function () {
-				if (props.recipe.instructions !== "") {
-					return props.recipe.instructions.map(function (recipeInstruction, i) {
-						return _react2.default.createElement(
-							"li",
-							{ key: i },
-							recipeInstruction
-						);
-					});
-				}
-			}()
-		),
-		_react2.default.createElement(
-			"p",
-			null,
-			"Serves: ",
-			props.recipe.serves
-		)
-	);
-};
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
 
@@ -28247,6 +28171,108 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RecipeCard = function (_React$Component) {
+	_inherits(RecipeCard, _React$Component);
+
+	function RecipeCard() {
+		_classCallCheck(this, RecipeCard);
+
+		return _possibleConstructorReturn(this, (RecipeCard.__proto__ || Object.getPrototypeOf(RecipeCard)).apply(this, arguments));
+	}
+
+	_createClass(RecipeCard, [{
+		key: "removeRecipe",
+		value: function removeRecipe(recipeToRemove) {
+			firebase.database().ref(this.props.currentUser + "/recipe/" + recipeToRemove.key).remove();
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				"div",
+				{ className: "recipe", id: this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet) },
+				_react2.default.createElement("i", { className: "fa fa-times", onClick: function onClick(e) {
+						return _this2.removeRecipe.call(_this2, _this2.props.recipe);
+					} }),
+				_react2.default.createElement(
+					"h2",
+					{ id: this.props.recipe.title },
+					this.props.recipe.title
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"Prep Time: ",
+					this.props.recipe.prepTime
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"Total Time: ",
+					this.props.recipe.totalTime
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"Ingredients:"
+				),
+				_react2.default.createElement(
+					"ul",
+					null,
+					function () {
+						if (_this2.props.recipe.ingredients !== "") {
+							return _this2.props.recipe.ingredients.map(function (recipeIngred, i) {
+								return _react2.default.createElement(
+									"li",
+									{ key: i },
+									recipeIngred
+								);
+							});
+						}
+					}()
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"Instructions:"
+				),
+				_react2.default.createElement(
+					"ul",
+					null,
+					function () {
+						if (_this2.props.recipe.instructions !== "") {
+							return _this2.props.recipe.instructions.map(function (recipeInstruction, i) {
+								return _react2.default.createElement(
+									"li",
+									{ key: i },
+									recipeInstruction
+								);
+							});
+						}
+					}()
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"Serves: ",
+					this.props.recipe.serves
+				)
+			);
+		}
+	}]);
+
+	return RecipeCard;
+}(_react2.default.Component);
+
+exports.default = RecipeCard;
 ;
 
 },{"react":233}],244:[function(require,module,exports){
@@ -28319,7 +28345,8 @@ var Recipes = function (_React$Component) {
 						alphabet: alphabet,
 						checkAlphabet: _this2.checkAlphabet,
 						firstLetter: firstLetter,
-						removeRecipe: _this2.props.removeRecipe });
+
+						currentUser: _this2.props.currentUser });
 				})
 			);
 		}
