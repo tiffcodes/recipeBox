@@ -27832,7 +27832,8 @@ var App = function (_React$Component) {
 			recipe: [],
 			filteredRecipes: [],
 			showFiltered: false,
-			globalRecipes: []
+			globalRecipes: [],
+			viewGlobal: false
 		};
 
 		var config = {
@@ -27949,7 +27950,7 @@ var App = function (_React$Component) {
 				'div',
 				null,
 				_react2.default.createElement(_alphabet2.default, null),
-				_react2.default.createElement(_recipes2.default, { recipe: recipes, currentUser: this.currentUser })
+				_react2.default.createElement(_recipes2.default, { recipe: recipes, currentUser: this.currentUser, isGlobal: this.state.viewGlobal })
 			);
 		}
 	}, {
@@ -27960,10 +27961,23 @@ var App = function (_React$Component) {
 					return _react2.default.createElement(_NoRecipesFound2.default, null);
 				}
 				return this.renderRecipes(this.state.filteredRecipes);
-			} else if (this.state.recipe.length === 0) {
+			} else if (this.state.viewGlobal) {
 				return this.renderRecipes(this.state.globalRecipes);
 			} else {
 				return this.renderRecipes(this.state.recipe);
+			}
+		}
+	}, {
+		key: 'toggleGlobal',
+		value: function toggleGlobal() {
+			if (this.state.viewGlobal) {
+				this.setState({
+					viewGlobal: false
+				});
+			} else {
+				this.setState({
+					viewGlobal: true
+				});
 			}
 		}
 	}, {
@@ -28010,6 +28024,13 @@ var App = function (_React$Component) {
 						)
 					),
 					_react2.default.createElement(_addRecipe2.default, { currentUser: this.currentUser }),
+					_react2.default.createElement(
+						'button',
+						{ onClick: function onClick(e) {
+								return _this6.toggleGlobal.call(_this6, e);
+							} },
+						this.state.viewGlobal ? 'View My Recipes' : 'View Shared Recipes'
+					),
 					_react2.default.createElement(
 						'section',
 						null,
@@ -28281,7 +28302,7 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 },{"react":233}],244:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -28289,7 +28310,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -28304,58 +28325,87 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var RecipeCard = function (_React$Component) {
 	_inherits(RecipeCard, _React$Component);
 
-	function RecipeCard() {
+	function RecipeCard(props, context) {
 		_classCallCheck(this, RecipeCard);
 
-		return _possibleConstructorReturn(this, (RecipeCard.__proto__ || Object.getPrototypeOf(RecipeCard)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (RecipeCard.__proto__ || Object.getPrototypeOf(RecipeCard)).call(this));
+
+		_this.state = {
+			recipeSaved: false
+		};
+		return _this;
 	}
 
 	_createClass(RecipeCard, [{
-		key: "removeRecipe",
+		key: 'removeRecipe',
 		value: function removeRecipe(recipeToRemove) {
-			firebase.database().ref(this.props.currentUser + "/recipe/" + recipeToRemove.key).remove();
+			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToRemove.key).remove();
 		}
 	}, {
-		key: "render",
-		value: function render() {
+		key: 'saveToMyRecipes',
+		value: function saveToMyRecipes(recipeToSave) {
 			var _this2 = this;
 
+			firebase.database().ref('recipe/' + recipeToSave.key).on('value', function (res) {
+				var data = res.val();
+				// save to firebase db:
+				firebase.database().ref(_this2.props.currentUser + '/recipe').push(data);
+				_this2.setState({
+					recipeSaved: true
+				});
+			});
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _this3 = this;
+
 			return _react2.default.createElement(
-				"div",
-				{ className: "recipe", id: this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet) },
-				_react2.default.createElement("i", { className: "fa fa-times", onClick: function onClick(e) {
-						return _this2.removeRecipe.call(_this2, _this2.props.recipe);
-					} }),
+				'div',
+				{ className: 'recipe', id: this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet) },
+				function () {
+					if (_this3.props.isGlobal && _this3.state.recipeSaved === false) {
+						return _react2.default.createElement('i', { className: 'fa fa-bookmark-o', onClick: function onClick(e) {
+								return _this3.saveToMyRecipes.call(_this3, _this3.props.recipe);
+							} });
+					} else if (_this3.props.isGlobal && _this3.state.recipeSaved) {
+						return _react2.default.createElement('i', { className: 'fa fa-bookmark' });
+					} else {
+						return _react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
+								return _this3.removeRecipe.call(_this3, _this3.props.recipe);
+							} });
+					}
+				}(),
 				_react2.default.createElement(
-					"h2",
+					'h2',
 					{ id: this.props.recipe.title },
 					this.props.recipe.title
 				),
 				_react2.default.createElement(
-					"p",
+					'p',
 					null,
-					"Prep Time: ",
+					'Prep Time: ',
 					this.props.recipe.prepTime
 				),
 				_react2.default.createElement(
-					"p",
+					'p',
 					null,
-					"Total Time: ",
+					'Total Time: ',
 					this.props.recipe.totalTime
 				),
 				_react2.default.createElement(
-					"p",
+					'p',
 					null,
-					"Ingredients:"
+					'Ingredients:'
 				),
 				_react2.default.createElement(
-					"ul",
+					'ul',
 					null,
 					function () {
-						if (_this2.props.recipe.ingredients !== "") {
-							return _this2.props.recipe.ingredients.map(function (recipeIngred, i) {
+						if (_this3.props.recipe.ingredients !== "") {
+							return _this3.props.recipe.ingredients.map(function (recipeIngred, i) {
 								return _react2.default.createElement(
-									"li",
+									'li',
 									{ key: i },
 									recipeIngred
 								);
@@ -28364,18 +28414,18 @@ var RecipeCard = function (_React$Component) {
 					}()
 				),
 				_react2.default.createElement(
-					"p",
+					'p',
 					null,
-					"Instructions:"
+					'Instructions:'
 				),
 				_react2.default.createElement(
-					"ul",
+					'ul',
 					null,
 					function () {
-						if (_this2.props.recipe.instructions !== "") {
-							return _this2.props.recipe.instructions.map(function (recipeInstruction, i) {
+						if (_this3.props.recipe.instructions !== "") {
+							return _this3.props.recipe.instructions.map(function (recipeInstruction, i) {
 								return _react2.default.createElement(
-									"li",
+									'li',
 									{ key: i },
 									recipeInstruction
 								);
@@ -28384,9 +28434,9 @@ var RecipeCard = function (_React$Component) {
 					}()
 				),
 				_react2.default.createElement(
-					"p",
+					'p',
 					null,
-					"Serves: ",
+					'Serves: ',
 					this.props.recipe.serves
 				)
 			);
@@ -28471,7 +28521,8 @@ var Recipes = function (_React$Component) {
 						alphabet: alphabet,
 						checkAlphabet: _this2.checkAlphabet,
 						firstLetter: firstLetter,
-						currentUser: _this2.props.currentUser });
+						currentUser: _this2.props.currentUser,
+						isGlobal: _this2.props.isGlobal });
 				})
 			);
 		}

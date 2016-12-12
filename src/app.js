@@ -24,7 +24,8 @@ class App extends React.Component {
 			recipe: [], 
 			filteredRecipes: [], 
 			showFiltered: false,
-			globalRecipes: []
+			globalRecipes: [],
+			viewGlobal: false
 		}
 
 		let config = {
@@ -129,7 +130,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<Alphabet />
-				<Recipes recipe={recipes} currentUser={this.currentUser} />
+				<Recipes recipe={recipes} currentUser={this.currentUser} isGlobal={this.state.viewGlobal} />
 			</div>
 		)
 	}
@@ -141,7 +142,7 @@ class App extends React.Component {
 			}
 			return this.renderRecipes(this.state.filteredRecipes);
 		}
-		else if (this.state.recipe.length === 0 ) {
+		else if (this.state.viewGlobal) {
 			return this.renderRecipes(this.state.globalRecipes);
 		}
 		else {
@@ -149,7 +150,17 @@ class App extends React.Component {
 		}
 	}
 
-
+	toggleGlobal() {
+		if(this.state.viewGlobal) {
+			this.setState({
+				viewGlobal: false
+			});
+		} else {
+			this.setState({
+				viewGlobal: true
+			});
+		}
+	}
 
 
 	render() {
@@ -168,6 +179,7 @@ class App extends React.Component {
 							</p>
 						</div>
 						<AddRecipe currentUser={this.currentUser} /> 
+						<button onClick={e => this.toggleGlobal.call(this,e)}>{this.state.viewGlobal ? 'View My Recipes' : 'View Shared Recipes'}</button>
 						<section>
 							{this.getRecipes()}
 						</section>

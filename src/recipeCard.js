@@ -1,15 +1,43 @@
 import React from 'react';
 
 export default class RecipeCard extends React.Component {
-	
+	constructor(props, context) {
+		super();
+		this.state = {
+			recipeSaved: false
+		}
+	}	
+
 	removeRecipe(recipeToRemove) {
 		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();
+	}
+
+	saveToMyRecipes(recipeToSave) {
+		firebase.database().ref(`recipe/${recipeToSave.key}`).on('value',  (res) => {
+			const data = res.val();
+			// save to firebase db:
+			firebase.database().ref(`${this.props.currentUser}/recipe`).push(data);
+			this.setState({
+				recipeSaved: true
+			})
+		});
+		
 	}
 
 	render() {
 		return (
 			<div className="recipe" id={this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet)} >
-				<i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, this.props.recipe)}></i>
+				{ (() => {
+					if(this.props.isGlobal && this.state.recipeSaved === false) {
+						return <i className="fa fa-bookmark-o" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
+					} else if (this.props.isGlobal && this.state.recipeSaved) {
+						return <i className="fa fa-bookmark"></i>
+					} else {
+						return <i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, this.props.recipe)}></i>
+					}
+					})()
+				}
+				
 				<h2 id={this.props.recipe.title}>{this.props.recipe.title}</h2>
 				<p>Prep Time: {this.props.recipe.prepTime}</p>
 				<p>Total Time: {this.props.recipe.totalTime}</p>
