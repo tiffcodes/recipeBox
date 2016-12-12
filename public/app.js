@@ -27495,240 +27495,249 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = function () {
 	return _react2.default.createElement(
-		"ul",
-		{ className: "alphabet" },
+		"div",
+		null,
 		_react2.default.createElement(
-			"li",
+			"h3",
 			null,
-			_react2.default.createElement(
-				"a",
-				{ href: "#a" },
-				"A"
-			)
+			"Recipes:"
 		),
 		_react2.default.createElement(
-			"li",
-			null,
+			"ul",
+			{ className: "alphabet" },
 			_react2.default.createElement(
-				"a",
-				{ href: "#b" },
-				"B"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#a" },
+					"A"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#c" },
-				"C"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#b" },
+					"B"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#d" },
-				"D"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#c" },
+					"C"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#e" },
-				"E"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#d" },
+					"D"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#f" },
-				"F"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#e" },
+					"E"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#g" },
-				"G"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#f" },
+					"F"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#h" },
-				"H"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#g" },
+					"G"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#i" },
-				"I"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#h" },
+					"H"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#j" },
-				"J"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#i" },
+					"I"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#k" },
-				"K"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#j" },
+					"J"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#l" },
-				"L"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#k" },
+					"K"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#m" },
-				"M"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#l" },
+					"L"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#n" },
-				"N"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#m" },
+					"M"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#o" },
-				"O"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#n" },
+					"N"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#p" },
-				"P"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#o" },
+					"O"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#q" },
-				"Q"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#p" },
+					"P"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#r" },
-				"R"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#q" },
+					"Q"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#s" },
-				"S"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#r" },
+					"R"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#t" },
-				"T"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#s" },
+					"S"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#u" },
-				"U"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#t" },
+					"T"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#v" },
-				"V"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#u" },
+					"U"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#w" },
-				"W"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#v" },
+					"V"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#x" },
-				"X"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#w" },
+					"W"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#y" },
-				"Y"
-			)
-		),
-		_react2.default.createElement(
-			"li",
-			null,
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#x" },
+					"X"
+				)
+			),
 			_react2.default.createElement(
-				"a",
-				{ href: "#z" },
-				"Z"
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#y" },
+					"Y"
+				)
+			),
+			_react2.default.createElement(
+				"li",
+				null,
+				_react2.default.createElement(
+					"a",
+					{ href: "#z" },
+					"Z"
+				)
 			)
 		)
 	);
@@ -27818,7 +27827,8 @@ var App = function (_React$Component) {
 			loggedIn: false,
 			recipe: [],
 			filteredRecipes: [],
-			showFiltered: false
+			showFiltered: false,
+			allRecipes: []
 		};
 
 		var config = {
@@ -27846,30 +27856,23 @@ var App = function (_React$Component) {
 					_this2.setState({
 						loggedIn: true
 					});
-					_this2.loadDatabase();
+					_this2.loadUserRecipes();
 				}
 			});
 		}
 	}, {
-		key: 'loadDatabase',
-		value: function loadDatabase() {
+		key: 'loadUserRecipes',
+		value: function loadUserRecipes() {
 			var _this3 = this;
 
 			console.log('currentUser:', this.currentUser);
-
 			firebase.database().ref(this.currentUser + '/recipe').on('value', function (res) {
-				console.log('res', res);
 				var data = res.val();
-				console.log('data', data);
-
 				var recipe = [];
 				for (var key in data) {
-					console.log('key', key);
-					console.log('data', data);
 					data[key].key = key;
 					recipe.push(data[key]);
 				}
-				console.log('recipes', recipe);
 				_this3.setState({ recipe: recipe });
 			});
 		}
@@ -27918,23 +27921,46 @@ var App = function (_React$Component) {
 			}
 		}
 	}, {
+		key: 'recipeRender',
+		value: function recipeRender(recipes) {
+			console.log('recipe render called');
+			console.log('recipes to render: ', recipes);
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(_alphabet2.default, null),
+				_react2.default.createElement(_recipes2.default, { recipe: recipes, currentUser: this.currentUser })
+			);
+		}
+	}, {
 		key: 'renderRecipes',
 		value: function renderRecipes() {
-			var _this5 = this;
-
-			var recipeRender = function recipeRender(recipes) {
-				return _react2.default.createElement(_recipes2.default, { recipe: recipes,
-
-					currentUser: _this5.currentUser });
-			};
 			if (this.state.showFiltered) {
 				if (this.state.filteredRecipes.length === 0) {
 					return _react2.default.createElement(_NoRecipesFound2.default, null);
 				}
-				return recipeRender(this.state.filteredRecipes);
+				return this.recipeRender(this.state.filteredRecipes);
+			} else if (this.state.recipe.length === 0) {
+				console.log('else if called');
+				return this.getAllRecipes();
 			} else {
-				return recipeRender(this.state.recipe);
+				return this.recipeRender(this.state.recipe);
 			}
+		}
+	}, {
+		key: 'getAllRecipes',
+		value: function getAllRecipes() {
+			var _this5 = this;
+
+			firebase.database().ref('recipe').on('value', function (res) {
+				var data = res.val();
+				var allRecipes = [];
+				for (var key in data) {
+					data[key].key = key;
+					allRecipes.push(data[key]);
+				}
+				return _this5.recipeRender(allRecipes);
+			});
 		}
 	}, {
 		key: 'render',
@@ -27983,12 +28009,6 @@ var App = function (_React$Component) {
 					_react2.default.createElement(
 						'section',
 						null,
-						_react2.default.createElement(
-							'h3',
-							null,
-							'Recipes:'
-						),
-						_react2.default.createElement(_alphabet2.default, null),
 						this.renderRecipes()
 					)
 				);
@@ -28345,7 +28365,6 @@ var Recipes = function (_React$Component) {
 						alphabet: alphabet,
 						checkAlphabet: _this2.checkAlphabet,
 						firstLetter: firstLetter,
-
 						currentUser: _this2.props.currentUser });
 				})
 			);

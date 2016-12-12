@@ -36,7 +36,6 @@ export default class Recipes extends React.Component {
 							alphabet={alphabet}
 							checkAlphabet={this.checkAlphabet} 
 							firstLetter={firstLetter} 
-							
 							currentUser={this.props.currentUser}/>
 				})}
 				</div>

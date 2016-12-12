@@ -23,6 +23,7 @@ class App extends React.Component {
 			recipe: [], 
 			filteredRecipes: [], 
 			showFiltered: false,
+			allRecipes: []
 		}
 
 		let config = {
@@ -46,27 +47,20 @@ class App extends React.Component {
 					this.setState({
 						loggedIn: true
 					});
-					this.loadDatabase();
+					this.loadUserRecipes();
 				}
 		});
 	}
 
-	loadDatabase() {
+	loadUserRecipes() {
 		console.log('currentUser:', this.currentUser);
-
 		firebase.database().ref(`${this.currentUser}/recipe`).on('value', (res) => {
-			console.log('res', res);
 			const data = res.val();
-			console.log('data', data);
-
 			const recipe = [];
 			for(let key in data) {
-				console.log('key', key);
-				console.log('data', data);
 				data[key].key = key;
 				recipe.push(data[key]);
 			}
-			console.log('recipes', recipe);
 			this.setState({recipe});
 		});
 	}
@@ -115,21 +109,43 @@ class App extends React.Component {
 
 	}
 
+	recipeRender(recipes) {
+		console.log('recipe render called');
+		console.log('recipes to render: ', recipes);
+		return (
+			<div>
+				<Alphabet />
+				<Recipes recipe={recipes} currentUser={this.currentUser} />
+			</div>
+		)
+	}
+
 	renderRecipes() {
-		const recipeRender = (recipes) => {
-			return <Recipes recipe={recipes} 
-					
-					currentUser={this.currentUser} />
-		};
 		if(this.state.showFiltered) {
 			if(this.state.filteredRecipes.length === 0) {
 				return <NoRecipesFound />
 			}
-			return recipeRender(this.state.filteredRecipes);
+			return this.recipeRender(this.state.filteredRecipes);
+		}
+		else if (this.state.recipe.length === 0 ) {
+			console.log('else if called');
+			return this.getAllRecipes();
 		}
 		else {
-			return recipeRender(this.state.recipe);
+			return this.recipeRender(this.state.recipe);
 		}
+	}
+
+	getAllRecipes() {
+		firebase.database().ref('recipe').on('value', (res) => {
+ 			const data = res.val();
+ 			const allRecipes = [];
+ 			for(let key in data) {
+ 				data[key].key = key;
+ 				allRecipes.push(data[key]);
+ 			}
+ 			return this.recipeRender(allRecipes);
+ 		});
 	}
 
 	render() {
@@ -149,8 +165,6 @@ class App extends React.Component {
 						</div>
 						<AddRecipe currentUser={this.currentUser} /> 
 						<section>
-							<h3>Recipes:</h3>
-							<Alphabet />
 							{this.renderRecipes()}
 						</section>
 					</div>
