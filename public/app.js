@@ -27804,6 +27804,10 @@ var _NoRecipesFound = require('./NoRecipesFound');
 
 var _NoRecipesFound2 = _interopRequireDefault(_NoRecipesFound);
 
+var _globalRecipes = require('./globalRecipes');
+
+var _globalRecipes2 = _interopRequireDefault(_globalRecipes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27828,7 +27832,7 @@ var App = function (_React$Component) {
 			recipe: [],
 			filteredRecipes: [],
 			showFiltered: false,
-			allRecipes: []
+			globalRecipes: []
 		};
 
 		var config = {
@@ -27856,6 +27860,7 @@ var App = function (_React$Component) {
 						loggedIn: true
 					});
 					_this2.loadUserRecipes();
+					_this2.loadGlobalRecipes();
 				}
 			});
 		}
@@ -27876,17 +27881,34 @@ var App = function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'loadGlobalRecipes',
+		value: function loadGlobalRecipes() {
+			var _this4 = this;
+
+			firebase.database().ref('recipe').on('value', function (res) {
+				var data = res.val();
+				var allRecipes = [];
+				for (var key in data) {
+					data[key].key = key;
+					allRecipes.push(data[key]);
+				}
+				console.log('allRecipes', allRecipes);
+				_this4.setState({ globalRecipes: allRecipes });
+				// return this.renderRecipes(allRecipes);
+			});
+		}
+	}, {
 		key: 'signout',
 		value: function signout(e) {
-			var _this4 = this;
+			var _this5 = this;
 
 			e.preventDefault();
 			firebase.auth().signOut().then(function () {
 				// Sign-out successful change state to not logged in:
-				_this4.setState({
+				_this5.setState({
 					loggedIn: false
 				});
-				_this4.context.router.push('/');
+				_this5.context.router.push('/');
 			}, function (error) {
 				console.log(error);
 			});
@@ -27922,6 +27944,7 @@ var App = function (_React$Component) {
 	}, {
 		key: 'renderRecipes',
 		value: function renderRecipes(recipes) {
+			// console.log('calling the render function');
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -27938,25 +27961,10 @@ var App = function (_React$Component) {
 				}
 				return this.renderRecipes(this.state.filteredRecipes);
 			} else if (this.state.recipe.length === 0) {
-				return this.getGlobalRecipes();
+				return this.renderRecipes(this.state.globalRecipes);
 			} else {
 				return this.renderRecipes(this.state.recipe);
 			}
-		}
-	}, {
-		key: 'getGlobalRecipes',
-		value: function getGlobalRecipes() {
-			var _this5 = this;
-
-			firebase.database().ref('recipe').on('value', function (res) {
-				var data = res.val();
-				var allRecipes = [];
-				for (var key in data) {
-					data[key].key = key;
-					allRecipes.push(data[key]);
-				}
-				return _this5.renderRecipes(allRecipes);
-			});
 		}
 	}, {
 		key: 'render',
@@ -28042,10 +28050,11 @@ _reactDom2.default.render(_react2.default.createElement(
 	{ history: _reactRouter.browserHistory },
 	_react2.default.createElement(_reactRouter.Route, { path: '/', component: App }),
 	_react2.default.createElement(_reactRouter.Route, { path: '/addrecipes', component: _addRecipe2.default }),
+	_react2.default.createElement(_reactRouter.Route, { path: '/searchforrecipes', component: _globalRecipes2.default }),
 	_react2.default.createElement(_reactRouter.Route, { path: '*', component: _notFound2.default })
 ), document.getElementById('app'));
 
-},{"./NoRecipesFound":236,"./addRecipe.js":237,"./alphabet.js":238,"./footer.js":240,"./header.js":241,"./notFound.js":242,"./recipes.js":244,"./signIn.js":245,"./signUp.js":246,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],240:[function(require,module,exports){
+},{"./NoRecipesFound":236,"./addRecipe.js":237,"./alphabet.js":238,"./footer.js":240,"./globalRecipes":241,"./header.js":242,"./notFound.js":243,"./recipes.js":245,"./signIn.js":246,"./signUp.js":247,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],240:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28118,6 +28127,106 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _recipes = require('./recipes');
+
+var _recipes2 = _interopRequireDefault(_recipes);
+
+var _alphabet = require('./alphabet');
+
+var _alphabet2 = _interopRequireDefault(_alphabet);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GlobalRecipes = function (_React$Component) {
+	_inherits(GlobalRecipes, _React$Component);
+
+	// constructor(props, context) {
+	// 	super();
+	// 	this.state = {
+	// 	}
+	// }
+
+	function GlobalRecipes(props, context) {
+		_classCallCheck(this, GlobalRecipes);
+
+		var _this = _possibleConstructorReturn(this, (GlobalRecipes.__proto__ || Object.getPrototypeOf(GlobalRecipes)).call(this));
+
+		var config = {
+			apiKey: "AIzaSyBvMwXsV0jsyGOy2laI6mUPdSo4irwT9hI",
+			authDomain: "my-project-734e0.firebaseapp.com",
+			databaseURL: "https://my-project-734e0.firebaseio.com",
+			storageBucket: "my-project-734e0.appspot.com",
+			messagingSenderId: "712734743751"
+		};
+		firebase.initializeApp(config);
+		var currentUser = '';
+		return _this;
+	}
+
+	_createClass(GlobalRecipes, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			firebase.database().ref('recipe').on('value', function (res) {
+				var data = res.val();
+				var allRecipes = [];
+				for (var key in data) {
+					data[key].key = key;
+					allRecipes.push(data[key]);
+				}
+				return _this2.renderRecipes(allRecipes);
+			});
+		}
+	}, {
+		key: 'renderRecipes',
+		value: function renderRecipes(recipes) {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(_alphabet2.default, null),
+				_react2.default.createElement(_recipes2.default, { recipe: recipes, currentUser: this.currentUser })
+			);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h3',
+					null,
+					'All Recipes:'
+				)
+			);
+		}
+	}]);
+
+	return GlobalRecipes;
+}(_react2.default.Component);
+
+exports.default = GlobalRecipes;
+
+},{"./alphabet":238,"./recipes":245,"react":233}],242:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
 exports.default = function () {
 	return _react2.default.createElement(
 		'header',
@@ -28136,7 +28245,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],242:[function(require,module,exports){
+},{"react":233}],243:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28171,7 +28280,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],243:[function(require,module,exports){
+},{"react":233}],244:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28290,7 +28399,7 @@ var RecipeCard = function (_React$Component) {
 exports.default = RecipeCard;
 ;
 
-},{"react":233}],244:[function(require,module,exports){
+},{"react":233}],245:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28342,7 +28451,6 @@ var Recipes = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			debugger;
 			console.log('rec comp called');
 			var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 			return _react2.default.createElement(
@@ -28355,6 +28463,7 @@ var Recipes = function (_React$Component) {
 					if (titleA > titleB) return 1;
 					return 0;
 				}).map(function (recipe, i) {
+					console.log('mappppppy map recipe component');
 					// grab first letter of title:
 					var firstLetter = recipe.title.charAt(0).toLowerCase();
 					return _react2.default.createElement(_recipeCard2.default, { key: 'card-' + i,
@@ -28373,7 +28482,7 @@ var Recipes = function (_React$Component) {
 
 exports.default = Recipes;
 
-},{"./recipeCard":243,"react":233}],245:[function(require,module,exports){
+},{"./recipeCard":244,"react":233}],246:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28476,7 +28585,7 @@ var SignIn = function (_React$Component) {
 
 exports.default = SignIn;
 
-},{"react":233}],246:[function(require,module,exports){
+},{"react":233}],247:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

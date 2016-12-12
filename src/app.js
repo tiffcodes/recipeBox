@@ -13,6 +13,7 @@ import AddRecipe from './addRecipe.js';
 import Recipes from './recipes.js';
 import Alphabet from './alphabet.js';
 import NoRecipesFound from './NoRecipesFound';
+import GlobalRecipes from './globalRecipes';
 
 
 class App extends React.Component {
@@ -23,7 +24,7 @@ class App extends React.Component {
 			recipe: [], 
 			filteredRecipes: [], 
 			showFiltered: false,
-			allRecipes: []
+			globalRecipes: []
 		}
 
 		let config = {
@@ -47,6 +48,7 @@ class App extends React.Component {
 						loggedIn: true
 					});
 					this.loadUserRecipes();
+					this.loadGlobalRecipes();
 				}
 		});
 	}
@@ -62,6 +64,20 @@ class App extends React.Component {
 			}
 			this.setState({recipe});
 		});
+	}
+
+	loadGlobalRecipes() {
+		firebase.database().ref('recipe').on('value', (res) => {
+ 			const data = res.val();
+ 			const allRecipes = [];
+ 			for(let key in data) {
+ 				data[key].key = key;
+ 				allRecipes.push(data[key]);
+ 			}
+ 			console.log('allRecipes', allRecipes);
+ 			this.setState({globalRecipes : allRecipes})
+ 			// return this.renderRecipes(allRecipes);
+ 		});
 	}
 
 	signout(e) {
@@ -109,6 +125,7 @@ class App extends React.Component {
 	}
 
 	renderRecipes(recipes) {
+		// console.log('calling the render function');
 		return (
 			<div>
 				<Alphabet />
@@ -125,24 +142,15 @@ class App extends React.Component {
 			return this.renderRecipes(this.state.filteredRecipes);
 		}
 		else if (this.state.recipe.length === 0 ) {
-			return this.getGlobalRecipes();
+			return this.renderRecipes(this.state.globalRecipes);
 		}
 		else {
 			return this.renderRecipes(this.state.recipe);
 		}
 	}
 
-	getGlobalRecipes() {
-		firebase.database().ref('recipe').on('value', (res) => {
- 			const data = res.val();
- 			const allRecipes = [];
- 			for(let key in data) {
- 				data[key].key = key;
- 				allRecipes.push(data[key]);
- 			}
- 			return this.renderRecipes(allRecipes);
- 		});
-	}
+
+
 
 	render() {
 		let main;
@@ -191,6 +199,7 @@ ReactDom.render(
 	<Router history={browserHistory}>
 		<Route path="/" component={App} />
 		<Route path="/addrecipes" component={AddRecipe} />
+		<Route path="/searchforrecipes" component={GlobalRecipes} />
 		<Route path="*" component={NotFound} />
 	</Router>, document.getElementById('app'));
 
