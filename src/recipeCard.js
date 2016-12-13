@@ -9,11 +9,11 @@ export default class RecipeCard extends React.Component {
 		}
 	}	
 
-	componentDidMount() {
-		if (this.props.isGlobal ){
+	// componentDidMount() {
+	// 	if (this.props.isGlobal ){
 
-		}
-	}
+	// 	}
+	// }
 
 	removeRecipe(recipeToRemove) {
 		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();

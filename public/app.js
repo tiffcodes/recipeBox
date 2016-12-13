@@ -28231,12 +28231,13 @@ var RecipeCard = function (_React$Component) {
 		return _this;
 	}
 
+	// componentDidMount() {
+	// 	if (this.props.isGlobal ){
+
+	// 	}
+	// }
+
 	_createClass(RecipeCard, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			if (this.props.isGlobal) {}
-		}
-	}, {
 		key: 'removeRecipe',
 		value: function removeRecipe(recipeToRemove) {
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToRemove.key).remove();
