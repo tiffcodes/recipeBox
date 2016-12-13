@@ -12,8 +12,7 @@ import NotFound from './notFound.js';
 import AddRecipe from './addRecipe.js';
 import Recipes from './recipes.js';
 import Alphabet from './alphabet.js';
-import NoRecipesFound from './NoRecipesFound';
-import GlobalRecipes from './globalRecipes';
+import NoRecipesFound from './noRecipesFound';
 
 
 class App extends React.Component {
@@ -77,7 +76,6 @@ class App extends React.Component {
  			}
  			console.log('allRecipes', allRecipes);
  			this.setState({globalRecipes : allRecipes})
- 			// return this.renderRecipes(allRecipes);
  		});
 	}
 
@@ -179,7 +177,7 @@ class App extends React.Component {
 							</p>
 						</div>
 						<AddRecipe currentUser={this.currentUser} /> 
-						<button onClick={e => this.toggleGlobal.call(this,e)}>{this.state.viewGlobal ? 'View My Recipes' : 'View Shared Recipes'}</button>
+						<button className="toggleRecipes" onClick={e => this.toggleGlobal.call(this,e)}>{this.state.viewGlobal ? 'View My Recipes' : 'View Shared Recipes'}</button>
 						<section>
 							{this.getRecipes()}
 						</section>
@@ -211,7 +209,6 @@ ReactDom.render(
 	<Router history={browserHistory}>
 		<Route path="/" component={App} />
 		<Route path="/addrecipes" component={AddRecipe} />
-		<Route path="/searchforrecipes" component={GlobalRecipes} />
 		<Route path="*" component={NotFound} />
 	</Router>, document.getElementById('app'));
 

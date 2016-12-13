@@ -9,12 +9,21 @@ export default class RecipeCard extends React.Component {
 		}
 	}	
 
-	componentWillMount() {
+	componentDidMount() {
+		if (this.props.isGlobal ){
 
+		}
 	}
 
 	removeRecipe(recipeToRemove) {
 		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();
+	}
+
+	removeGlobalRecipe(recipeToRemove) {
+		firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
+		this.setState({
+			recipeShared: false
+		})
 	}
 
 	saveToMyRecipes(recipeToSave) {
@@ -26,12 +35,13 @@ export default class RecipeCard extends React.Component {
 				recipeSaved: true
 			})
 		});
-		
 	}
 
 	shareRecipe(recipeToShare) {
 		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToShare.key}`).on('value',  (res) => {
 			const data = res.val();
+			// add user id to the global recipe object
+			data['userId'] = this.props.currentUser;
 			// save to firebase db:
 			firebase.database().ref('recipe').push(data);
 			this.setState({
@@ -40,34 +50,47 @@ export default class RecipeCard extends React.Component {
 		});
 	}
 
+	getRemoveButton(){
+		if (this.props.isGlobal && this.props.recipe.userId === this.props.currentUser) {
+			return <i className="fa fa-times" onClick={(e) => this.removeGlobalRecipe.call(this, this.props.recipe)}></i>
+
+		} else if (this.props.isGlobal === false) {
+			return <i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, this.props.recipe)}></i>
+		}
+	}
+
+	getBookmark() {
+		if(this.props.isGlobal && this.state.recipeSaved === false && this.props.recipe.userId !== this.props.currentUser) {
+			return <i className="fa fa-bookmark-o" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
+
+		} else if (this.props.recipe.userId === this.props.currentUser) {
+			console.log('should efin work');
+			return <i className="fa fa-bookmark"></i>
+
+		} 
+	}
+
+	getShareRecipeButton() {
+		if(this.props.isGlobal === false 
+			&& this.state.recipeShared === false) {
+
+			return <i className="fa fa-share" onClick={(e) => this.shareRecipe.call(this, this.props.recipe)}></i>
+
+		} else if (this.props.isGlobal === false 
+			&& this.state.recipeShared){
+			
+			return <i className="fa fa-share green"></i>
+
+		}
+	}
+
 	render() {
 		return (
 			<div className="recipe" id={this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet)} >
-				{ (() => {
-					if(this.props.isGlobal && this.state.recipeSaved === false) {
-						return <i className="fa fa-bookmark-o" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
-					} else if (this.props.isGlobal && this.state.recipeSaved) {
-						return <i className="fa fa-bookmark"></i>
-					} else {
-						return <i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, this.props.recipe)}></i>
-					}
-					})()
-				}
+				{this.getRemoveButton()}
+				{this.getBookmark()}
+				{this.getShareRecipeButton()}
 
-				{ (() => {
-					if(this.props.isGlobal === false 
-						&& this.state.recipeShared === false) {
-
-						return <i className="fa fa-share" onClick={(e) => this.shareRecipe.call(this, this.props.recipe)}></i>
-
-					} else if (this.props.isGlobal === false 
-						&& this.state.recipeShared){
-						
-						return <i className="fa fa-share green"></i>
-
-					}
-					})()
-				}
 				
 				<h2 id={this.props.recipe.title}>{this.props.recipe.title}</h2>
 				<p>Prep Time: {this.props.recipe.prepTime}</p>

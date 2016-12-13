@@ -26934,38 +26934,6 @@ module.exports = function (str) {
 },{}],235:[function(require,module,exports){
 arguments[4][46][0].apply(exports,arguments)
 },{"_process":50,"dup":46}],236:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-exports.default = function (props) {
-	return _react2.default.createElement(
-		"section",
-		{ className: "recipe" },
-		_react2.default.createElement(
-			"h2",
-			null,
-			"Sorry, no recipes match your search."
-		),
-		_react2.default.createElement(
-			"h2",
-			null,
-			"Try something else!"
-		)
-	);
-};
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-;
-
-},{"react":233}],237:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27486,7 +27454,7 @@ var AddRecipe = function (_React$Component) {
 
 exports.default = AddRecipe;
 
-},{"react":233,"react-dom":52}],238:[function(require,module,exports){
+},{"react":233,"react-dom":52}],237:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27749,7 +27717,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],239:[function(require,module,exports){
+},{"react":233}],238:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -27800,13 +27768,9 @@ var _alphabet = require('./alphabet.js');
 
 var _alphabet2 = _interopRequireDefault(_alphabet);
 
-var _NoRecipesFound = require('./NoRecipesFound');
+var _noRecipesFound = require('./noRecipesFound');
 
-var _NoRecipesFound2 = _interopRequireDefault(_NoRecipesFound);
-
-var _globalRecipes = require('./globalRecipes');
-
-var _globalRecipes2 = _interopRequireDefault(_globalRecipes);
+var _noRecipesFound2 = _interopRequireDefault(_noRecipesFound);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27895,7 +27859,6 @@ var App = function (_React$Component) {
 				}
 				console.log('allRecipes', allRecipes);
 				_this4.setState({ globalRecipes: allRecipes });
-				// return this.renderRecipes(allRecipes);
 			});
 		}
 	}, {
@@ -27958,7 +27921,7 @@ var App = function (_React$Component) {
 		value: function getRecipes() {
 			if (this.state.showFiltered) {
 				if (this.state.filteredRecipes.length === 0) {
-					return _react2.default.createElement(_NoRecipesFound2.default, null);
+					return _react2.default.createElement(_noRecipesFound2.default, null);
 				}
 				return this.renderRecipes(this.state.filteredRecipes);
 			} else if (this.state.viewGlobal) {
@@ -28026,7 +27989,7 @@ var App = function (_React$Component) {
 					_react2.default.createElement(_addRecipe2.default, { currentUser: this.currentUser }),
 					_react2.default.createElement(
 						'button',
-						{ onClick: function onClick(e) {
+						{ className: 'toggleRecipes', onClick: function onClick(e) {
 								return _this6.toggleGlobal.call(_this6, e);
 							} },
 						this.state.viewGlobal ? 'View My Recipes' : 'View Shared Recipes'
@@ -28071,11 +28034,10 @@ _reactDom2.default.render(_react2.default.createElement(
 	{ history: _reactRouter.browserHistory },
 	_react2.default.createElement(_reactRouter.Route, { path: '/', component: App }),
 	_react2.default.createElement(_reactRouter.Route, { path: '/addrecipes', component: _addRecipe2.default }),
-	_react2.default.createElement(_reactRouter.Route, { path: '/searchforrecipes', component: _globalRecipes2.default }),
 	_react2.default.createElement(_reactRouter.Route, { path: '*', component: _notFound2.default })
 ), document.getElementById('app'));
 
-},{"./NoRecipesFound":236,"./addRecipe.js":237,"./alphabet.js":238,"./footer.js":240,"./globalRecipes":241,"./header.js":242,"./notFound.js":243,"./recipes.js":245,"./signIn.js":246,"./signUp.js":247,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],240:[function(require,module,exports){
+},{"./addRecipe.js":236,"./alphabet.js":237,"./footer.js":239,"./header.js":240,"./noRecipesFound":241,"./notFound.js":242,"./recipes.js":244,"./signIn.js":245,"./signUp.js":246,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],239:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28141,107 +28103,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],241:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _recipes = require('./recipes');
-
-var _recipes2 = _interopRequireDefault(_recipes);
-
-var _alphabet = require('./alphabet');
-
-var _alphabet2 = _interopRequireDefault(_alphabet);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var GlobalRecipes = function (_React$Component) {
-	_inherits(GlobalRecipes, _React$Component);
-
-	// constructor(props, context) {
-	// 	super();
-	// 	this.state = {
-	// 	}
-	// }
-
-	function GlobalRecipes(props, context) {
-		_classCallCheck(this, GlobalRecipes);
-
-		var _this = _possibleConstructorReturn(this, (GlobalRecipes.__proto__ || Object.getPrototypeOf(GlobalRecipes)).call(this));
-
-		var config = {
-			apiKey: "AIzaSyBvMwXsV0jsyGOy2laI6mUPdSo4irwT9hI",
-			authDomain: "my-project-734e0.firebaseapp.com",
-			databaseURL: "https://my-project-734e0.firebaseio.com",
-			storageBucket: "my-project-734e0.appspot.com",
-			messagingSenderId: "712734743751"
-		};
-		firebase.initializeApp(config);
-		var currentUser = '';
-		return _this;
-	}
-
-	_createClass(GlobalRecipes, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			var _this2 = this;
-
-			firebase.database().ref('recipe').on('value', function (res) {
-				var data = res.val();
-				var allRecipes = [];
-				for (var key in data) {
-					data[key].key = key;
-					allRecipes.push(data[key]);
-				}
-				return _this2.renderRecipes(allRecipes);
-			});
-		}
-	}, {
-		key: 'renderRecipes',
-		value: function renderRecipes(recipes) {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(_alphabet2.default, null),
-				_react2.default.createElement(_recipes2.default, { recipe: recipes, currentUser: this.currentUser })
-			);
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h3',
-					null,
-					'All Recipes:'
-				)
-			);
-		}
-	}]);
-
-	return GlobalRecipes;
-}(_react2.default.Component);
-
-exports.default = GlobalRecipes;
-
-},{"./alphabet":238,"./recipes":245,"react":233}],242:[function(require,module,exports){
+},{"react":233}],240:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28266,7 +28128,39 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],243:[function(require,module,exports){
+},{"react":233}],241:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+exports.default = function (props) {
+	return _react2.default.createElement(
+		"section",
+		{ className: "recipe" },
+		_react2.default.createElement(
+			"h2",
+			null,
+			"Sorry, no recipes match your search."
+		),
+		_react2.default.createElement(
+			"h2",
+			null,
+			"Try something else!"
+		)
+	);
+};
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+;
+
+},{"react":233}],242:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28301,7 +28195,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],244:[function(require,module,exports){
+},{"react":233}],243:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28338,12 +28232,22 @@ var RecipeCard = function (_React$Component) {
 	}
 
 	_createClass(RecipeCard, [{
-		key: 'componentWillMount',
-		value: function componentWillMount() {}
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			if (this.props.isGlobal) {}
+		}
 	}, {
 		key: 'removeRecipe',
 		value: function removeRecipe(recipeToRemove) {
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToRemove.key).remove();
+		}
+	}, {
+		key: 'removeGlobalRecipe',
+		value: function removeGlobalRecipe(recipeToRemove) {
+			firebase.database().ref('recipe/' + recipeToRemove.key).remove();
+			this.setState({
+				recipeShared: false
+			});
 		}
 	}, {
 		key: 'saveToMyRecipes',
@@ -28366,6 +28270,8 @@ var RecipeCard = function (_React$Component) {
 
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToShare.key).on('value', function (res) {
 				var data = res.val();
+				// add user id to the global recipe object
+				data['userId'] = _this3.props.currentUser;
 				// save to firebase db:
 				firebase.database().ref('recipe').push(data);
 				_this3.setState({
@@ -28374,37 +28280,60 @@ var RecipeCard = function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'getRemoveButton',
+		value: function getRemoveButton() {
+			var _this4 = this;
+
+			if (this.props.isGlobal && this.props.recipe.userId === this.props.currentUser) {
+				return _react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
+						return _this4.removeGlobalRecipe.call(_this4, _this4.props.recipe);
+					} });
+			} else if (this.props.isGlobal === false) {
+				return _react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
+						return _this4.removeRecipe.call(_this4, _this4.props.recipe);
+					} });
+			}
+		}
+	}, {
+		key: 'getBookmark',
+		value: function getBookmark() {
+			var _this5 = this;
+
+			if (this.props.isGlobal && this.state.recipeSaved === false && this.props.recipe.userId !== this.props.currentUser) {
+				return _react2.default.createElement('i', { className: 'fa fa-bookmark-o', onClick: function onClick(e) {
+						return _this5.saveToMyRecipes.call(_this5, _this5.props.recipe);
+					} });
+			} else if (this.props.recipe.userId === this.props.currentUser) {
+				console.log('should efin work');
+				return _react2.default.createElement('i', { className: 'fa fa-bookmark' });
+			}
+		}
+	}, {
+		key: 'getShareRecipeButton',
+		value: function getShareRecipeButton() {
+			var _this6 = this;
+
+			if (this.props.isGlobal === false && this.state.recipeShared === false) {
+
+				return _react2.default.createElement('i', { className: 'fa fa-share', onClick: function onClick(e) {
+						return _this6.shareRecipe.call(_this6, _this6.props.recipe);
+					} });
+			} else if (this.props.isGlobal === false && this.state.recipeShared) {
+
+				return _react2.default.createElement('i', { className: 'fa fa-share green' });
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			var _this4 = this;
+			var _this7 = this;
 
 			return _react2.default.createElement(
 				'div',
 				{ className: 'recipe', id: this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet) },
-				function () {
-					if (_this4.props.isGlobal && _this4.state.recipeSaved === false) {
-						return _react2.default.createElement('i', { className: 'fa fa-bookmark-o', onClick: function onClick(e) {
-								return _this4.saveToMyRecipes.call(_this4, _this4.props.recipe);
-							} });
-					} else if (_this4.props.isGlobal && _this4.state.recipeSaved) {
-						return _react2.default.createElement('i', { className: 'fa fa-bookmark' });
-					} else {
-						return _react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
-								return _this4.removeRecipe.call(_this4, _this4.props.recipe);
-							} });
-					}
-				}(),
-				function () {
-					if (_this4.props.isGlobal === false && _this4.state.recipeShared === false) {
-
-						return _react2.default.createElement('i', { className: 'fa fa-share', onClick: function onClick(e) {
-								return _this4.shareRecipe.call(_this4, _this4.props.recipe);
-							} });
-					} else if (_this4.props.isGlobal === false && _this4.state.recipeShared) {
-
-						return _react2.default.createElement('i', { className: 'fa fa-share green' });
-					}
-				}(),
+				this.getRemoveButton(),
+				this.getBookmark(),
+				this.getShareRecipeButton(),
 				_react2.default.createElement(
 					'h2',
 					{ id: this.props.recipe.title },
@@ -28431,8 +28360,8 @@ var RecipeCard = function (_React$Component) {
 					'ul',
 					null,
 					function () {
-						if (_this4.props.recipe.ingredients !== "") {
-							return _this4.props.recipe.ingredients.map(function (recipeIngred, i) {
+						if (_this7.props.recipe.ingredients !== "") {
+							return _this7.props.recipe.ingredients.map(function (recipeIngred, i) {
 								return _react2.default.createElement(
 									'li',
 									{ key: i },
@@ -28451,8 +28380,8 @@ var RecipeCard = function (_React$Component) {
 					'ul',
 					null,
 					function () {
-						if (_this4.props.recipe.instructions !== "") {
-							return _this4.props.recipe.instructions.map(function (recipeInstruction, i) {
+						if (_this7.props.recipe.instructions !== "") {
+							return _this7.props.recipe.instructions.map(function (recipeInstruction, i) {
 								return _react2.default.createElement(
 									'li',
 									{ key: i },
@@ -28478,7 +28407,7 @@ var RecipeCard = function (_React$Component) {
 exports.default = RecipeCard;
 ;
 
-},{"react":233}],245:[function(require,module,exports){
+},{"react":233}],244:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28530,7 +28459,6 @@ var Recipes = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			console.log('rec comp called');
 			var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 			return _react2.default.createElement(
 				'div',
@@ -28542,7 +28470,6 @@ var Recipes = function (_React$Component) {
 					if (titleA > titleB) return 1;
 					return 0;
 				}).map(function (recipe, i) {
-					console.log('mappppppy map recipe component');
 					// grab first letter of title:
 					var firstLetter = recipe.title.charAt(0).toLowerCase();
 					return _react2.default.createElement(_recipeCard2.default, { key: 'card-' + i,
@@ -28562,7 +28489,7 @@ var Recipes = function (_React$Component) {
 
 exports.default = Recipes;
 
-},{"./recipeCard":244,"react":233}],246:[function(require,module,exports){
+},{"./recipeCard":243,"react":233}],245:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28665,7 +28592,7 @@ var SignIn = function (_React$Component) {
 
 exports.default = SignIn;
 
-},{"react":233}],247:[function(require,module,exports){
+},{"react":233}],246:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28801,4 +28728,4 @@ var SignUp = function (_React$Component) {
 
 exports.default = SignUp;
 
-},{"react":233}]},{},[239]);
+},{"react":233}]},{},[238]);
