@@ -24,7 +24,8 @@ class App extends React.Component {
 			filteredRecipes: [], 
 			showFiltered: false,
 			globalRecipes: [],
-			viewGlobal: false
+			viewGlobal: false,
+			searchVisible: false
 		}
 
 		let config = {
@@ -74,7 +75,7 @@ class App extends React.Component {
  				data[key].key = key;
  				allRecipes.push(data[key]);
  			}
- 			console.log('allRecipes', allRecipes);
+ 			// console.log('allRecipes', allRecipes);
  			this.setState({globalRecipes : allRecipes})
  		});
 	}
@@ -148,6 +149,20 @@ class App extends React.Component {
 		}
 	}
 
+	viewPublic() {
+		this.setState({
+			viewGlobal: true
+		});
+		document.getElementById('recipeList').scrollIntoView();
+	}
+
+	viewPrivate() {
+		this.setState({
+			viewGlobal: false
+		});
+		document.getElementById('recipeList').scrollIntoView();
+	}
+
 	toggleGlobal() {
 		if(this.state.viewGlobal) {
 			this.setState({
@@ -160,27 +175,59 @@ class App extends React.Component {
 		}
 	}
 
+	showSearch() {
+		if(this.state.searchVisible) {
+			this.setState({
+				searchVisible: false
+			});
+		} else {
+			this.setState({
+				searchVisible: true
+			});
+		}
+	}
+
 
 	render() {
 		let main;
 		if (this.state.loggedIn) {
-			main =  <div>
-						<div className="menu">
-							<p>
-								<a href="#" onClick={e => this.signout.call(this,e)}>Sign out</a>
-							</p>
-							<p>
-								<a href="#addrecipe">Add Recipe</a>
-							</p>
-							<p>
-								<input placeholder="Search" ref={ref => this.search = ref} onChange={e => this.handleSearch.call(this,e)}/>
-							</p>
+			main =  <div className="clearfix">
+						<div className="search clearfix" onClick={e => this.showSearch.call(this,e)}>
+							<input className={this.state.searchVisible ? 'visible' : 'notVisible'} placeholder="Search" ref={ref => this.search = ref} onChange={e => this.handleSearch.call(this,e)}/>
+							<i className="fa fa-search"></i>
 						</div>
-						<AddRecipe currentUser={this.currentUser} /> 
-						<button className="toggleRecipes" onClick={e => this.toggleGlobal.call(this,e)}>{this.state.viewGlobal ? 'View My Recipes' : 'View Shared Recipes'}</button>
-						<section>
-							{this.getRecipes()}
-						</section>
+						<div className="clearfix">
+							<AddRecipe currentUser={this.currentUser} /> 
+							<section>
+								{this.getRecipes()}
+							</section>
+							<aside className="menu">
+								<p>
+									<button onClick={e => this.signout.call(this,e)}>
+										<i className="fa fa-sign-out"></i>
+											Sign out
+									</button>
+								</p>
+								<p className={this.state.viewGlobal ? 'nonactive' : 'active'}>
+									<button onClick={e => this.viewPrivate.call(this,e)}>
+										<i className="fa fa-user"></i>
+										My Recipes
+									</button>
+								</p>
+								<p className={this.state.viewGlobal ? 'active' : 'nonactive'}>
+									<button onClick={e => this.viewPublic.call(this,e)}>
+										<i className="fa fa-users"></i>
+										Public
+									</button>
+								</p>
+								<p className="addrec">
+									<a href="#addrecipe">
+										<i className="fa fa-plus"></i>
+										Add
+									</a>
+								</p>
+							</aside>
+						</div>
 					</div>
 
 		} else {
@@ -195,6 +242,7 @@ class App extends React.Component {
 				<div className="wrapper">
 					{main}
 				</div>
+
 				<Footer/>
 			</div>
 		);
@@ -212,3 +260,6 @@ ReactDom.render(
 		<Route path="*" component={NotFound} />
 	</Router>, document.getElementById('app'));
 
+
+// import images and docs?
+// star for fav ---> say "share"

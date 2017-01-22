@@ -9,7 +9,7 @@ input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}b
 body {
 	font-family: 'open sans', sans-serif;
 	/*background: url(../src/assets/black_paper.png);*/
-	background: #EAECED;
+	background: white;
 }
 /*
 h1, h2, h3, h4, h5, h6 {
@@ -57,15 +57,9 @@ h2 {
 }
 
 h3 {
-	/*background: url(../src/assets/line2.svg) no-repeat top center;*/
 	padding-top: 10px;
 	margin-top: 20px;
 }
-
-/*div#test {
-	background: url(src/assets/redFlower.svg) no-repeat center center;
-	padding: 175px;
-}*/
 
 div.leaf {
 	background: url(../src/assets/pinkFlower.svg) no-repeat top center;
@@ -75,7 +69,7 @@ div.leaf {
 .wrapper {
 	max-width: 1200px;
 	margin: 0 auto;
-	width: 75%;
+	width: 95%;
 }
 
 .error {
@@ -89,24 +83,37 @@ form div {
 	text-align: left;
 }
 
+form input {
+	background: white;
+}
+
 .menu {
 	position: fixed;
-	top: 20px;
-	right: 20px;
+	bottom: 0;
+	left: 0;
 	text-transform: uppercase;
 	padding: 0;
 	font-weight: bold;
 	letter-spacing: 1px;
 	font-size: 15px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	z-index: 4;
+	background: white;
+/*	background: linear-gradient( to top, rgba(255, 255, 255, 1) 85%, rgba(255, 255, 255, 0.2));*/
 }
 
 form.addRecipe, .recipe {
-	width: 75%;
+	width: 95%;
 	margin: 100px auto 0;
 	/*border: 1px solid grey;*/
-	padding: 50px 150px;
+	padding: 50px 5%;
 	position: relative;
-	background-image: url(../src/assets/handmadepaper.png);
+	background-color: #ffffff;
+	background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */);
 	/*background-image: url(../src/assets/handmadepaper_@2X.png);*/
 	box-shadow: 1px 1px 2px grey;
 }
@@ -132,6 +139,7 @@ input {
 	/*border: 1px solid grey;*/
 	padding: 10px;
 	margin: 5px 0;
+	background: #EAECED;
 	/*background: url(../src/assets/line2.svg) no-repeat bottom center;*/
 }
 
@@ -149,13 +157,13 @@ i.fa {
 	margin-right: 10px;
 }
 
-i.fa-times, i.fa-bookmark-o, i.fa-bookmark, i.fa-share {
+i.fa-times, i.fa-star-o, i.fa-star, i.fa-share-alt {
 	position: absolute;
 	font-size: 20px;
 	margin-right: 0;
 }
 
-i.fa-share, i.fa-bookmark-o, i.fa-bookmark {
+i.fa-share-alt, i.fa-star-o, i.fa-star {
 	top: 20px;
 	right: 20px;
 }
@@ -228,8 +236,63 @@ label.plus {
 	padding: 10px 20px;
 	background-color: white;
 	box-shadow: 1px 1px 2px grey;
-	position: relative;
-	top: 70px;
-	right: -15px;
 }
 
+button {
+	border: none;
+	background: transparent;
+	text-decoration: underline;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: bold;
+	margin: 0;
+	text-align: center;
+}
+
+aside p {
+	padding: 10px;
+	margin: 0;
+}
+
+.addrec:hover {
+	cursor: pointer;
+}
+
+.active {
+	background: #164052;
+	/*background: linear-gradient( to top, #4d7984 85%, white 100%);*/
+	padding: 10px;
+}
+
+.active button {
+	color: white;
+}
+
+div.search {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	text-align: right;
+	z-index: 5;
+}
+
+.search i.fa {
+	margin-right: 0;
+	background: white;
+	float: left;
+}
+
+.search input {
+	width: auto;
+	background: white;
+	border-bottom: 1px solid black;
+	float: left;
+}
+
+.notVisible {
+	display: none;
+}
+
+.visible {
+	display: block;
+}

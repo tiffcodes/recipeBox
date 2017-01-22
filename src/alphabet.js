@@ -4,7 +4,7 @@ export default function(props){
 	return (
 		<div>
 
-			<h3>{props.isGlobal ? 'All Shared Recipes:' : 'My Recipes:'}</h3>
+			<h3 id="recipeList">{props.isGlobal ? 'All Public Recipes:' : 'My Recipes:'}</h3>
 			<ul className="alphabet">
 				<li><a href="#a">A</a></li>
 				<li><a href="#b">B</a></li>

@@ -260,7 +260,10 @@ export default class AddRecipe extends React.Component {
 		// reset the ingredients state:
 		this.setState({
 			ingredients: [], 
-			instructions: []
+			instructions: [],
+			titleError: false, 
+			ingredientError: false,
+			instructionError: false
 		});
 	}
 
@@ -336,7 +339,7 @@ export default class AddRecipe extends React.Component {
 								// value={this.state.instructionValue} 
 								onChange={(e) => this.handleInstructionChange.call(this, e) }
 								/>
-								<button className="add" onClick={(e) => this.addInstruction.call(this,e) }>add</button>
+								<button className="add" onClick={(e) => this.addInstruction(e) }>add</button>
 						</div>
 
 						<ul>

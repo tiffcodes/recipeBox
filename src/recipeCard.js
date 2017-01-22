@@ -9,27 +9,29 @@ export default class RecipeCard extends React.Component {
 		}
 	}	
 
-	// componentDidMount() {
-	// 	if (this.props.isGlobal ){
-
-	// 	}
-	// }
-
 	removeRecipe(recipeToRemove) {
-		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();
+		if (confirm('Are you sure you want to delete this recipe')) { 
+		  firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();
+		  alert('Note: deleting this recipe does not automatically delete the public recipe');
+		}
 	}
 
 	removeGlobalRecipe(recipeToRemove) {
-		firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
-		this.setState({
-			recipeShared: false
-		})
+		if (confirm('Are you sure you want to delete this recipe')) { 
+		 firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
+		 		this.setState({
+		 			recipeShared: false
+		 		})
+
+		  alert('Note: deleting this public recipe does not automatically delete your private recipe');
+		}
+		
 	}
 
 	saveToMyRecipes(recipeToSave) {
 		firebase.database().ref(`recipe/${recipeToSave.key}`).on('value',  (res) => {
 			const data = res.val();
-			// save to firebase db:
+			// save to firebase db private list:
 			firebase.database().ref(`${this.props.currentUser}/recipe`).push(data);
 			this.setState({
 				recipeSaved: true
@@ -42,16 +44,23 @@ export default class RecipeCard extends React.Component {
 			const data = res.val();
 			// add user id to the global recipe object
 			data['userId'] = this.props.currentUser;
-			// save to firebase db:
+			// save to firebase db in public recipes:
 			firebase.database().ref('recipe').push(data);
+			// add user id to original private recipe:
+			console.log('next step');
+			firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToShare.key}`).push(data);
+			// set state to show recipe is shared:
 			this.setState({
 				recipeShared: true
 			})
+			console.log('done');
 		});
 	}
 
 	getRemoveButton(){
-		if (this.props.isGlobal && this.props.recipe.userId === this.props.currentUser) {
+		if (this.props.isGlobal && 
+			this.props.recipe.userId === this.props.currentUser) {
+			
 			return <i className="fa fa-times" onClick={(e) => this.removeGlobalRecipe.call(this, this.props.recipe)}></i>
 
 		} else if (this.props.isGlobal === false) {
@@ -60,27 +69,36 @@ export default class RecipeCard extends React.Component {
 	}
 
 	getBookmark() {
-		if(this.props.isGlobal && this.state.recipeSaved === false && this.props.recipe.userId !== this.props.currentUser) {
-			return <i className="fa fa-bookmark-o" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
+		if(this.props.isGlobal && 
+			this.state.recipeSaved === false 
+			&& this.props.recipe.userId !== this.props.currentUser ) {
+			
+			return <i className="fa fa-star-o" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
 
 		} else if (this.props.recipe.userId === this.props.currentUser) {
-			console.log('should efin work');
-			return <i className="fa fa-bookmark"></i>
+			return <i className="fa fa-star"></i>
 
 		} 
 	}
 
 	getShareRecipeButton() {
-		if(this.props.isGlobal === false 
-			&& this.state.recipeShared === false) {
+		if(this.props.isGlobal === false  &&
+			!this.props.recipe.userId ) {
 
-			return <i className="fa fa-share" onClick={(e) => this.shareRecipe.call(this, this.props.recipe)}></i>
+			return ( 
+				<div>
+					<i className="fa fa-share-alt" onClick={(e) => this.shareRecipe.call(this, this.props.recipe)}></i>
+					<p>Share</p>
+				</div> )
 
-		} else if (this.props.isGlobal === false 
-			&& this.state.recipeShared){
+		} else if (this.props.isGlobal === false &&
+			this.props.recipe.userId ){
 			
-			return <i className="fa fa-share green"></i>
-
+			return (
+				<div>
+					<i className="fa fa-share-alt green"></i>
+					<p>Shared</p>
+				</div> )
 		}
 	}
 
@@ -90,7 +108,6 @@ export default class RecipeCard extends React.Component {
 				{this.getRemoveButton()}
 				{this.getBookmark()}
 				{this.getShareRecipeButton()}
-
 				
 				<h2 id={this.props.recipe.title}>{this.props.recipe.title}</h2>
 				<p>Prep Time: {this.props.recipe.prepTime}</p>
@@ -111,7 +128,7 @@ export default class RecipeCard extends React.Component {
 					}
 				</ul>
 				<p>Instructions:</p>
-				<ul>
+				<ol>
 					{ (() => {
 						if(this.props.recipe.instructions !== "") {
 							return this.props.recipe.instructions.map((recipeInstruction, i) => {
@@ -123,7 +140,7 @@ export default class RecipeCard extends React.Component {
 
 						})()
 					}
-				</ul>
+				</ol>
 				<p>Serves: {this.props.recipe.serves}</p>
 			</div>
 		)
