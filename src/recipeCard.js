@@ -118,15 +118,24 @@ export default class RecipeCard extends React.Component {
 	getSaveRecipeButton() {
 		if (this.props.isGlobal && 
 			this.props.recipe.userId === this.props.currentUser) {
-			return <p className="upperRight">I shared</p>
+			return  <div className="upperRight clearfix">
+						<p className="textHint">My Recipe</p>
+						<i className="fa-user fa"></i>
+					</div>
 
 		} else if(this.props.isGlobal && 
 			this.state.publicRecipeSaved === false ) {
-			return <i className="fa fa-star-o upperRight" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
+			return  <div className="upperRight clearfix clickable">
+						<p className="textHint">Save</p>
+						<i className="fa fa-star-o" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
+					</div>
 
 		} else if (this.props.isGlobal && 
 			this.state.publicRecipeSaved === true ) {
-			return <i className="fa fa-star upperRight"></i>
+			return  <div className="upperRight clearfix">
+						<p className="textHint">Saved</p>
+						<i className="fa fa-star"></i>
+					</div>
 
 		} 
 	}
@@ -144,7 +153,7 @@ export default class RecipeCard extends React.Component {
 			&& this.state.recipeShared === false ) {
 
 			return ( 
-				<div className="upperRight clearfix">
+				<div className="upperRight clearfix clickable">
 					<p className="textHint">Share</p>
 					<i className="fa fa-share-alt" onClick={(e) => this.shareRecipe.call(this, this.props.recipe)}></i>
 				</div> )

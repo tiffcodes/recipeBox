@@ -147,10 +147,10 @@ input[type=submit] {
 	background: #92C38D;
 	width: auto;
 	text-align: left;
+	text-transform: uppercase;
+	border: 1px solid black;
 }
 
-.smallFont {
-}
 
 i.fa {
 	margin-right: 10px;
@@ -160,6 +160,18 @@ i.fa {
 	position: absolute;
 	font-size: 20px;
 	margin-right: 0;
+	border: 1px solid transparent;
+	border-radius: 20px;
+	padding: 2.5px 15px;
+}
+
+.upperLeft,.fa-plus {
+	padding: 1.5px 5px 4px;
+}
+
+.fa-plus {
+	border: 1px solid transparent;
+	border-radius: 20px;
 }
 
 .upperRight{
@@ -167,9 +179,23 @@ i.fa {
 	right: 20px;
 }
 
+.upperRight:not(.clickable) {
+	color: grey;
+}
+
+.clickable:hover {
+	border: 1px solid grey;
+	cursor: pointer;
+}
+
 .upperLeft {
 	top: 20px;
 	left: 20px;
+}
+
+.upperLeft:hover, .fa-plus:hover {
+	border: 1px solid grey;
+	cursor: pointer;
 }
 
 .upperRight i, .textHint {
@@ -178,13 +204,10 @@ i.fa {
 }
 
 .textHint {
-	font-size: 12px;
+	font-size: 15px;
 	text-transform: uppercase;
 	margin-right: 10px;
-}
-
-i.fa:hover {
-	cursor: pointer;
+	font-weight: bold;
 }
 
 footer {
@@ -195,6 +218,13 @@ footer {
 	clear: both;
 }
 
+i.fa-times.remove {
+	padding: 5px;
+	margin-left: 10px;
+	color: #ed5e68;
+	text-shadow: 1px 1px 2px #ccc;
+}
+
 li.ingredientList {
 	border: none;
 	padding: 0;
@@ -202,7 +232,7 @@ li.ingredientList {
 }
 
 .required {
-	color: red;
+/*	color: #ed5e68;*/
 	font-weight: bold;
 }
 
@@ -238,7 +268,7 @@ label.plus {
 }
 
 .green {
-	color: green;
+	color:  #92C38D;
 }
 
 .toggleRecipes {
@@ -257,6 +287,16 @@ button {
 	font-weight: bold;
 	margin: 0;
 	text-align: center;
+	/*border-radius: 15px;*/
+	transition: 0.3s all ease;
+}
+
+button.add {
+	text-decoration: none;
+}
+
+button.add:hover {
+	background: #92C38D;
 }
 
 aside p {
@@ -297,6 +337,8 @@ div.search {
 	background: white;
 	border-bottom: 1px solid black;
 	float: left;
+	margin-top: -15px;
+	margin-right: 10px;
 }
 
 .notVisible {

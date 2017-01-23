@@ -27091,14 +27091,14 @@ var AddRecipe = function (_React$Component) {
 								return _react2.default.createElement(
 									'li',
 									{ key: i, className: 'ingredientList' },
-									_react2.default.createElement('i', { className: 'fa fa-minus deleteIngred', onClick: function onClick(e) {
-											return _this2.removeIngredient.call(_this2, ingredient);
-										} }),
 									_react2.default.createElement(
 										'span',
 										null,
 										ingredient
-									)
+									),
+									_react2.default.createElement('i', { className: 'fa fa-times remove deleteIngred', onClick: function onClick(e) {
+											return _this2.removeIngredient.call(_this2, ingredient);
+										} })
 								);
 							})
 						),
@@ -27157,14 +27157,14 @@ var AddRecipe = function (_React$Component) {
 								return _react2.default.createElement(
 									'li',
 									{ key: i, className: 'instructionList' },
-									_react2.default.createElement('i', { className: 'fa fa-minus deleteInstruction', onClick: function onClick(e) {
-											return _this2.removeInstruction.call(_this2, instruction);
-										} }),
 									_react2.default.createElement(
 										'span',
 										null,
 										instruction
-									)
+									),
+									_react2.default.createElement('i', { className: 'fa fa-times remove deleteInstruction', onClick: function onClick(e) {
+											return _this2.removeInstruction.call(_this2, instruction);
+										} })
 								);
 							})
 						),
@@ -28257,11 +28257,7 @@ var RecipeCard = function (_React$Component) {
 					recipeShared: true
 				});
 			}
-			// Public View state handling: 
-			// I think I need to check if the recipe exists in my recipes to see if it is truly saved
-
-			// check in this.props.allRecipes array to see if this recipe exists
-			// map over each object inside of allRecipes and filter for this,props,recipe 
+			// Global/public view state handlers:
 			if (this.props.isGlobal) {
 				var allUsersRecipes = this.props.allUsersRecipes;
 				var filtered = allUsersRecipes.filter(function (recipe) {
@@ -28361,16 +28357,39 @@ var RecipeCard = function (_React$Component) {
 
 			if (this.props.isGlobal && this.props.recipe.userId === this.props.currentUser) {
 				return _react2.default.createElement(
-					'p',
-					{ className: 'upperRight' },
-					'I shared'
+					'div',
+					{ className: 'upperRight clearfix' },
+					_react2.default.createElement(
+						'p',
+						{ className: 'textHint' },
+						'My Recipe'
+					),
+					_react2.default.createElement('i', { className: 'fa-user fa' })
 				);
 			} else if (this.props.isGlobal && this.state.publicRecipeSaved === false) {
-				return _react2.default.createElement('i', { className: 'fa fa-star-o upperRight', onClick: function onClick(e) {
-						return _this6.saveToMyRecipes.call(_this6, _this6.props.recipe);
-					} });
+				return _react2.default.createElement(
+					'div',
+					{ className: 'upperRight clearfix clickable' },
+					_react2.default.createElement(
+						'p',
+						{ className: 'textHint' },
+						'Save'
+					),
+					_react2.default.createElement('i', { className: 'fa fa-star-o', onClick: function onClick(e) {
+							return _this6.saveToMyRecipes.call(_this6, _this6.props.recipe);
+						} })
+				);
 			} else if (this.props.isGlobal && this.state.publicRecipeSaved === true) {
-				return _react2.default.createElement('i', { className: 'fa fa-star upperRight' });
+				return _react2.default.createElement(
+					'div',
+					{ className: 'upperRight clearfix' },
+					_react2.default.createElement(
+						'p',
+						{ className: 'textHint' },
+						'Saved'
+					),
+					_react2.default.createElement('i', { className: 'fa fa-star' })
+				);
 			}
 		}
 	}, {
@@ -28393,7 +28412,7 @@ var RecipeCard = function (_React$Component) {
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'upperRight clearfix' },
+					{ className: 'upperRight clearfix clickable' },
 					_react2.default.createElement(
 						'p',
 						{ className: 'textHint' },

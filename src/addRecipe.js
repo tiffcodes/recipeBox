@@ -62,8 +62,8 @@ export default class AddRecipe extends React.Component {
 								this.state.ingredients.map((ingredient, i) => {
 									return(
 										<li key={i} className="ingredientList">
-											<i className="fa fa-minus deleteIngred" onClick={(e) => this.removeIngredient.call(this, ingredient)}></i>
 											<span>{ingredient}</span>
+											<i className="fa fa-times remove deleteIngred" onClick={(e) => this.removeIngredient.call(this, ingredient)}></i>
 										</li>
 									)
 								
@@ -95,8 +95,8 @@ export default class AddRecipe extends React.Component {
 								this.state.instructions.map((instruction, i) => {
 									return(
 										<li key={i} className="instructionList">
-											<i className="fa fa-minus deleteInstruction" onClick={(e) => this.removeInstruction.call(this, instruction)}></i>
 											<span>{instruction}</span>
+											<i className="fa fa-times remove deleteInstruction" onClick={(e) => this.removeInstruction.call(this, instruction)}></i>
 										</li>
 									)
 								
