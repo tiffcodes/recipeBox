@@ -32,6 +32,7 @@ export default class Recipes extends React.Component {
 						let firstLetter = recipe.title.charAt(0).toLowerCase();
 						return <RecipeCard key={`card-${i}`} 
 							recipe={recipe} 
+							allUsersRecipes={this.props.allUsersRecipes}
 							alphabet={alphabet}
 							checkAlphabet={this.checkAlphabet} 
 							firstLetter={firstLetter} 

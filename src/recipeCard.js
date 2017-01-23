@@ -4,10 +4,54 @@ export default class RecipeCard extends React.Component {
 	constructor(props, context) {
 		super();
 		this.state = {
-			recipeSaved: false,
+			publicRecipeSaved: false, 
+			privateRecipeDownloaded: false,
 			recipeShared: false
 		}
 	}	
+
+	componentDidMount() {
+		// Private view state handling:
+		if (this.props.isGlobal) {
+			this.setState({
+				recipeShared: false
+			})
+		} else if (this.props.recipe.userId === undefined ) {
+			this.setState({
+				recipeShared: false
+			})
+		} else if (this.props.recipe.userId !== this.props.currentUser) {
+			this.setState({
+				privateRecipeDownloaded: true
+			})
+		} else if (this.props.recipe.userId === this.props.currentUser) {
+			this.setState({
+				privateRecipeDownloaded: false,
+				recipeShared: true
+			})
+		}
+		// Global/public view state handlers:
+		if (this.props.isGlobal) {
+			const allUsersRecipes = this.props.allUsersRecipes;
+			var filtered = allUsersRecipes.filter((recipe) => {
+				recipe.ingredients.map((ingredient) => {
+					if (this.props.recipe.ingredients.indexOf(ingredient) === -1) {
+						return;
+					}
+				}) 
+				return (this.props.recipe.title === recipe.title 
+						&& this.props.recipe.totalTime === recipe.totalTime
+						&& this.props.recipe.serves === recipe.serves
+						&& this.props.recipe.prepTime === recipe.prepTime);
+			})
+			console.log('length and name',this.props.recipe.title, filtered.length)
+			if (filtered.length > 0) {
+				this.setState({
+					publicRecipeSaved: true
+				})
+			}
+		}
+	}
 
 	removeRecipe(recipeToRemove) {
 		if (confirm('Are you sure you want to delete this recipe')) { 
@@ -19,10 +63,8 @@ export default class RecipeCard extends React.Component {
 	removeGlobalRecipe(recipeToRemove) {
 		if (confirm('Are you sure you want to delete this recipe')) { 
 		 firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
-		 		this.setState({
-		 			recipeShared: false
-		 		})
 
+		 // delete the userId on the private version of the recipe here
 		  alert('Note: deleting this public recipe does not automatically delete your private recipe');
 		}
 		
@@ -34,7 +76,7 @@ export default class RecipeCard extends React.Component {
 			// save to firebase db private list:
 			firebase.database().ref(`${this.props.currentUser}/recipe`).push(data);
 			this.setState({
-				recipeSaved: true
+				publicRecipeSaved: true
 			})
 		});
 	}
@@ -42,18 +84,23 @@ export default class RecipeCard extends React.Component {
 	shareRecipe(recipeToShare) {
 		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToShare.key}`).on('value',  (res) => {
 			const data = res.val();
-			// add user id to the global recipe object
+			// add user id to the recipe object
+			data['userId'] = this.props.currentUser;
+			// add user id to original private recipe:
+			firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToShare.key}`).set(data);
+			console.log('first done');
+		});
+
+		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToShare.key}`).on('value',  (res) => {
+			const data = res.val();
+			// add user id to the recipe object
 			data['userId'] = this.props.currentUser;
 			// save to firebase db in public recipes:
 			firebase.database().ref('recipe').push(data);
-			// add user id to original private recipe:
-			console.log('next step');
-			firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToShare.key}`).push(data);
 			// set state to show recipe is shared:
 			this.setState({
 				recipeShared: true
 			})
-			console.log('done');
 		});
 	}
 
@@ -61,52 +108,64 @@ export default class RecipeCard extends React.Component {
 		if (this.props.isGlobal && 
 			this.props.recipe.userId === this.props.currentUser) {
 			
-			return <i className="fa fa-times" onClick={(e) => this.removeGlobalRecipe.call(this, this.props.recipe)}></i>
+			return <i className="fa fa-times upperLeft" onClick={(e) => this.removeGlobalRecipe.call(this, this.props.recipe)}></i>
 
 		} else if (this.props.isGlobal === false) {
-			return <i className="fa fa-times" onClick={(e) => this.removeRecipe.call(this, this.props.recipe)}></i>
+			return <i className="fa fa-times upperLeft" onClick={(e) => this.removeRecipe.call(this, this.props.recipe)}></i>
 		}
 	}
 
-	getBookmark() {
-		if(this.props.isGlobal && 
-			this.state.recipeSaved === false 
-			&& this.props.recipe.userId !== this.props.currentUser ) {
-			
-			return <i className="fa fa-star-o" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
+	getSaveRecipeButton() {
+		if (this.props.isGlobal && 
+			this.props.recipe.userId === this.props.currentUser) {
+			return <p className="upperRight">I shared</p>
 
-		} else if (this.props.recipe.userId === this.props.currentUser) {
-			return <i className="fa fa-star"></i>
+		} else if(this.props.isGlobal && 
+			this.state.publicRecipeSaved === false ) {
+			return <i className="fa fa-star-o upperRight" onClick={(e) => this.saveToMyRecipes.call(this, this.props.recipe)}></i>
+
+		} else if (this.props.isGlobal && 
+			this.state.publicRecipeSaved === true ) {
+			return <i className="fa fa-star upperRight"></i>
 
 		} 
 	}
 
 	getShareRecipeButton() {
-		if(this.props.isGlobal === false  &&
-			!this.props.recipe.userId ) {
+		if (this.props.isGlobal === false 
+			&& this.state.privateRecipeDownloaded) {
+			return (
+				<div className="upperRight clearfix">
+					<p className="textHint">Saved</p>
+					<i className="fa fa-bookmark green"></i>
+				</div> )
+
+		} else if (this.props.isGlobal === false  
+			&& this.state.recipeShared === false ) {
 
 			return ( 
-				<div>
+				<div className="upperRight clearfix">
+					<p className="textHint">Share</p>
 					<i className="fa fa-share-alt" onClick={(e) => this.shareRecipe.call(this, this.props.recipe)}></i>
-					<p>Share</p>
 				</div> )
 
-		} else if (this.props.isGlobal === false &&
-			this.props.recipe.userId ){
+		} else if (this.props.isGlobal === false 
+			&& this.state.recipeShared ){
 			
 			return (
-				<div>
+				<div className="upperRight clearfix">
+					<p className="textHint">Shared</p>
 					<i className="fa fa-share-alt green"></i>
-					<p>Shared</p>
 				</div> )
-		}
+
+		} 
 	}
 
 	render() {
 		return (
 			<div className="recipe" id={this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet)} >
 				{this.getRemoveButton()}
-				{this.getBookmark()}
+				{this.getSaveRecipeButton()}
 				{this.getShareRecipeButton()}
 				
 				<h2 id={this.props.recipe.title}>{this.props.recipe.title}</h2>

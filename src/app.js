@@ -129,7 +129,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<Alphabet isGlobal={this.state.viewGlobal} />
-				<Recipes recipe={recipes} currentUser={this.currentUser} isGlobal={this.state.viewGlobal} />
+				<Recipes recipe={recipes} allUsersRecipes={this.state.recipe} currentUser={this.currentUser} isGlobal={this.state.viewGlobal} />
 			</div>
 		)
 	}
@@ -187,14 +187,20 @@ class App extends React.Component {
 		}
 	}
 
-
 	render() {
 		let main;
 		if (this.state.loggedIn) {
 			main =  <div className="clearfix">
-						<div className="search clearfix" onClick={e => this.showSearch.call(this,e)}>
-							<input className={this.state.searchVisible ? 'visible' : 'notVisible'} placeholder="Search" ref={ref => this.search = ref} onChange={e => this.handleSearch.call(this,e)}/>
-							<i className="fa fa-search"></i>
+						<div className="search clearfix">
+							<input 
+							id="search"
+							className={this.state.searchVisible ? 'visible' : 'notVisible'} 
+							placeholder="Search" 
+							ref={ref => this.search = ref} 
+							onChange={e => this.handleSearch.call(this,e)} />
+							<i 
+							className="fa fa-search" 
+							onClick={e => this.showSearch.call(this,e)}></i>
 						</div>
 						<div className="clearfix">
 							<AddRecipe currentUser={this.currentUser} /> 

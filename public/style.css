@@ -125,13 +125,13 @@ form.addRecipe .flower{
 	right: 20px;
 }
 
-input, label {
+input, label, textarea {
 	width: 100%;
 	text-align: left;
 	border: none;
 }
 
-input.enterIngred {
+.enterIngred {
 	width: 80%;
 }
 
@@ -150,27 +150,37 @@ input[type=submit] {
 }
 
 .smallFont {
-	font-size: 10px;
 }
 
 i.fa {
 	margin-right: 10px;
 }
 
-i.fa-times, i.fa-star-o, i.fa-star, i.fa-share-alt {
+.upperRight, .upperLeft {
 	position: absolute;
 	font-size: 20px;
 	margin-right: 0;
 }
 
-i.fa-share-alt, i.fa-star-o, i.fa-star {
+.upperRight{
 	top: 20px;
 	right: 20px;
 }
 
-i.fa-times {
+.upperLeft {
 	top: 20px;
 	left: 20px;
+}
+
+.upperRight i, .textHint {
+	float: left;
+	margin: 0;
+}
+
+.textHint {
+	font-size: 12px;
+	text-transform: uppercase;
+	margin-right: 10px;
 }
 
 i.fa:hover {

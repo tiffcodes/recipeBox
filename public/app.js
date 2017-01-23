@@ -26978,271 +26978,6 @@ var AddRecipe = function (_React$Component) {
 	}
 
 	_createClass(AddRecipe, [{
-		key: 'listFocus',
-		value: function listFocus() {
-			this.setState({
-				listFocus: true
-			});
-		}
-	}, {
-		key: 'listUnFocus',
-		value: function listUnFocus() {
-			this.setState({
-				listFocus: false
-			});
-		}
-	}, {
-		key: 'addIngredient',
-		value: function addIngredient(e) {
-			e.preventDefault();
-			var newIngredient = this.recipeIngredients.value;
-			if (newIngredient.length > 0 && newIngredient != " ") {
-				// make a new instance of the previous ingredient list from state
-				var ingredientArray = Array.from(this.state.ingredients);
-				// add new ingredient to that list
-				ingredientArray.push(newIngredient);
-				// reset the state with the new ingredient included on the list
-				this.setState({
-					ingredients: ingredientArray
-				});
-			}
-			// resent the value of input to be blank and ready for next ingredient 
-			this.recipeIngredients.value = '';
-		}
-	}, {
-		key: 'createIngredient',
-		value: function createIngredient(e) {
-			if (e.keyCode === 13) {
-				this.addIngredient(e);
-			}
-		}
-	}, {
-		key: 'removeIngredient',
-		value: function removeIngredient(ingredientToRemove) {
-			// get the index of the ingredient to remove
-			var indexOfIngred = this.state.ingredients.indexOf(ingredientToRemove);
-			// make a new instance of the ingredientsArray from state
-			var ingredientsArray = Array.from(this.state.ingredients);
-			ingredientsArray.splice(indexOfIngred, 1);
-			// reset state to the new ingredientsArray without the removed ingredient
-			this.setState({
-				ingredients: ingredientsArray
-			});
-		}
-	}, {
-		key: 'addInstruction',
-		value: function addInstruction(e) {
-			e.preventDefault();
-			var newInstruction = this.recipeInstructions.value;
-			if (newInstruction.length > 0 && newInstruction != " ") {
-				// make a new instance of the previous ingredient list from state
-				var instructionArray = Array.from(this.state.instructions);
-				// add new ingredient to that list
-				instructionArray.push(newInstruction);
-				// reset the state with the new ingredient included on the list
-				this.setState({
-					instructions: instructionArray
-				});
-				// resent the value of input to be blank and ready for next ingredient 
-				this.recipeInstructions.value = '';
-			}
-		}
-	}, {
-		key: 'createInstruction',
-		value: function createInstruction(e) {
-			if (e.keyCode === 13) {
-				this.addInstruction(e);
-			}
-		}
-	}, {
-		key: 'removeInstruction',
-		value: function removeInstruction(instructionToRemove) {
-			// get the index of the ingredient to remove
-			var indexOfInstruction = this.state.instructions.indexOf(instructionToRemove);
-			// make a new instance of the ingredientsArray from state
-			var instructionArray = Array.from(this.state.instructions);
-			instructionArray.splice(indexOfInstruction, 1);
-			// reset state to the new ingredientsArray without the removed ingredient
-			this.setState({
-				instructions: instructionArray
-			});
-		}
-	}, {
-		key: 'handleTitleChange',
-		value: function handleTitleChange(e) {
-			var titleVal = this.recipeTitle.value;
-			// run validation 
-			if (titleVal.length <= 1) {
-				this.setState({
-					titleError: true
-				});
-			} else {
-				this.setState({
-					titleError: false
-				});
-			}
-		}
-	}, {
-		key: 'handleIngredientChange',
-		value: function handleIngredientChange(e) {
-			var ingredVal = e.target.value;
-			// run validation 
-			if (ingredVal.length <= 1) {
-				this.setState({
-					ingredientError: true
-				});
-			} else {
-				this.setState({
-					ingredientError: false
-				});
-			}
-		}
-	}, {
-		key: 'handleInstructionChange',
-		value: function handleInstructionChange(e) {
-			var instructVal = e.target.value;
-			// run validation 
-			if (instructVal.length <= 1) {
-				this.setState({
-					instructionError: true
-				});
-			} else {
-				this.setState({
-					instructionError: false
-				});
-			}
-		}
-		// checkIngredientInput() {
-		// 	const newIngredient = this.recipeIngredients.value;
-		// 	if (newIngredient.length !== 0) {
-		// 		let ingredientArray = [newIngredient];
-		// 		// add new ingredient to that list
-
-		// 		// console.log('ingredientArray', ingredientArray);
-		// 		// console.log(ingredientArray);
-		// 		// reset the state with the new ingredient included on the list
-		// 		this.setState({
-		// 			ingredients: ingredientArray
-		// 		});
-		// 		// console.log('ingredients thing good', this.state.ingredients);
-		// 		// return ingredientArray;
-
-		// 		this.checkInstructionInput();
-		// 	} else {
-		// 		alert('Please fill out the required fields');
-		// 	}
-		// }
-
-		// checkInstructionInput() {
-		// 	const newInstruction = this.recipeInstructions.value;
-		// 	if (newInstruction.length !== 0) {
-		// 		// add new ingredient to that list
-		// 		let instructionArray = [newInstruction];
-
-		// 		// reset the state with the new ingredient included on the list
-		// 		this.setState({
-		// 			instructions: instructionArray
-		// 		});
-		// 		// console.log('instructing thing good', this.state.instructions);
-		// 		this.createNewRecipe();
-		// 	} else {
-		// 		alert('Please fill out the required fields');
-		// 	}
-		// }
-
-	}, {
-		key: 'validateRecipeForm',
-		value: function validateRecipeForm(e) {
-			e.preventDefault();
-			if (this.state.listFocus === true) {
-				return false;
-			} else {
-
-				// const newIngredient = this.recipeIngredients.value;
-				// if (newIngredient.length !== 0) {
-				// 	// add new ingredient to new arr
-				// 	let ingredientArray = [newIngredient];
-				// 	// reset the state with the new ingredient included on the list
-				// 	this.setState({
-				// 		ingredients: ingredientArray
-				// 	});
-				// } else {
-				// 	alert('Please fill out the required ingredient field');
-				// 	return false;
-				// }
-
-				// const newInstruction = this.recipeInstructions.value;
-				// if (newInstruction.length !== 0) {
-				// 	// add new ingredient to new array
-				// 	let instructionArray = [newInstruction];
-				// 	// reset the state with the new ingredient included on the list
-				// 	this.setState({
-				// 		instructions: instructionArray
-				// 	});				
-				// } else {
-				// 	alert('Please fill out the required instruction field');
-				// 	return false;
-				// }
-
-				// save input values
-				var recipeTitle = this.recipeTitle.value;
-				var recipeIngredients = this.state.ingredients;
-				var recipeInstructions = this.state.instructions;
-
-				if (recipeTitle === '' || this.state.titleError === true || recipeIngredients.length <= 0 || recipeInstructions.length <= 0) {
-					alert('Please fill out the required fields');
-					return false;
-				} else {
-					// call createNewRecipe:
-					this.createNewRecipe();
-				}
-			}
-		}
-	}, {
-		key: 'createNewRecipe',
-		value: function createNewRecipe() {
-			// save input values
-			var recipeTitle = this.recipeTitle.value;
-			var recipePrepTime = this.recipePrepTime.value ? this.recipePrepTime.value : 'unknown';
-			var recipeTotalTime = this.recipeTotalTime.value ? this.recipeTotalTime.value : 'unknown';
-			var recipeIngredients = this.state.ingredients;
-			var recipeInstructions = this.state.instructions;
-			var recipeServes = this.recipeServes.value ? this.recipeServes.value : 'unknown';
-
-			// add to recipe object:
-			var recipe = {
-				title: recipeTitle,
-				prepTime: recipePrepTime,
-				totalTime: recipeTotalTime,
-				ingredients: recipeIngredients,
-				instructions: recipeInstructions,
-				serves: recipeServes
-			};
-
-			// console.log('new recipe', recipe);
-			// console.log('user on add recipe', this.props.currentUser);
-
-			// save to firebase db:
-			firebase.database().ref(this.props.currentUser + '/recipe').push(recipe);
-
-			// clear the inputs
-			this.recipeTitle.value = '';
-			this.recipePrepTime.value = '';
-			this.recipeTotalTime.value = '';
-			this.recipeIngredients.value = '';
-			this.recipeInstructions.value = '';
-			this.recipeServes.value = '';
-
-			// reset the ingredients state:
-			this.setState({
-				ingredients: [],
-				instructions: [],
-				titleError: false,
-				ingredientError: false,
-				instructionError: false
-			});
-		}
-	}, {
 		key: 'render',
 		value: function render() {
 			var _this2 = this;
@@ -27386,9 +27121,10 @@ var AddRecipe = function (_React$Component) {
 									className: this.state.instructionError ? 'errorLabel plus' : 'plus' },
 								_react2.default.createElement('i', { className: 'fa fa-plus' })
 							),
-							_react2.default.createElement('input', {
+							_react2.default.createElement('textarea', {
 								className: this.state.instructionError ? 'error enterIngred' : 'enterIngred',
-								type: 'text', id: 'instruction',
+								rows: '3',
+								id: 'instruction',
 								ref: function ref(_ref5) {
 									return _this2.recipeInstructions = _ref5;
 								},
@@ -27445,13 +27181,209 @@ var AddRecipe = function (_React$Component) {
 				)
 			);
 		}
+	}, {
+		key: 'listFocus',
+		value: function listFocus() {
+			this.setState({
+				listFocus: true
+			});
+		}
+	}, {
+		key: 'listUnFocus',
+		value: function listUnFocus() {
+			this.setState({
+				listFocus: false
+			});
+		}
+	}, {
+		key: 'addIngredient',
+		value: function addIngredient(e) {
+			e.preventDefault();
+			var newIngredient = this.recipeIngredients.value;
+			if (newIngredient.length > 0 && newIngredient != " ") {
+				// make a new instance of the previous ingredient list from state
+				var ingredientArray = Array.from(this.state.ingredients);
+				// add new ingredient to that list
+				ingredientArray.push(newIngredient);
+				// reset the state with the new ingredient included on the list
+				this.setState({
+					ingredients: ingredientArray
+				});
+			}
+			// resent the value of input to be blank and ready for next ingredient 
+			this.recipeIngredients.value = '';
+		}
+	}, {
+		key: 'createIngredient',
+		value: function createIngredient(e) {
+			if (e.keyCode === 13) {
+				this.addIngredient(e);
+			}
+		}
+	}, {
+		key: 'removeIngredient',
+		value: function removeIngredient(ingredientToRemove) {
+			// get the index of the ingredient to remove
+			var indexOfIngred = this.state.ingredients.indexOf(ingredientToRemove);
+			// make a new instance of the ingredientsArray from state
+			var ingredientsArray = Array.from(this.state.ingredients);
+			ingredientsArray.splice(indexOfIngred, 1);
+			// reset state to the new ingredientsArray without the removed ingredient
+			this.setState({
+				ingredients: ingredientsArray
+			});
+		}
+	}, {
+		key: 'addInstruction',
+		value: function addInstruction(e) {
+			e.preventDefault();
+			var newInstruction = this.recipeInstructions.value;
+			if (newInstruction.length > 0 && newInstruction != " ") {
+				// make a new instance of the previous ingredient list from state
+				var instructionArray = Array.from(this.state.instructions);
+				// add new ingredient to that list
+				instructionArray.push(newInstruction);
+				// reset the state with the new ingredient included on the list
+				this.setState({
+					instructions: instructionArray
+				});
+				// resent the value of input to be blank and ready for next ingredient 
+				this.recipeInstructions.value = '';
+			}
+		}
+	}, {
+		key: 'createInstruction',
+		value: function createInstruction(e) {
+			if (e.keyCode === 13) {
+				this.addInstruction(e);
+			}
+		}
+	}, {
+		key: 'removeInstruction',
+		value: function removeInstruction(instructionToRemove) {
+			// get the index of the ingredient to remove
+			var indexOfInstruction = this.state.instructions.indexOf(instructionToRemove);
+			// make a new instance of the ingredientsArray from state
+			var instructionArray = Array.from(this.state.instructions);
+			instructionArray.splice(indexOfInstruction, 1);
+			// reset state to the new ingredientsArray without the removed ingredient
+			this.setState({
+				instructions: instructionArray
+			});
+		}
+	}, {
+		key: 'handleTitleChange',
+		value: function handleTitleChange(e) {
+			var titleVal = this.recipeTitle.value;
+			// run validation 
+			if (titleVal.length <= 1) {
+				this.setState({
+					titleError: true
+				});
+			} else {
+				this.setState({
+					titleError: false
+				});
+			}
+		}
+	}, {
+		key: 'handleIngredientChange',
+		value: function handleIngredientChange(e) {
+			var ingredVal = e.target.value;
+			// run validation 
+			if (ingredVal.length <= 1) {
+				this.setState({
+					ingredientError: true
+				});
+			} else {
+				this.setState({
+					ingredientError: false
+				});
+			}
+		}
+	}, {
+		key: 'handleInstructionChange',
+		value: function handleInstructionChange(e) {
+			var instructVal = e.target.value;
+			// run validation 
+			if (instructVal.length <= 1) {
+				this.setState({
+					instructionError: true
+				});
+			} else {
+				this.setState({
+					instructionError: false
+				});
+			}
+		}
+	}, {
+		key: 'validateRecipeForm',
+		value: function validateRecipeForm(e) {
+			e.preventDefault();
+			if (this.state.listFocus === true) {
+				return false;
+			} else {
+				// save input values
+				var recipeTitle = this.recipeTitle.value;
+				var recipeIngredients = this.state.ingredients;
+				var recipeInstructions = this.state.instructions;
+
+				if (recipeTitle === '' || this.state.titleError === true || recipeIngredients.length <= 0 || recipeInstructions.length <= 0) {
+					alert('Please fill out the required fields');
+					return false;
+				} else {
+					// call createNewRecipe:
+					this.createNewRecipe();
+				}
+			}
+		}
+	}, {
+		key: 'createNewRecipe',
+		value: function createNewRecipe() {
+			// save input values
+			var recipeTitle = this.recipeTitle.value;
+			var recipePrepTime = this.recipePrepTime.value ? this.recipePrepTime.value : 'unknown';
+			var recipeTotalTime = this.recipeTotalTime.value ? this.recipeTotalTime.value : 'unknown';
+			var recipeIngredients = this.state.ingredients;
+			var recipeInstructions = this.state.instructions;
+			var recipeServes = this.recipeServes.value ? this.recipeServes.value : 'unknown';
+
+			// add to recipe object:
+			var recipe = {
+				title: recipeTitle,
+				prepTime: recipePrepTime,
+				totalTime: recipeTotalTime,
+				ingredients: recipeIngredients,
+				instructions: recipeInstructions,
+				serves: recipeServes
+			};
+
+			// save to firebase db:
+			firebase.database().ref(this.props.currentUser + '/recipe').push(recipe);
+
+			// clear the inputs
+			this.recipeTitle.value = '';
+			this.recipePrepTime.value = '';
+			this.recipeTotalTime.value = '';
+			this.recipeIngredients.value = '';
+			this.recipeInstructions.value = '';
+			this.recipeServes.value = '';
+
+			// reset the ingredients state:
+			this.setState({
+				ingredients: [],
+				instructions: [],
+				titleError: false,
+				ingredientError: false,
+				instructionError: false
+			});
+		}
 	}]);
 
 	return AddRecipe;
 }(_react2.default.Component);
 
 // add conversion widget 
-// add search for ingredients
 // sticky alphabet once you scroll into recipes 
 
 
@@ -27917,7 +27849,7 @@ var App = function (_React$Component) {
 				'div',
 				null,
 				_react2.default.createElement(_alphabet2.default, { isGlobal: this.state.viewGlobal }),
-				_react2.default.createElement(_recipes2.default, { recipe: recipes, currentUser: this.currentUser, isGlobal: this.state.viewGlobal })
+				_react2.default.createElement(_recipes2.default, { recipe: recipes, allUsersRecipes: this.state.recipe, currentUser: this.currentUser, isGlobal: this.state.viewGlobal })
 			);
 		}
 	}, {
@@ -27988,15 +27920,22 @@ var App = function (_React$Component) {
 					{ className: 'clearfix' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'search clearfix', onClick: function onClick(e) {
-								return _this6.showSearch.call(_this6, e);
-							} },
-						_react2.default.createElement('input', { className: this.state.searchVisible ? 'visible' : 'notVisible', placeholder: 'Search', ref: function ref(_ref) {
+						{ className: 'search clearfix' },
+						_react2.default.createElement('input', {
+							id: 'search',
+							className: this.state.searchVisible ? 'visible' : 'notVisible',
+							placeholder: 'Search',
+							ref: function ref(_ref) {
 								return _this6.search = _ref;
-							}, onChange: function onChange(e) {
+							},
+							onChange: function onChange(e) {
 								return _this6.handleSearch.call(_this6, e);
 							} }),
-						_react2.default.createElement('i', { className: 'fa fa-search' })
+						_react2.default.createElement('i', {
+							className: 'fa fa-search',
+							onClick: function onClick(e) {
+								return _this6.showSearch.call(_this6, e);
+							} })
 					),
 					_react2.default.createElement(
 						'div',
@@ -28287,13 +28226,61 @@ var RecipeCard = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (RecipeCard.__proto__ || Object.getPrototypeOf(RecipeCard)).call(this));
 
 		_this.state = {
-			recipeSaved: false,
+			publicRecipeSaved: false,
+			privateRecipeDownloaded: false,
 			recipeShared: false
 		};
 		return _this;
 	}
 
 	_createClass(RecipeCard, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			// Private view state handling:
+			if (this.props.isGlobal) {
+				this.setState({
+					recipeShared: false
+				});
+			} else if (this.props.recipe.userId === undefined) {
+				this.setState({
+					recipeShared: false
+				});
+			} else if (this.props.recipe.userId !== this.props.currentUser) {
+				this.setState({
+					privateRecipeDownloaded: true
+				});
+			} else if (this.props.recipe.userId === this.props.currentUser) {
+				this.setState({
+					privateRecipeDownloaded: false,
+					recipeShared: true
+				});
+			}
+			// Public View state handling: 
+			// I think I need to check if the recipe exists in my recipes to see if it is truly saved
+
+			// check in this.props.allRecipes array to see if this recipe exists
+			// map over each object inside of allRecipes and filter for this,props,recipe 
+			if (this.props.isGlobal) {
+				var allUsersRecipes = this.props.allUsersRecipes;
+				var filtered = allUsersRecipes.filter(function (recipe) {
+					recipe.ingredients.map(function (ingredient) {
+						if (_this2.props.recipe.ingredients.indexOf(ingredient) === -1) {
+							return;
+						}
+					});
+					return _this2.props.recipe.title === recipe.title && _this2.props.recipe.totalTime === recipe.totalTime && _this2.props.recipe.serves === recipe.serves && _this2.props.recipe.prepTime === recipe.prepTime;
+				});
+				console.log('length and name', this.props.recipe.title, filtered.length);
+				if (filtered.length > 0) {
+					this.setState({
+						publicRecipeSaved: true
+					});
+				}
+			}
+		}
+	}, {
 		key: 'removeRecipe',
 		value: function removeRecipe(recipeToRemove) {
 			if (confirm('Are you sure you want to delete this recipe')) {
@@ -28306,121 +28293,140 @@ var RecipeCard = function (_React$Component) {
 		value: function removeGlobalRecipe(recipeToRemove) {
 			if (confirm('Are you sure you want to delete this recipe')) {
 				firebase.database().ref('recipe/' + recipeToRemove.key).remove();
-				this.setState({
-					recipeShared: false
-				});
 
+				// delete the userId on the private version of the recipe here
 				alert('Note: deleting this public recipe does not automatically delete your private recipe');
 			}
 		}
 	}, {
 		key: 'saveToMyRecipes',
 		value: function saveToMyRecipes(recipeToSave) {
-			var _this2 = this;
+			var _this3 = this;
 
 			firebase.database().ref('recipe/' + recipeToSave.key).on('value', function (res) {
 				var data = res.val();
 				// save to firebase db private list:
-				firebase.database().ref(_this2.props.currentUser + '/recipe').push(data);
-				_this2.setState({
-					recipeSaved: true
+				firebase.database().ref(_this3.props.currentUser + '/recipe').push(data);
+				_this3.setState({
+					publicRecipeSaved: true
 				});
 			});
 		}
 	}, {
 		key: 'shareRecipe',
 		value: function shareRecipe(recipeToShare) {
-			var _this3 = this;
+			var _this4 = this;
 
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToShare.key).on('value', function (res) {
 				var data = res.val();
-				// add user id to the global recipe object
-				data['userId'] = _this3.props.currentUser;
+				// add user id to the recipe object
+				data['userId'] = _this4.props.currentUser;
+				// add user id to original private recipe:
+				firebase.database().ref(_this4.props.currentUser + '/recipe/' + recipeToShare.key).set(data);
+				console.log('first done');
+			});
+
+			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToShare.key).on('value', function (res) {
+				var data = res.val();
+				// add user id to the recipe object
+				data['userId'] = _this4.props.currentUser;
 				// save to firebase db in public recipes:
 				firebase.database().ref('recipe').push(data);
-				// add user id to original private recipe:
-				console.log('next step');
-				firebase.database().ref(_this3.props.currentUser + '/recipe/' + recipeToShare.key).push(data);
 				// set state to show recipe is shared:
-				_this3.setState({
+				_this4.setState({
 					recipeShared: true
 				});
-				console.log('done');
 			});
 		}
 	}, {
 		key: 'getRemoveButton',
 		value: function getRemoveButton() {
-			var _this4 = this;
+			var _this5 = this;
 
 			if (this.props.isGlobal && this.props.recipe.userId === this.props.currentUser) {
 
-				return _react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
-						return _this4.removeGlobalRecipe.call(_this4, _this4.props.recipe);
+				return _react2.default.createElement('i', { className: 'fa fa-times upperLeft', onClick: function onClick(e) {
+						return _this5.removeGlobalRecipe.call(_this5, _this5.props.recipe);
 					} });
 			} else if (this.props.isGlobal === false) {
-				return _react2.default.createElement('i', { className: 'fa fa-times', onClick: function onClick(e) {
-						return _this4.removeRecipe.call(_this4, _this4.props.recipe);
+				return _react2.default.createElement('i', { className: 'fa fa-times upperLeft', onClick: function onClick(e) {
+						return _this5.removeRecipe.call(_this5, _this5.props.recipe);
 					} });
 			}
 		}
 	}, {
-		key: 'getBookmark',
-		value: function getBookmark() {
-			var _this5 = this;
+		key: 'getSaveRecipeButton',
+		value: function getSaveRecipeButton() {
+			var _this6 = this;
 
-			if (this.props.isGlobal && this.state.recipeSaved === false && this.props.recipe.userId !== this.props.currentUser) {
-
-				return _react2.default.createElement('i', { className: 'fa fa-star-o', onClick: function onClick(e) {
-						return _this5.saveToMyRecipes.call(_this5, _this5.props.recipe);
+			if (this.props.isGlobal && this.props.recipe.userId === this.props.currentUser) {
+				return _react2.default.createElement(
+					'p',
+					{ className: 'upperRight' },
+					'I shared'
+				);
+			} else if (this.props.isGlobal && this.state.publicRecipeSaved === false) {
+				return _react2.default.createElement('i', { className: 'fa fa-star-o upperRight', onClick: function onClick(e) {
+						return _this6.saveToMyRecipes.call(_this6, _this6.props.recipe);
 					} });
-			} else if (this.props.recipe.userId === this.props.currentUser) {
-				return _react2.default.createElement('i', { className: 'fa fa-star' });
+			} else if (this.props.isGlobal && this.state.publicRecipeSaved === true) {
+				return _react2.default.createElement('i', { className: 'fa fa-star upperRight' });
 			}
 		}
 	}, {
 		key: 'getShareRecipeButton',
 		value: function getShareRecipeButton() {
-			var _this6 = this;
+			var _this7 = this;
 
-			if (this.props.isGlobal === false && !this.props.recipe.userId) {
-
+			if (this.props.isGlobal === false && this.state.privateRecipeDownloaded) {
 				return _react2.default.createElement(
 					'div',
-					null,
-					_react2.default.createElement('i', { className: 'fa fa-share-alt', onClick: function onClick(e) {
-							return _this6.shareRecipe.call(_this6, _this6.props.recipe);
-						} }),
+					{ className: 'upperRight clearfix' },
 					_react2.default.createElement(
 						'p',
-						null,
-						'Share'
-					)
+						{ className: 'textHint' },
+						'Saved'
+					),
+					_react2.default.createElement('i', { className: 'fa fa-bookmark green' })
 				);
-			} else if (this.props.isGlobal === false && this.props.recipe.userId) {
+			} else if (this.props.isGlobal === false && this.state.recipeShared === false) {
 
 				return _react2.default.createElement(
 					'div',
-					null,
-					_react2.default.createElement('i', { className: 'fa fa-share-alt green' }),
+					{ className: 'upperRight clearfix' },
 					_react2.default.createElement(
 						'p',
-						null,
+						{ className: 'textHint' },
+						'Share'
+					),
+					_react2.default.createElement('i', { className: 'fa fa-share-alt', onClick: function onClick(e) {
+							return _this7.shareRecipe.call(_this7, _this7.props.recipe);
+						} })
+				);
+			} else if (this.props.isGlobal === false && this.state.recipeShared) {
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'upperRight clearfix' },
+					_react2.default.createElement(
+						'p',
+						{ className: 'textHint' },
 						'Shared'
-					)
+					),
+					_react2.default.createElement('i', { className: 'fa fa-share-alt green' })
 				);
 			}
 		}
 	}, {
 		key: 'render',
 		value: function render() {
-			var _this7 = this;
+			var _this8 = this;
 
 			return _react2.default.createElement(
 				'div',
 				{ className: 'recipe', id: this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet) },
 				this.getRemoveButton(),
-				this.getBookmark(),
+				this.getSaveRecipeButton(),
 				this.getShareRecipeButton(),
 				_react2.default.createElement(
 					'h2',
@@ -28448,8 +28454,8 @@ var RecipeCard = function (_React$Component) {
 					'ul',
 					null,
 					function () {
-						if (_this7.props.recipe.ingredients !== "") {
-							return _this7.props.recipe.ingredients.map(function (recipeIngred, i) {
+						if (_this8.props.recipe.ingredients !== "") {
+							return _this8.props.recipe.ingredients.map(function (recipeIngred, i) {
 								return _react2.default.createElement(
 									'li',
 									{ key: i },
@@ -28468,8 +28474,8 @@ var RecipeCard = function (_React$Component) {
 					'ol',
 					null,
 					function () {
-						if (_this7.props.recipe.instructions !== "") {
-							return _this7.props.recipe.instructions.map(function (recipeInstruction, i) {
+						if (_this8.props.recipe.instructions !== "") {
+							return _this8.props.recipe.instructions.map(function (recipeInstruction, i) {
 								return _react2.default.createElement(
 									'li',
 									{ key: i },
@@ -28562,6 +28568,7 @@ var Recipes = function (_React$Component) {
 					var firstLetter = recipe.title.charAt(0).toLowerCase();
 					return _react2.default.createElement(_recipeCard2.default, { key: 'card-' + i,
 						recipe: recipe,
+						allUsersRecipes: _this2.props.allUsersRecipes,
 						alphabet: alphabet,
 						checkAlphabet: _this2.checkAlphabet,
 						firstLetter: firstLetter,
