@@ -28520,6 +28520,12 @@ var RecipeCard = function (_React$Component) {
 exports.default = RecipeCard;
 ;
 
+//TODO
+// need to have states update on save and share. Only working on refresh. need to update that shit on events
+// need to make search more evident
+// change "my recipes" when there are no recipes to display! (when user first signs up)
+// maybe add search to bottom nav???
+
 },{"react":233}],244:[function(require,module,exports){
 'use strict';
 

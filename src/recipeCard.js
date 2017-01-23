@@ -214,3 +214,10 @@ export default class RecipeCard extends React.Component {
 		)
 	};
 };
+
+
+//TODO
+// need to have states update on save and share. Only working on refresh. need to update that shit on events
+// need to make search more evident
+// change "my recipes" when there are no recipes to display! (when user first signs up)
+// maybe add search to bottom nav???
