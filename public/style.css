@@ -6,15 +6,11 @@ input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}b
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 /* Gold colour : #ba962d; */
+
 body {
 	font-family: 'open sans', sans-serif;
-	/*background: url(../src/assets/black_paper.png);*/
 	background: white;
 }
-/*
-h1, h2, h3, h4, h5, h6 {
-	font-family: 'lora', serif;
-}*/
 
 a {
 	color: black;
@@ -33,7 +29,9 @@ a {
 	padding-bottom: 20px;
 }
 
-
+form:not(.addRecipe) input {
+	border-bottom: 1px solid black;
+}
 
 header {
 	margin-top:20px;
@@ -339,10 +337,6 @@ div.search {
 	float: left;
 	margin-top: -15px;
 	margin-right: 10px;
-}
-
-form input {
-	border-bottom: 1px solid black;
 }
 
 .notVisible {

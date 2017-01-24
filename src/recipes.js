@@ -3,6 +3,7 @@ import RecipeCard from './recipeCard';
 
 export default class Recipes extends React.Component {
 
+
 	checkAlphabet(letter, alphabet) {
 		// for each recipe, check to see if the first letter in the title is in the alphabet state
 		if (alphabet.includes(letter)) {
@@ -30,14 +31,16 @@ export default class Recipes extends React.Component {
 					}).map((recipe, i) => {
 						// grab first letter of title:
 						let firstLetter = recipe.title.charAt(0).toLowerCase();
-						return <RecipeCard key={`card-${i}`} 
+						return <RecipeCard 
+							key={`card-${i}`} 
 							recipe={recipe} 
 							allUsersRecipes={this.props.allUsersRecipes}
 							alphabet={alphabet}
 							checkAlphabet={this.checkAlphabet} 
 							firstLetter={firstLetter} 
 							currentUser={this.props.currentUser}
-							isGlobal={this.props.isGlobal} />
+							isGlobal={this.props.isGlobal}
+							/>
 				})}
 				</div>
 		)

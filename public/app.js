@@ -26987,9 +26987,11 @@ var AddRecipe = function (_React$Component) {
 				null,
 				_react2.default.createElement(
 					'form',
-					{ action: '', onSubmit: function onSubmit(e) {
+					{ action: '',
+						onSubmit: function onSubmit(e) {
 							return _this2.validateRecipeForm.call(_this2, e);
-						}, className: 'addRecipe',
+						},
+						className: 'addRecipe',
 						id: 'addrecipe' },
 					_react2.default.createElement(
 						'div',
@@ -27052,11 +27054,6 @@ var AddRecipe = function (_React$Component) {
 						_react2.default.createElement(
 							'div',
 							null,
-							_react2.default.createElement(
-								'label',
-								{ htmlFor: 'ingredient', className: this.state.ingredientError ? 'errorLabel plus' : 'plus' },
-								_react2.default.createElement('i', { className: 'fa fa-plus' })
-							),
 							_react2.default.createElement('input', {
 								className: this.state.ingredientError ? 'error enterIngred' : 'enterIngred',
 								id: 'ingredient', type: 'text',
@@ -27115,12 +27112,6 @@ var AddRecipe = function (_React$Component) {
 						_react2.default.createElement(
 							'div',
 							null,
-							_react2.default.createElement(
-								'label',
-								{ htmlFor: 'instruction',
-									className: this.state.instructionError ? 'errorLabel plus' : 'plus' },
-								_react2.default.createElement('i', { className: 'fa fa-plus' })
-							),
 							_react2.default.createElement('textarea', {
 								className: this.state.instructionError ? 'error enterIngred' : 'enterIngred',
 								rows: '3',
@@ -27385,6 +27376,7 @@ var AddRecipe = function (_React$Component) {
 
 // add conversion widget 
 // sticky alphabet once you scroll into recipes 
+// add notifications and feedback to the top like readme does with the blue bar
 
 
 exports.default = AddRecipe;
@@ -28234,12 +28226,29 @@ var RecipeCard = function (_React$Component) {
 	}
 
 	_createClass(RecipeCard, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
+		key: 'handleState',
+		value: function handleState() {
 			var _this2 = this;
 
 			// Private view state handling:
+			console.log('is global', this.props.isGlobal);
+			console.log("Handle State", this.props.recipe.title);
 			if (this.props.isGlobal) {
+				var allUsersRecipes = this.props.allUsersRecipes;
+				var filtered = allUsersRecipes.filter(function (recipe) {
+					recipe.ingredients.map(function (ingredient) {
+						if (_this2.props.recipe.ingredients.indexOf(ingredient) === -1) {
+							return;
+						}
+					});
+					return _this2.props.recipe.title === recipe.title && _this2.props.recipe.totalTime === recipe.totalTime && _this2.props.recipe.serves === recipe.serves && _this2.props.recipe.prepTime === recipe.prepTime;
+				});
+
+				if (filtered.length > 0) {
+					this.setState({
+						publicRecipeSaved: true
+					});
+				}
 				this.setState({
 					recipeShared: false
 				});
@@ -28257,24 +28266,12 @@ var RecipeCard = function (_React$Component) {
 					recipeShared: true
 				});
 			}
-			// Global/public view state handlers:
-			if (this.props.isGlobal) {
-				var allUsersRecipes = this.props.allUsersRecipes;
-				var filtered = allUsersRecipes.filter(function (recipe) {
-					recipe.ingredients.map(function (ingredient) {
-						if (_this2.props.recipe.ingredients.indexOf(ingredient) === -1) {
-							return;
-						}
-					});
-					return _this2.props.recipe.title === recipe.title && _this2.props.recipe.totalTime === recipe.totalTime && _this2.props.recipe.serves === recipe.serves && _this2.props.recipe.prepTime === recipe.prepTime;
-				});
-				console.log('length and name', this.props.recipe.title, filtered.length);
-				if (filtered.length > 0) {
-					this.setState({
-						publicRecipeSaved: true
-					});
-				}
-			}
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			console.log(this.props.isGlobal);
+			this.handleState();
 		}
 	}, {
 		key: 'removeRecipe',
@@ -28303,9 +28300,10 @@ var RecipeCard = function (_React$Component) {
 				var data = res.val();
 				// save to firebase db private list:
 				firebase.database().ref(_this3.props.currentUser + '/recipe').push(data);
-				_this3.setState({
-					publicRecipeSaved: true
-				});
+				_this3.handleState();
+				// this.setState({
+				// 	publicRecipeSaved: true
+				// })
 			});
 		}
 	}, {
@@ -28319,7 +28317,6 @@ var RecipeCard = function (_React$Component) {
 				data['userId'] = _this4.props.currentUser;
 				// add user id to original private recipe:
 				firebase.database().ref(_this4.props.currentUser + '/recipe/' + recipeToShare.key).set(data);
-				console.log('first done');
 			});
 
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToShare.key).on('value', function (res) {
@@ -28329,10 +28326,11 @@ var RecipeCard = function (_React$Component) {
 				// save to firebase db in public recipes:
 				firebase.database().ref('recipe').push(data);
 				// set state to show recipe is shared:
-				_this4.setState({
-					recipeShared: true
-				});
 			});
+			this.handleState();
+			// this.setState({
+			// 	recipeShared: true
+			// })
 		}
 	}, {
 		key: 'getRemoveButton',
@@ -28369,15 +28367,16 @@ var RecipeCard = function (_React$Component) {
 			} else if (this.props.isGlobal && this.state.publicRecipeSaved === false) {
 				return _react2.default.createElement(
 					'div',
-					{ className: 'upperRight clearfix clickable' },
+					{ className: 'upperRight clearfix clickable',
+						onClick: function onClick(e) {
+							return _this6.saveToMyRecipes.call(_this6, _this6.props.recipe);
+						} },
 					_react2.default.createElement(
 						'p',
 						{ className: 'textHint' },
 						'Save'
 					),
-					_react2.default.createElement('i', { className: 'fa fa-star-o', onClick: function onClick(e) {
-							return _this6.saveToMyRecipes.call(_this6, _this6.props.recipe);
-						} })
+					_react2.default.createElement('i', { className: 'fa fa-star-o' })
 				);
 			} else if (this.props.isGlobal && this.state.publicRecipeSaved === true) {
 				return _react2.default.createElement(
@@ -28412,15 +28411,16 @@ var RecipeCard = function (_React$Component) {
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'upperRight clearfix clickable' },
+					{ className: 'upperRight clearfix clickable',
+						onClick: function onClick(e) {
+							return _this7.shareRecipe.call(_this7, _this7.props.recipe);
+						} },
 					_react2.default.createElement(
 						'p',
 						{ className: 'textHint' },
 						'Share'
 					),
-					_react2.default.createElement('i', { className: 'fa fa-share-alt', onClick: function onClick(e) {
-							return _this7.shareRecipe.call(_this7, _this7.props.recipe);
-						} })
+					_react2.default.createElement('i', { className: 'fa fa-share-alt' })
 				);
 			} else if (this.props.isGlobal === false && this.state.recipeShared) {
 
@@ -28591,14 +28591,16 @@ var Recipes = function (_React$Component) {
 				}).map(function (recipe, i) {
 					// grab first letter of title:
 					var firstLetter = recipe.title.charAt(0).toLowerCase();
-					return _react2.default.createElement(_recipeCard2.default, { key: 'card-' + i,
+					return _react2.default.createElement(_recipeCard2.default, {
+						key: 'card-' + i,
 						recipe: recipe,
 						allUsersRecipes: _this2.props.allUsersRecipes,
 						alphabet: alphabet,
 						checkAlphabet: _this2.checkAlphabet,
 						firstLetter: firstLetter,
 						currentUser: _this2.props.currentUser,
-						isGlobal: _this2.props.isGlobal });
+						isGlobal: _this2.props.isGlobal
+					});
 				})
 			);
 		}

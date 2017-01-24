@@ -17,8 +17,10 @@ export default class AddRecipe extends React.Component {
 	render() {
 		return (
 			<section>
-				<form action="" onSubmit={(e) => this.validateRecipeForm.call(this,e) } className="addRecipe"
-					 id="addrecipe" >
+				<form action="" 
+				onSubmit={(e) => this.validateRecipeForm.call(this,e) }
+				className="addRecipe"
+				id="addrecipe" >
 					<div className="flower">
 						<img src="src/assets/bud.svg" href="Water colour small pink bud"/>
 					</div>
@@ -42,9 +44,6 @@ export default class AddRecipe extends React.Component {
 
 						<label htmlFor="ingredient" className={this.state.ingredientError ? 'errorLabel newIngred' : 'newIngred'}>Enter the ingredients:<span className="required">*</span></label>
 						<div>
-							<label htmlFor="ingredient" className={this.state.ingredientError ? 'errorLabel plus' : 'plus'} >
-								<i className="fa fa-plus"></i>
-							</label>
 							<input 
 								className={this.state.ingredientError ? 'error enterIngred' : 'enterIngred'}
 								id="ingredient" type="text" 
@@ -72,10 +71,6 @@ export default class AddRecipe extends React.Component {
 
 						<label htmlFor="instruction" className={this.state.instructionError ? 'errorLabel newInstruct' : 'newInstruct'}>Enter the instructions:<span className="required">*</span></label>
 						<div>
-							<label htmlFor="instruction" 
-								className={this.state.instructionError ? 'errorLabel plus' : 'plus'} >
-								<i className="fa fa-plus"></i>
-							</label>
 							<textarea 
 								className={this.state.instructionError ? 'error enterIngred' : 'enterIngred'}
 								rows="3"
@@ -304,3 +299,4 @@ export default class AddRecipe extends React.Component {
 
 // add conversion widget 
 // sticky alphabet once you scroll into recipes 
+// add notifications and feedback to the top like readme does with the blue bar
