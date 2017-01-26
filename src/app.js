@@ -89,7 +89,7 @@ class App extends React.Component {
 			});
 			this.context.router.push('/');
 		}, function(error) {
-			console.log(error);
+			console.log('error: ', error);
 		});
 	}
 

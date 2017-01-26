@@ -27802,7 +27802,7 @@ var App = function (_React$Component) {
 				});
 				_this5.context.router.push('/');
 			}, function (error) {
-				console.log(error);
+				console.log('error: ', error);
 			});
 		}
 	}, {
@@ -28233,6 +28233,7 @@ var RecipeCard = function (_React$Component) {
 			// Private view state handling:
 			console.log('is global', this.props.isGlobal);
 			console.log("Handle State", this.props.recipe.title);
+
 			if (this.props.isGlobal) {
 				var allUsersRecipes = this.props.allUsersRecipes;
 				var filtered = allUsersRecipes.filter(function (recipe) {
@@ -28301,9 +28302,9 @@ var RecipeCard = function (_React$Component) {
 				// save to firebase db private list:
 				firebase.database().ref(_this3.props.currentUser + '/recipe').push(data);
 				_this3.handleState();
-				// this.setState({
-				// 	publicRecipeSaved: true
-				// })
+				_this3.setState({
+					publicRecipeSaved: true
+				});
 			});
 		}
 	}, {
@@ -28328,9 +28329,9 @@ var RecipeCard = function (_React$Component) {
 				// set state to show recipe is shared:
 			});
 			this.handleState();
-			// this.setState({
-			// 	recipeShared: true
-			// })
+			this.setState({
+				recipeShared: true
+			});
 		}
 	}, {
 		key: 'getRemoveButton',
@@ -28592,7 +28593,7 @@ var Recipes = function (_React$Component) {
 					// grab first letter of title:
 					var firstLetter = recipe.title.charAt(0).toLowerCase();
 					return _react2.default.createElement(_recipeCard2.default, {
-						key: 'card-' + i,
+						key: _this2.props.isGlobal ? 'publicCard-' + i : 'privateCard-' + i,
 						recipe: recipe,
 						allUsersRecipes: _this2.props.allUsersRecipes,
 						alphabet: alphabet,

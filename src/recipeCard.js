@@ -14,6 +14,7 @@ export default class RecipeCard extends React.Component {
 		// Private view state handling:
 		console.log('is global', this.props.isGlobal);
 		console.log("Handle State", this.props.recipe.title);
+		
 		if (this.props.isGlobal) {
 			const allUsersRecipes = this.props.allUsersRecipes;
 			var filtered = allUsersRecipes.filter((recipe) => {
@@ -80,9 +81,9 @@ export default class RecipeCard extends React.Component {
 			// save to firebase db private list:
 			firebase.database().ref(`${this.props.currentUser}/recipe`).push(data);
 			this.handleState();
-			// this.setState({
-			// 	publicRecipeSaved: true
-			// })
+			this.setState({
+				publicRecipeSaved: true
+			})
 		});
 	}
 
@@ -104,9 +105,9 @@ export default class RecipeCard extends React.Component {
 			// set state to show recipe is shared:
 		});
 		this.handleState();
-		// this.setState({
-		// 	recipeShared: true
-		// })
+		this.setState({
+			recipeShared: true
+		})
 	}
 
 	getRemoveButton(){
