@@ -57,14 +57,14 @@ class App extends React.Component {
 	loadUserRecipes() {
 		// console.log('currentUser:', this.currentUser);
 		firebase.database().ref(`${this.currentUser}/recipe`).on('value', (res) => {
-			const data = res.val();
-			const recipe = [];
-			for(let key in data) {
-				data[key].key = key;
-				recipe.push(data[key]);
-			}
-			this.setState({recipe});
-		});
+				const data = res.val();
+				const recipe = [];
+				for(let key in data) {
+					data[key].key = key;
+					recipe.push(data[key]);
+				}
+				this.setState({recipe});
+			})
 	}
 
 	loadGlobalRecipes() {
@@ -116,6 +116,7 @@ class App extends React.Component {
 				filteredRecipes: result,
 				showFiltered: true
 			});
+			document.getElementById('recipeList').scrollIntoView();
 		} else {
 			this.setState({
 				showFiltered: false
@@ -130,6 +131,7 @@ class App extends React.Component {
 			<div>
 				<Alphabet isGlobal={this.state.viewGlobal} />
 				<Recipes recipe={recipes} allUsersRecipes={this.state.recipe} currentUser={this.currentUser} isGlobal={this.state.viewGlobal} />
+				
 			</div>
 		)
 	}
@@ -184,6 +186,7 @@ class App extends React.Component {
 			this.setState({
 				searchVisible: true
 			});
+			// focus on search input
 		}
 	}
 
@@ -204,34 +207,36 @@ class App extends React.Component {
 						</div>
 						<div className="clearfix">
 							<AddRecipe currentUser={this.currentUser} /> 
-							<section>
+							<section className="recipeSection">
 								{this.getRecipes()}
 							</section>
 							<aside className="menu">
-								<p>
-									<button onClick={e => this.signout.call(this,e)}>
-										<i className="fa fa-sign-out"></i>
-											Sign out
-									</button>
-								</p>
-								<p className={this.state.viewGlobal ? 'nonactive' : 'active'}>
-									<button onClick={e => this.viewPrivate.call(this,e)}>
-										<i className="fa fa-user"></i>
-										My Recipes
-									</button>
-								</p>
-								<p className={this.state.viewGlobal ? 'active' : 'nonactive'}>
-									<button onClick={e => this.viewPublic.call(this,e)}>
-										<i className="fa fa-users"></i>
-										Public
-									</button>
-								</p>
-								<p className="addrec">
-									<a href="#addrecipe">
-										<i className="fa fa-plus"></i>
-										Add
-									</a>
-								</p>
+								<div className="wrapper">
+									<p>
+										<button onClick={e => this.signout.call(this,e)}>
+											<i className="fa fa-hand-peace-o"></i>
+												Sign out
+										</button>
+									</p>
+									<p className={this.state.viewGlobal ? 'nonactive' : 'active'}>
+										<button onClick={e => this.viewPrivate.call(this,e)}>
+											<i className="fa fa-user"></i>
+											My Recipes
+										</button>
+									</p>
+									<p className={this.state.viewGlobal ? 'active' : 'nonactive'}>
+											<button onClick={e => this.viewPublic.call(this,e)}>
+											<i className="fa fa-users"></i>
+											Public
+										</button>
+									</p>
+									<p className="addrec">
+										<a href="#addrecipe">
+											<i className="fa fa-plus"></i>
+											Add
+										</a>
+									</p>
+								</div>
 							</aside>
 						</div>
 					</div>
@@ -268,4 +273,4 @@ ReactDom.render(
 
 
 // import images and docs?
-// star for fav ---> say "share"
+// once you share there's no going back from the public view. You can, however, delete the recipe from the public view

@@ -12,8 +12,8 @@ export default class RecipeCard extends React.Component {
 
 	handleState() {
 		// Private view state handling:
-		console.log('is global', this.props.isGlobal);
-		console.log("Handle State", this.props.recipe.title);
+		// console.log('is global', this.props.isGlobal);
+		// console.log("Handle State", this.props.recipe.title);
 		
 		if (this.props.isGlobal) {
 			const allUsersRecipes = this.props.allUsersRecipes;
@@ -39,6 +39,7 @@ export default class RecipeCard extends React.Component {
 			})
 		} else if (this.props.recipe.userId === undefined ) {
 			this.setState({
+				privateRecipeDownloaded: false,
 				recipeShared: false
 			})
 		} else if (this.props.recipe.userId !== this.props.currentUser) {
@@ -53,9 +54,8 @@ export default class RecipeCard extends React.Component {
 		}
 	}
 	componentDidMount() {
-		console.log(this.props.isGlobal);
+		// console.log(this.props.isGlobal);
 		this.handleState();
-
 	}
 
 	removeRecipe(recipeToRemove) {
@@ -178,6 +178,28 @@ export default class RecipeCard extends React.Component {
 		} 
 	}
 
+	getRecipeIngredients() {
+		if(this.props.recipe.ingredients !== "") {
+			return this.props.recipe.ingredients.map((recipeIngred, i) => {
+					return (
+						<li key={i}>{recipeIngred}</li>
+					)
+				}
+			);
+		}
+	}
+
+	getRecipeInstructions(){
+		if(this.props.recipe.instructions !== "") {
+			return this.props.recipe.instructions.map((recipeInstruction, i) => {
+					return (
+						<li key={i}>{recipeInstruction}</li>
+					)
+				}
+			);
+		}
+	}
+
 	render() {
 		return (
 			<div className="recipe" id={this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet)} >
@@ -191,32 +213,11 @@ export default class RecipeCard extends React.Component {
 				<p>Total Time: {this.props.recipe.totalTime}</p>
 				<p>Ingredients:</p>
 				<ul>
-
-					{ (() => {
-						if(this.props.recipe.ingredients !== "") {
-							return this.props.recipe.ingredients.map((recipeIngred, i) => {
-									return (
-										<li key={i}>{recipeIngred}</li>
-									)
-								});
-							}
-
-						})()
-					}
+					{this.getRecipeIngredients()}
 				</ul>
 				<p>Instructions:</p>
 				<ol>
-					{ (() => {
-						if(this.props.recipe.instructions !== "") {
-							return this.props.recipe.instructions.map((recipeInstruction, i) => {
-									return (
-										<li key={i}>{recipeInstruction}</li>
-									)
-								});
-							}
-
-						})()
-					}
+					{this.getRecipeInstructions()}
 				</ol>
 				<p>Serves: {this.props.recipe.serves}</p>
 			</div>

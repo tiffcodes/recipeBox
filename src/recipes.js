@@ -17,6 +17,14 @@ export default class Recipes extends React.Component {
 		}
 	}
 
+	checkGlobal(recipe, i) {
+		if (this.props.isGlobal) {
+			return (`publicCard${recipe.key}`)
+		} else {
+			return (`privateCard${recipe.key}`)
+		}
+	}
+
 	render() {
 		const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 		return (
@@ -32,7 +40,7 @@ export default class Recipes extends React.Component {
 						// grab first letter of title:
 						let firstLetter = recipe.title.charAt(0).toLowerCase();
 						return <RecipeCard 
-							key={this.props.isGlobal ? `publicCard-${i}` : `privateCard-${i}`} 
+							key={this.checkGlobal(recipe, i)} 
 							recipe={recipe} 
 							allUsersRecipes={this.props.allUsersRecipes}
 							alphabet={alphabet}

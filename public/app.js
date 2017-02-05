@@ -27827,6 +27827,7 @@ var App = function (_React$Component) {
 					filteredRecipes: result,
 					showFiltered: true
 				});
+				document.getElementById('recipeList').scrollIntoView();
 			} else {
 				this.setState({
 					showFiltered: false
@@ -27898,6 +27899,7 @@ var App = function (_React$Component) {
 				this.setState({
 					searchVisible: true
 				});
+				// focus on search input
 			}
 		}
 	}, {
@@ -27935,56 +27937,60 @@ var App = function (_React$Component) {
 						_react2.default.createElement(_addRecipe2.default, { currentUser: this.currentUser }),
 						_react2.default.createElement(
 							'section',
-							null,
+							{ className: 'recipeSection' },
 							this.getRecipes()
 						),
 						_react2.default.createElement(
 							'aside',
 							{ className: 'menu' },
 							_react2.default.createElement(
-								'p',
-								null,
+								'div',
+								{ className: 'wrapper' },
 								_react2.default.createElement(
-									'button',
-									{ onClick: function onClick(e) {
-											return _this6.signout.call(_this6, e);
-										} },
-									_react2.default.createElement('i', { className: 'fa fa-sign-out' }),
-									'Sign out'
-								)
-							),
-							_react2.default.createElement(
-								'p',
-								{ className: this.state.viewGlobal ? 'nonactive' : 'active' },
+									'p',
+									null,
+									_react2.default.createElement(
+										'button',
+										{ onClick: function onClick(e) {
+												return _this6.signout.call(_this6, e);
+											} },
+										_react2.default.createElement('i', { className: 'fa fa-hand-peace-o' }),
+										'Sign out'
+									)
+								),
 								_react2.default.createElement(
-									'button',
-									{ onClick: function onClick(e) {
-											return _this6.viewPrivate.call(_this6, e);
-										} },
-									_react2.default.createElement('i', { className: 'fa fa-user' }),
-									'My Recipes'
-								)
-							),
-							_react2.default.createElement(
-								'p',
-								{ className: this.state.viewGlobal ? 'active' : 'nonactive' },
+									'p',
+									{ className: this.state.viewGlobal ? 'nonactive' : 'active' },
+									_react2.default.createElement(
+										'button',
+										{ onClick: function onClick(e) {
+												return _this6.viewPrivate.call(_this6, e);
+											} },
+										_react2.default.createElement('i', { className: 'fa fa-user' }),
+										'My Recipes'
+									)
+								),
 								_react2.default.createElement(
-									'button',
-									{ onClick: function onClick(e) {
-											return _this6.viewPublic.call(_this6, e);
-										} },
-									_react2.default.createElement('i', { className: 'fa fa-users' }),
-									'Public'
-								)
-							),
-							_react2.default.createElement(
-								'p',
-								{ className: 'addrec' },
+									'p',
+									{ className: this.state.viewGlobal ? 'active' : 'nonactive' },
+									_react2.default.createElement(
+										'button',
+										{ onClick: function onClick(e) {
+												return _this6.viewPublic.call(_this6, e);
+											} },
+										_react2.default.createElement('i', { className: 'fa fa-users' }),
+										'Public'
+									)
+								),
 								_react2.default.createElement(
-									'a',
-									{ href: '#addrecipe' },
-									_react2.default.createElement('i', { className: 'fa fa-plus' }),
-									'Add'
+									'p',
+									{ className: 'addrec' },
+									_react2.default.createElement(
+										'a',
+										{ href: '#addrecipe' },
+										_react2.default.createElement('i', { className: 'fa fa-plus' }),
+										'Add'
+									)
 								)
 							)
 						)
@@ -28028,7 +28034,7 @@ _reactDom2.default.render(_react2.default.createElement(
 ), document.getElementById('app'));
 
 // import images and docs?
-// star for fav ---> say "share"
+// once you share there's no going back from the public view. You can, however, delete the recipe from the public view
 
 },{"./addRecipe.js":236,"./alphabet.js":237,"./footer.js":239,"./header.js":240,"./noRecipesFound":241,"./notFound.js":242,"./recipes.js":244,"./signIn.js":245,"./signUp.js":246,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],239:[function(require,module,exports){
 "use strict";
@@ -28078,7 +28084,7 @@ exports.default = function () {
 			"coded and designed by ",
 			_react2.default.createElement(
 				"a",
-				{ href: "tiffanydanielle.ca" },
+				{ href: "http://tiffanydanielle.ca" },
 				"tiff nogueira"
 			)
 		),
@@ -28131,7 +28137,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (props) {
 	return _react2.default.createElement(
 		"section",
-		{ className: "recipe" },
+		{ className: "recipe", id: "recipeList" },
 		_react2.default.createElement(
 			"h2",
 			null,
@@ -28231,8 +28237,8 @@ var RecipeCard = function (_React$Component) {
 			var _this2 = this;
 
 			// Private view state handling:
-			console.log('is global', this.props.isGlobal);
-			console.log("Handle State", this.props.recipe.title);
+			// console.log('is global', this.props.isGlobal);
+			// console.log("Handle State", this.props.recipe.title);
 
 			if (this.props.isGlobal) {
 				var allUsersRecipes = this.props.allUsersRecipes;
@@ -28255,6 +28261,7 @@ var RecipeCard = function (_React$Component) {
 				});
 			} else if (this.props.recipe.userId === undefined) {
 				this.setState({
+					privateRecipeDownloaded: false,
 					recipeShared: false
 				});
 			} else if (this.props.recipe.userId !== this.props.currentUser) {
@@ -28271,7 +28278,7 @@ var RecipeCard = function (_React$Component) {
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			console.log(this.props.isGlobal);
+			// console.log(this.props.isGlobal);
 			this.handleState();
 		}
 	}, {
@@ -28438,10 +28445,34 @@ var RecipeCard = function (_React$Component) {
 			}
 		}
 	}, {
+		key: 'getRecipeIngredients',
+		value: function getRecipeIngredients() {
+			if (this.props.recipe.ingredients !== "") {
+				return this.props.recipe.ingredients.map(function (recipeIngred, i) {
+					return _react2.default.createElement(
+						'li',
+						{ key: i },
+						recipeIngred
+					);
+				});
+			}
+		}
+	}, {
+		key: 'getRecipeInstructions',
+		value: function getRecipeInstructions() {
+			if (this.props.recipe.instructions !== "") {
+				return this.props.recipe.instructions.map(function (recipeInstruction, i) {
+					return _react2.default.createElement(
+						'li',
+						{ key: i },
+						recipeInstruction
+					);
+				});
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			var _this8 = this;
-
 			return _react2.default.createElement(
 				'div',
 				{ className: 'recipe', id: this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet) },
@@ -28473,17 +28504,7 @@ var RecipeCard = function (_React$Component) {
 				_react2.default.createElement(
 					'ul',
 					null,
-					function () {
-						if (_this8.props.recipe.ingredients !== "") {
-							return _this8.props.recipe.ingredients.map(function (recipeIngred, i) {
-								return _react2.default.createElement(
-									'li',
-									{ key: i },
-									recipeIngred
-								);
-							});
-						}
-					}()
+					this.getRecipeIngredients()
 				),
 				_react2.default.createElement(
 					'p',
@@ -28493,17 +28514,7 @@ var RecipeCard = function (_React$Component) {
 				_react2.default.createElement(
 					'ol',
 					null,
-					function () {
-						if (_this8.props.recipe.instructions !== "") {
-							return _this8.props.recipe.instructions.map(function (recipeInstruction, i) {
-								return _react2.default.createElement(
-									'li',
-									{ key: i },
-									recipeInstruction
-								);
-							});
-						}
-					}()
+					this.getRecipeInstructions()
 				),
 				_react2.default.createElement(
 					'p',
@@ -28575,6 +28586,15 @@ var Recipes = function (_React$Component) {
 			}
 		}
 	}, {
+		key: 'checkGlobal',
+		value: function checkGlobal(recipe, i) {
+			if (this.props.isGlobal) {
+				return 'publicCard' + recipe.key;
+			} else {
+				return 'privateCard' + recipe.key;
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			var _this2 = this;
@@ -28593,7 +28613,7 @@ var Recipes = function (_React$Component) {
 					// grab first letter of title:
 					var firstLetter = recipe.title.charAt(0).toLowerCase();
 					return _react2.default.createElement(_recipeCard2.default, {
-						key: _this2.props.isGlobal ? 'publicCard-' + i : 'privateCard-' + i,
+						key: _this2.checkGlobal(recipe, i),
 						recipe: recipe,
 						allUsersRecipes: _this2.props.allUsersRecipes,
 						alphabet: alphabet,
