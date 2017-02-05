@@ -27758,6 +27758,11 @@ var App = function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate() {
+			if (this.state.searchVisible) this.search.focus();
+		}
+	}, {
 		key: 'loadUserRecipes',
 		value: function loadUserRecipes() {
 			var _this3 = this;
@@ -27889,6 +27894,13 @@ var App = function (_React$Component) {
 			}
 		}
 	}, {
+		key: 'shouldFocus',
+		value: function shouldFocus() {
+			console.log('should focus');
+			document.getElementById('search').focus();
+			console.log('should be focused');
+		}
+	}, {
 		key: 'showSearch',
 		value: function showSearch() {
 			if (this.state.searchVisible) {
@@ -27899,7 +27911,7 @@ var App = function (_React$Component) {
 				this.setState({
 					searchVisible: true
 				});
-				// focus on search input
+				this.shouldFocus();
 			}
 		}
 	}, {
@@ -28033,7 +28045,7 @@ _reactDom2.default.render(_react2.default.createElement(
 	_react2.default.createElement(_reactRouter.Route, { path: '*', component: _notFound2.default })
 ), document.getElementById('app'));
 
-// import images and docs?
+// import images and docs? maybe hidden on click, but the upload is normal
 // once you share there's no going back from the public view. You can, however, delete the recipe from the public view
 
 },{"./addRecipe.js":236,"./alphabet.js":237,"./footer.js":239,"./header.js":240,"./noRecipesFound":241,"./notFound.js":242,"./recipes.js":244,"./signIn.js":245,"./signUp.js":246,"fuse.js":29,"react":233,"react-dom":52,"react-router":82}],239:[function(require,module,exports){
@@ -28160,7 +28172,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 ;
 
 },{"react":233}],242:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -28168,33 +28180,35 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = function () {
 	return _react2.default.createElement(
-		"div",
-		{ className: "notFound" },
+		'div',
+		{ className: 'notFound' },
 		_react2.default.createElement(
-			"h1",
+			'h1',
 			null,
-			"Hmm not quite sure what you're looking for."
+			'Hmm not quite sure what you\'re looking for.'
 		),
 		_react2.default.createElement(
-			"p",
+			'p',
 			null,
-			"I would suggest ",
+			'I would suggest ',
 			_react2.default.createElement(
-				"a",
-				{ href: "/" },
-				"checking out our home page"
+				_reactRouter.Link,
+				{ to: '/' },
+				'checking out our home page'
 			)
 		)
 	);
 };
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = require('react-router');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":233}],243:[function(require,module,exports){
+},{"react":233,"react-router":82}],243:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

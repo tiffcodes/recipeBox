@@ -54,6 +54,11 @@ class App extends React.Component {
 		});
 	}
 
+	componentDidUpdate() {
+	  if(this.state.searchVisible)
+	    this.search.focus();
+	}
+
 	loadUserRecipes() {
 		// console.log('currentUser:', this.currentUser);
 		firebase.database().ref(`${this.currentUser}/recipe`).on('value', (res) => {
@@ -176,7 +181,11 @@ class App extends React.Component {
 			});
 		}
 	}
-
+	shouldFocus() {
+		console.log('should focus');
+		document.getElementById('search').focus();
+		console.log('should be focused');
+	}
 	showSearch() {
 		if(this.state.searchVisible) {
 			this.setState({
@@ -186,7 +195,7 @@ class App extends React.Component {
 			this.setState({
 				searchVisible: true
 			});
-			// focus on search input
+			this.shouldFocus();
 		}
 	}
 
@@ -272,5 +281,5 @@ ReactDom.render(
 	</Router>, document.getElementById('app'));
 
 
-// import images and docs?
+// import images and docs? maybe hidden on click, but the upload is normal
 // once you share there's no going back from the public view. You can, however, delete the recipe from the public view
