@@ -38,7 +38,8 @@ header {
 	margin-top:20px;
 	/*border-bottom: 2px solid black;*/
 	background: url(../src/assets/flowerBorder.svg) no-repeat center center;
-	padding: 250px;
+	padding: 250px 0;
+	max-width: 100%;
 }
 
 h1, h2, .signOut, h3 {
@@ -311,15 +312,26 @@ aside p, aside a {
 	padding: 0;
 	width: 25%;
 	text-align: center;
-	line-height: 0;
+	/*line-height: 0;*/
 }
+
 aside a {
 	display: block;
 }
 aside button, aside a {
-	padding: 15px 10px;
+	padding: 20px 10px;
 	box-shadow: none;
 	width: 100%;
+	line-height: 0;
+	transition: background 0.3s ease;
+}
+
+aside button:hover, aside a:hover {
+	background: #fcdfbf;
+}
+
+aside p.active button:hover {
+	background: #164052;
 }
 
 .addrec:hover {
@@ -382,4 +394,25 @@ div.search {
 	}
 }
 
+@media (max-width: 630px) {
+	aside p, aside button, aside a {
+		line-height: 1.2;
+		font-size: 12px;
+	}
+	aside i.fa {
+		display: block;
+		margin-right: 0;
+		font-size: 18px;
+		margin-bottom: 5px;
+	}
+}
+
+@media (max-width: 460px) {
+	aside i.fa {
+		font-size: 20px;
+	}
+	aside span {
+		font-size: 8px;
+	}
+}
 

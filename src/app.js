@@ -224,25 +224,25 @@ class App extends React.Component {
 									<p>
 										<button onClick={e => this.signout.call(this,e)}>
 											<i className="fa fa-hand-peace-o"></i>
-												Sign out
+											<span>Sign out</span>
 										</button>
 									</p>
 									<p className={this.state.viewGlobal ? 'nonactive' : 'active'}>
 										<button onClick={e => this.viewPrivate.call(this,e)}>
 											<i className="fa fa-user"></i>
-											My Recipes
+											<span>My Recipes</span>
 										</button>
 									</p>
 									<p className={this.state.viewGlobal ? 'active' : 'nonactive'}>
 											<button onClick={e => this.viewPublic.call(this,e)}>
 											<i className="fa fa-users"></i>
-											Public
+											<span>Public</span>
 										</button>
 									</p>
 									<p className="addrec">
 										<a href="#addrecipe">
 											<i className="fa fa-plus"></i>
-											Add
+											<span>Add</span>
 										</a>
 									</p>
 								</div>

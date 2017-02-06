@@ -1,4 +1,5 @@
 import React from 'react';
+import { SweetAlert } from 'react-bootstrap-sweetalert';
 
 export default class RecipeCard extends React.Component {
 	constructor(props, context) {
@@ -59,10 +60,28 @@ export default class RecipeCard extends React.Component {
 	}
 
 	removeRecipe(recipeToRemove) {
-		if (confirm('Are you sure you want to delete this recipe')) { 
-		  firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();
-		  alert('Note: deleting this recipe does not automatically delete the public recipe');
-		}
+		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();
+	}
+
+	onCancelDelete() {
+		return <SweetAlert title="Note:" onConfirm={this.onConfirm} >
+			Deleting this recipe does not automatically delete the public recipe
+		</SweetAlert>
+	}
+
+	removeRecipeConfirm(recipeToRemove) {
+		return <SweetAlert
+		warning
+		showCancel
+		confirmBtnText="Yes, delete it!"
+		confirmBtnBsStyle="danger"
+		cancelBtnBsStyle="default"
+		title="Are you sure?"
+		onConfirm={this.removeRecipe(recipeToRemove)}
+		onCancel={this.onCancelDelete}
+		>
+		Are you sure you want to delete this recipe?
+		</SweetAlert>
 	}
 
 	removeGlobalRecipe(recipeToRemove) {
@@ -117,7 +136,7 @@ export default class RecipeCard extends React.Component {
 			return <i className="fa fa-times upperLeft" onClick={(e) => this.removeGlobalRecipe.call(this, this.props.recipe)}></i>
 
 		} else if (this.props.isGlobal === false) {
-			return <i className="fa fa-times upperLeft" onClick={(e) => this.removeRecipe.call(this, this.props.recipe)}></i>
+			return <i className="fa fa-times upperLeft" onClick={(e) => this.removeRecipeConfirm.call(this, this.props.recipe)}></i>
 		}
 	}
 
