@@ -18,7 +18,7 @@ a {
 
 .signUp, .signIn {
 	width: calc(50% - 20px);
-	margin: 100px 10px;
+	margin: 20px 10px;
 	float: left;
 	padding: 20px;
 	/*border: 2px solid black;*/
@@ -38,7 +38,7 @@ header {
 	margin-top:20px;
 	/*border-bottom: 2px solid black;*/
 	background: url(../src/assets/flowerBorder.svg) no-repeat center center;
-	padding: 250px 0;
+	padding: 200px 0;
 	max-width: 100%;
 }
 

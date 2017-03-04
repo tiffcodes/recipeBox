@@ -28204,7 +28204,7 @@ var AddRecipe = function (_React$Component) {
 							)
 						),
 						_react2.default.createElement(
-							'ul',
+							'ol',
 							null,
 							this.state.instructions.map(function (instruction, i) {
 								return _react2.default.createElement(
@@ -28977,6 +28977,21 @@ var App = function (_React$Component) {
 			}
 		}
 	}, {
+		key: 'addRecipe',
+		value: function addRecipe() {
+			if (!this.state.viewGlobal) {
+				return _react2.default.createElement(_addRecipe2.default, { currentUser: this.currentUser });
+			}
+		}
+	}, {
+		key: 'addRecipeClickHandler',
+		value: function addRecipeClickHandler() {
+			console.log('clicked');
+			this.setState({
+				viewGlobal: false
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			var _this6 = this;
@@ -29008,7 +29023,7 @@ var App = function (_React$Component) {
 					_react2.default.createElement(
 						'div',
 						{ className: 'clearfix' },
-						_react2.default.createElement(_addRecipe2.default, { currentUser: this.currentUser }),
+						this.addRecipe(),
 						_react2.default.createElement(
 							'section',
 							{ className: 'recipeSection' },
@@ -29070,7 +29085,9 @@ var App = function (_React$Component) {
 								),
 								_react2.default.createElement(
 									'p',
-									{ className: 'addrec' },
+									{ className: 'addrec', onClick: function onClick(e) {
+											return _this6.addRecipeClickHandler.call(_this6, e);
+										} },
 									_react2.default.createElement(
 										'a',
 										{ href: '#addrecipe' },

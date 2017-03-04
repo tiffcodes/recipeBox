@@ -182,9 +182,7 @@ class App extends React.Component {
 		}
 	}
 	shouldFocus() {
-		console.log('should focus');
 		document.getElementById('search').focus();
-		console.log('should be focused');
 	}
 	showSearch() {
 		if(this.state.searchVisible) {
@@ -197,6 +195,17 @@ class App extends React.Component {
 			});
 			this.shouldFocus();
 		}
+	}
+
+	addRecipe() {
+		if (!this.state.viewGlobal) {
+			return <AddRecipe currentUser={this.currentUser} />
+		}
+	}
+	addRecipeClickHandler() {
+		this.setState({
+			viewGlobal: false
+		})
 	}
 
 	render() {
@@ -215,7 +224,9 @@ class App extends React.Component {
 							onClick={e => this.showSearch.call(this,e)}></i>
 						</div>
 						<div className="clearfix">
-							<AddRecipe currentUser={this.currentUser} /> 
+							
+							{this.addRecipe()}
+							
 							<section className="recipeSection">
 								{this.getRecipes()}
 							</section>
@@ -239,7 +250,8 @@ class App extends React.Component {
 											<span>Public</span>
 										</button>
 									</p>
-									<p className="addrec">
+
+									<p className="addrec" onClick={e => this.addRecipeClickHandler.call(this, e)}>
 										<a href="#addrecipe">
 											<i className="fa fa-plus"></i>
 											<span>Add</span>

@@ -85,7 +85,7 @@ export default class AddRecipe extends React.Component {
 								<button className="add" onClick={(e) => this.addInstruction(e) }>add</button>
 						</div>
 
-						<ul>
+						<ol>
 							{
 								this.state.instructions.map((instruction, i) => {
 									return(
@@ -96,7 +96,7 @@ export default class AddRecipe extends React.Component {
 									)
 								
 							})}
-						</ul>
+						</ol>
 
 						<label>Serves:</label>
 						<input type="text" ref={ref => this.recipeServes = ref}/>

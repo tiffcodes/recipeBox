@@ -3,7 +3,6 @@ import React from 'react';
 export default function(props){
 	return (
 		<div>
-
 			<h3 id="recipeList">{props.isGlobal ? 'All Public Recipes:' : 'My Recipes:'}</h3>
 			<ul className="alphabet">
 				<li><a href="#a">A</a></li>
