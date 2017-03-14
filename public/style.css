@@ -17,12 +17,19 @@ a {
 }
 
 .signUp, .signIn {
-	width: calc(50% - 20px);
-	margin: 20px 10px;
+	width: 100%;
+	margin: 0 10px;
 	float: left;
 	padding: 20px;
-	/*border: 2px solid black;*/
 	text-align: center;
+}
+
+.enterIngred {
+	width: 100%;
+}
+
+.flower {
+	z-index: -1;
 }
 
 .signUp h2,.signIn h2 {
@@ -112,7 +119,6 @@ form input {
 form.addRecipe, .recipe {
 	width: 95%;
 	margin: 100px auto 0;
-	/*border: 1px solid grey;*/
 	padding: 50px 5%;
 	position: relative;
 	background-color: #ffffff;
@@ -133,10 +139,6 @@ input, label, textarea {
 	width: 100%;
 	text-align: left;
 	border: none;
-}
-
-.enterIngred {
-	width: 85%;
 }
 
 input {
@@ -284,6 +286,7 @@ button, input[type=submit], aside a {
 
 input[type=submit] {
 	border: 1px solid transparent;
+	width: 100%;
 }
 
 input[type=submit]:hover {
@@ -295,13 +298,18 @@ button, aside a {
 	background: transparent;
 }
 
+form button.add {
+	width: 100%;
+}
+
 button.add {
 	text-decoration: none;
 	padding: 10px;
-	margin-left: 10px;
+	margin-top: 5px;
 	background-color: #EAECED;
 	border: 1px solid black;
 }
+
 
 button.add:hover {
 	background: #92C38D;
@@ -387,13 +395,42 @@ div.search {
 	aside .wrapper {
 		align-items: center;
 		width: 70%;
-/*		transform: translate(-50%, -100%);*/
 	}
 	form.addRecipe, .recipe {
 		width: 70%;
 	}
 }
 
+@media (min-width: 400px) {
+	.signUp, .signIn {
+		width: calc(50% - 20px);
+		margin: 20px 10px;
+	}
+	.enterIngred {
+		width: 80%;
+	}
+	form button.add {
+		width: 20%;
+		margin-top: 0;
+	}
+}
+
+@media (min-width: 600px) {
+	.enterIngred {
+		width: 80%;
+	}
+	form button.add {
+		width: calc(20% - 10px);
+		margin-left: 10px;
+	}
+}
+
+
+
+
+
+
+/* nav buttons */
 @media (max-width: 630px) {
 	aside p, aside button, aside a {
 		line-height: 1.2;

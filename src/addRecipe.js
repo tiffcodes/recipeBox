@@ -22,7 +22,7 @@ export default class AddRecipe extends React.Component {
 				className="addRecipe"
 				id="addrecipe" >
 					<div className="flower">
-						<img src="src/assets/bud.svg" href="Water colour small pink bud"/>
+						<img src="src/assets/bud.svg" href="Water colour small pink bud" />
 					</div>
 					<h2>Add a New Recipe:</h2>
 					<div>
@@ -295,8 +295,3 @@ export default class AddRecipe extends React.Component {
 		});
 	}
 }
-
-
-// add conversion widget 
-// sticky alphabet once you scroll into recipes 
-// add notifications and feedback to the top like readme does with the blue bar

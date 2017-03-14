@@ -28436,11 +28436,6 @@ var AddRecipe = function (_React$Component) {
 	return AddRecipe;
 }(_react2.default.Component);
 
-// add conversion widget 
-// sticky alphabet once you scroll into recipes 
-// add notifications and feedback to the top like readme does with the blue bar
-
-
 exports.default = AddRecipe;
 
 },{"react":246,"react-dom":65}],250:[function(require,module,exports){
@@ -28958,9 +28953,7 @@ var App = function (_React$Component) {
 	}, {
 		key: 'shouldFocus',
 		value: function shouldFocus() {
-			console.log('should focus');
 			document.getElementById('search').focus();
-			console.log('should be focused');
 		}
 	}, {
 		key: 'showSearch',
@@ -28986,7 +28979,6 @@ var App = function (_React$Component) {
 	}, {
 		key: 'addRecipeClickHandler',
 		value: function addRecipeClickHandler() {
-			console.log('clicked');
 			this.setState({
 				viewGlobal: false
 			});
@@ -29007,7 +28999,7 @@ var App = function (_React$Component) {
 						_react2.default.createElement('input', {
 							id: 'search',
 							className: this.state.searchVisible ? 'visible' : 'notVisible',
-							placeholder: 'Search',
+							placeholder: 'Search for recipes or ingredients',
 							ref: function ref(_ref) {
 								return _this6.search = _ref;
 							},
@@ -29141,7 +29133,9 @@ _reactDom2.default.render(_react2.default.createElement(
 ), document.getElementById('app'));
 
 // import images and docs? maybe hidden on click, but the upload is normal
-// once you share there's no going back from the public view. You can, however, delete the recipe from the public view
+// add conversion widget 
+// sticky alphabet once you scroll into recipes 
+// add notifications and feedback to the top like readme does with the blue bar
 
 },{"./addRecipe.js":249,"./alphabet.js":250,"./footer.js":252,"./header.js":253,"./noRecipesFound":254,"./notFound.js":255,"./recipes.js":257,"./signIn.js":258,"./signUp.js":259,"fuse.js":29,"react":246,"react-dom":65,"react-router":95}],252:[function(require,module,exports){
 "use strict";

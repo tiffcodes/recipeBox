@@ -216,7 +216,7 @@ class App extends React.Component {
 							<input 
 							id="search"
 							className={this.state.searchVisible ? 'visible' : 'notVisible'} 
-							placeholder="Search" 
+							placeholder="Search for recipes or ingredients" 
 							ref={ref => this.search = ref} 
 							onChange={e => this.handleSearch.call(this,e)} />
 							<i 
@@ -226,7 +226,7 @@ class App extends React.Component {
 						<div className="clearfix">
 							
 							{this.addRecipe()}
-							
+						
 							<section className="recipeSection">
 								{this.getRecipes()}
 							</section>
@@ -250,7 +250,6 @@ class App extends React.Component {
 											<span>Public</span>
 										</button>
 									</p>
-
 									<p className="addrec" onClick={e => this.addRecipeClickHandler.call(this, e)}>
 										<a href="#addrecipe">
 											<i className="fa fa-plus"></i>
@@ -292,6 +291,7 @@ ReactDom.render(
 		<Route path="*" component={NotFound} />
 	</Router>, document.getElementById('app'));
 
-
 // import images and docs? maybe hidden on click, but the upload is normal
-// once you share there's no going back from the public view. You can, however, delete the recipe from the public view
+// add conversion widget 
+// sticky alphabet once you scroll into recipes 
+// add notifications and feedback to the top like readme does with the blue bar
