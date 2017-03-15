@@ -98,7 +98,7 @@ export default class AddRecipe extends React.Component {
 							})}
 						</ol>
 
-						<label>Serves:</label>
+						<label>Serves/Notes:</label>
 						<input type="text" ref={ref => this.recipeServes = ref}/>
 
 						<input type="submit" />

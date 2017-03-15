@@ -228,17 +228,17 @@ export default class RecipeCard extends React.Component {
 				{this.getShareRecipeButton()}
 				
 				<h2 id={this.props.recipe.title}>{this.props.recipe.title}</h2>
-				<p>Prep Time: {this.props.recipe.prepTime}</p>
-				<p>Total Time: {this.props.recipe.totalTime}</p>
-				<p>Ingredients:</p>
+				<p><span className="formLabel">Prep Time:</span> {this.props.recipe.prepTime}</p>
+				<p><span className="formLabel">Total Time:</span> {this.props.recipe.totalTime}</p>
+				<p><span className="formLabel">Ingredients:</span></p>
 				<ul>
 					{this.getRecipeIngredients()}
 				</ul>
-				<p>Instructions:</p>
+				<p><span className="formLabel">Instructions:</span></p>
 				<ol>
 					{this.getRecipeInstructions()}
 				</ol>
-				<p>Serves: {this.props.recipe.serves}</p>
+				<p><span className="formLabel">Serves/Notes:</span> {this.props.recipe.serves}</p>
 			</div>
 		)
 	};

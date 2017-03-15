@@ -1,37 +1,45 @@
 import React from 'react';
 
-export default function(props){
-	return (
-		<div>
-			<h3 id="recipeList">{props.isGlobal ? 'All Public Recipes:' : 'My Recipes:'}</h3>
-			<ul className="alphabet">
-				<li><a href="#a">A</a></li>
-				<li><a href="#b">B</a></li>
-				<li><a href="#c">C</a></li>
-				<li><a href="#d">D</a></li>
-				<li><a href="#e">E</a></li>
-				<li><a href="#f">F</a></li>
-				<li><a href="#g">G</a></li>
-				<li><a href="#h">H</a></li>
-				<li><a href="#i">I</a></li>
-				<li><a href="#j">J</a></li>
-				<li><a href="#k">K</a></li>
-				<li><a href="#l">L</a></li>
-				<li><a href="#m">M</a></li>
-				<li><a href="#n">N</a></li>
-				<li><a href="#o">O</a></li>
-				<li><a href="#p">P</a></li>
-				<li><a href="#q">Q</a></li>
-				<li><a href="#r">R</a></li>
-				<li><a href="#s">S</a></li>
-				<li><a href="#t">T</a></li>
-				<li><a href="#u">U</a></li>
-				<li><a href="#v">V</a></li>
-				<li><a href="#w">W</a></li>
-				<li><a href="#x">X</a></li>
-				<li><a href="#y">Y</a></li>
-				<li><a href="#z">Z</a></li>
-			</ul>
-		</div>	
-	)
+export default class AlphabetContainer extends React.Component {
+	constructor(props, context) {
+		super();
+		this.state = {
+			showNoLetterMessage: false
+		}
+	}
+	checkExisting(letter) {
+		if (document.getElementById(letter)) {
+			this.setState({
+				showNoLetterMessage: false
+			})
+		} else {
+			this.setState({
+				showNoLetterMessage: true
+			})
+		}
+	}
+	showNoLetterMessage() {
+		if (this.state.showNoLetterMessage === true ) {
+			// document.getElementById('alphabet').appendChild(element);
+			return 	<p className="noRecipesWithLetter">There are no recipes that start with that letter yet!</p>
+		}
+	}
+	render() {
+		const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+		return (
+			<div id="alphabet">
+				<h3 id="recipeList">{this.props.isGlobal ? 'All Public Recipes:' : 'My Recipes:'}</h3>
+				<ul className="alphabet">
+					{alphabet.map((letter, i) => {
+						return (
+							<li key={i}>
+								<a href={`#${letter}`} onClick={e => this.checkExisting.call(this, letter)}>{letter}</a>
+							</li>
+						)
+					})}
+				</ul>
+				{this.showNoLetterMessage()}
+			</div>	
+		)
+	}
 }

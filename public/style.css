@@ -62,8 +62,13 @@ h1, h2, .signOut, h3 {
 i.fa.fa-chevron-down {
 	display: block;
 	text-align: center;
-	font-size: 10px;
+	font-size: 15px;
 	margin: 0;
+}
+
+input {
+	-webkit-appearance: none;
+    border-radius: 0;
 }
 
 h2 {
@@ -249,6 +254,19 @@ li.ingredientList {
 	margin-top: 70px;
 	padding: 0;
 }
+.alphabet a {
+	text-transform: uppercase;
+}
+
+.noRecipesWithLetter {
+	text-align: center;
+	color: #ed5e68;
+	font-size: 12px;
+}
+
+.formLabel {
+	font-weight: bold;
+}
 
 .alphabet li {
 	flex: 1 0 auto;
@@ -364,8 +382,8 @@ aside p.active button:hover {
 
 div.search {
 	position: fixed;
-	top: 40px;
-	right: 40px;
+	top: 10px;
+	right: 10px;
 	text-align: right;
 	z-index: 5;
 }
@@ -388,9 +406,8 @@ div.search {
 
 .info {
 	position: fixed;
-	top: 40px;
+	top: 10px;
 	left: 10px;
-	right: 10px;
 	z-index: 5;
 }
 
@@ -399,7 +416,7 @@ div.search {
 }
 
 .moreInfo {
-	/*width: 95%;*/
+	width: 95%;
 	background: white;
 	box-shadow: 1px 1px 2px grey;
 	line-height: 1.5;
@@ -436,7 +453,7 @@ div.search {
 	}
 }
 
-@media (min-width: 400px) {
+@media (min-width: 420px) {
 	.signUp, .signIn {
 		width: calc(50% - 20px);
 		margin: 20px 10px;
@@ -453,10 +470,14 @@ div.search {
 	}
 	.info {
 		left: 40px;
-		right: 40px;
+		top: 40px;
 	}
 	.moreInfo {
 		padding: 40px;
+	}
+	div.search {
+		top: 40px;
+		right: 40px;
 	}
 }
 
