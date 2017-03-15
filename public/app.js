@@ -28782,7 +28782,8 @@ var App = function (_React$Component) {
 			showFiltered: false,
 			globalRecipes: [],
 			viewGlobal: false,
-			searchVisible: false
+			searchVisible: false,
+			showInfo: false
 		};
 
 		var config = {
@@ -28805,7 +28806,7 @@ var App = function (_React$Component) {
 			firebase.auth().onAuthStateChanged(function (user) {
 				if (user) {
 					_this2.currentUser = user.uid;
-					console.log('logged In? ', user.Xb);
+					// console.log('logged In? ', user.Xb);
 					_this2.setState({
 						loggedIn: true
 					});
@@ -28984,6 +28985,56 @@ var App = function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'showInfoHandler',
+		value: function showInfoHandler() {
+			if (this.state.showInfo === true) {
+				this.setState({
+					showInfo: false
+				});
+			} else {
+				this.setState({
+					showInfo: true
+				});
+			}
+		}
+	}, {
+		key: 'showInfo',
+		value: function showInfo() {
+			if (this.state.showInfo === true) {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'moreInfo' },
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Welcome to Recipe Box!'
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						_react2.default.createElement(
+							'strong',
+							null,
+							'\'My Recipes\''
+						),
+						' is a place for you to save recipes. The ',
+						_react2.default.createElement(
+							'strong',
+							null,
+							'\'Public\''
+						),
+						' recipe list is a shared recipe list for everyone that uses Recipe Box. Add your own recipes to the ',
+						_react2.default.createElement(
+							'strong',
+							null,
+							'\'Public\''
+						),
+						' recipe list, and save other public recipes to your \'My Recipe\' list.'
+					)
+				);
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			var _this6 = this;
@@ -29011,6 +29062,14 @@ var App = function (_React$Component) {
 							onClick: function onClick(e) {
 								return _this6.showSearch.call(_this6, e);
 							} })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'info', onClick: function onClick(e) {
+								return _this6.showInfoHandler.call(_this6, e);
+							} },
+						_react2.default.createElement('i', { className: 'fa fa-question' }),
+						this.showInfo()
 					),
 					_react2.default.createElement(
 						'div',
@@ -29204,7 +29263,7 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 },{"react":246}],253:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -29212,17 +29271,18 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = function () {
 	return _react2.default.createElement(
-		'header',
+		"header",
 		null,
 		_react2.default.createElement(
-			'h1',
+			"h1",
 			null,
-			'Recipe Box'
-		)
+			"Recipe Box"
+		),
+		_react2.default.createElement("i", { className: "fa fa-chevron-down" })
 	);
 };
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 

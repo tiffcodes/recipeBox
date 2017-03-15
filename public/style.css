@@ -59,6 +59,13 @@ h1, h2, .signOut, h3 {
 	text-align: center;
 }
 
+i.fa.fa-chevron-down {
+	display: block;
+	text-align: center;
+	font-size: 10px;
+	margin: 0;
+}
+
 h2 {
 	padding-top: 20px;
 }
@@ -366,17 +373,40 @@ div.search {
 .search i.fa {
 	margin-right: 0;
 	background: transparent;
-	float: left;
+/*	float: left;*/
 	font-size: 25px;
 }
 
 .search input {
-	width: auto;
+	width: 150px;
 	background: white;
 	border-bottom: 1px solid black;
 	float: left;
 	margin-top: -10px;
 	margin-right: 10px;
+}
+
+.info {
+	position: fixed;
+	top: 40px;
+	left: 10px;
+	right: 10px;
+	z-index: 5;
+}
+
+.info i.fa {
+	font-size: 25px;
+}
+
+.moreInfo {
+	/*width: 95%;*/
+	background: white;
+	box-shadow: 1px 1px 2px grey;
+	line-height: 1.5;
+	padding: 10px;
+	margin: 0;
+	top: 20px;
+	position: relative;
 }
 
 .notVisible {
@@ -399,6 +429,11 @@ div.search {
 	form.addRecipe, .recipe {
 		width: 70%;
 	}
+	.moreInfo h2, .moreInfo p{
+		width: 75%;
+		margin-right: auto;
+		margin-left: auto;
+	}
 }
 
 @media (min-width: 400px) {
@@ -412,6 +447,16 @@ div.search {
 	form button.add {
 		width: 20%;
 		margin-top: 0;
+	}
+	.search input {
+		width: 300px;
+	}
+	.info {
+		left: 40px;
+		right: 40px;
+	}
+	.moreInfo {
+		padding: 40px;
 	}
 }
 

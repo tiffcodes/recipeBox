@@ -25,7 +25,8 @@ class App extends React.Component {
 			showFiltered: false,
 			globalRecipes: [],
 			viewGlobal: false,
-			searchVisible: false
+			searchVisible: false, 
+			showInfo: false
 		}
 
 		let config = {
@@ -44,7 +45,7 @@ class App extends React.Component {
 			.onAuthStateChanged((user) => {
 				if(user) {
 					this.currentUser = user.uid;
-					console.log('logged In? ', user.Xb);
+					// console.log('logged In? ', user.Xb);
 					this.setState({
 						loggedIn: true
 					});
@@ -207,6 +208,27 @@ class App extends React.Component {
 			viewGlobal: false
 		})
 	}
+	showInfoHandler() {
+		if (this.state.showInfo === true) {
+			this.setState({
+				showInfo: false
+			})
+		} else {
+			this.setState({
+				showInfo: true
+			})
+		}
+	}
+	showInfo() {
+		if (this.state.showInfo === true) {
+			return (
+				<div className='moreInfo'>
+					<h2>Welcome to Recipe Box!</h2>
+					<p><strong>'My Recipes'</strong> is a place for you to save recipes. The <strong>'Public'</strong> recipe list is a shared recipe list for everyone that uses Recipe Box. Add your own recipes to the <strong>'Public'</strong> recipe list, and save other public recipes to your 'My Recipe' list.</p>
+				</div>
+			)
+		} 
+	}
 
 	render() {
 		let main;
@@ -222,6 +244,10 @@ class App extends React.Component {
 							<i 
 							className="fa fa-search" 
 							onClick={e => this.showSearch.call(this,e)}></i>
+						</div>
+						<div className="info" onClick={e => this.showInfoHandler.call(this, e)}>
+							<i className="fa fa-question"></i>
+							{this.showInfo()}
 						</div>
 						<div className="clearfix">
 							
