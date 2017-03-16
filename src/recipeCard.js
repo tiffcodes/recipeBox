@@ -61,38 +61,31 @@ export default class RecipeCard extends React.Component {
 
 	removeRecipe(recipeToRemove) {
 		firebase.database().ref(`${this.props.currentUser}/recipe/${recipeToRemove.key}`).remove();
+		alert('Deleting this recipe does not automatically delete the public recipe');
 	}
 
 	onCancelDelete() {
-		return <SweetAlert title="Note:" onConfirm={this.onConfirm} >
-			Deleting this recipe does not automatically delete the public recipe
-		</SweetAlert>
+		alert('Cool! We will not delete this recipe');
 	}
 
 	removeRecipeConfirm(recipeToRemove) {
-		return <SweetAlert
-		warning
-		showCancel
-		confirmBtnText="Yes, delete it!"
-		confirmBtnBsStyle="danger"
-		cancelBtnBsStyle="default"
-		title="Are you sure?"
-		onConfirm={this.removeRecipe(recipeToRemove)}
-		onCancel={this.onCancelDelete}
-		>
-		Are you sure you want to delete this recipe?
-		</SweetAlert>
+		if (confirm('Are you sure you want to delete this recipe?')){
+			this.removeRecipe(recipeToRemove);
+		} else {
+			this.onCancelDelete();
+		}
 	}
 
 	removeGlobalRecipe(recipeToRemove) {
 		if (confirm('Are you sure you want to delete this recipe')) { 
-		 firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
-
-		 // delete the userId on the private version of the recipe here
-		  alert('Note: deleting this public recipe does not automatically delete your private recipe');
-		}
-		
+			firebase.database().ref(`recipe/${recipeToRemove.key}`).remove();
+			// delete the userId on the private version of the recipe here
+			alert('Note: deleting this public recipe does not automatically delete your private recipe');
+		 } else {
+			this.onCancelDelete();
+		 }
 	}
+
 
 	saveToMyRecipes(recipeToSave) {
 		firebase.database().ref(`recipe/${recipeToSave.key}`).on('value',  (res) => {

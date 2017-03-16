@@ -29288,42 +29288,31 @@ var RecipeCard = function (_React$Component) {
 		key: 'removeRecipe',
 		value: function removeRecipe(recipeToRemove) {
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToRemove.key).remove();
+			alert('Deleting this recipe does not automatically delete the public recipe');
 		}
 	}, {
 		key: 'onCancelDelete',
 		value: function onCancelDelete() {
-			return _react2.default.createElement(
-				_reactBootstrapSweetalert.SweetAlert,
-				{ title: 'Note:', onConfirm: this.onConfirm },
-				'Deleting this recipe does not automatically delete the public recipe'
-			);
+			alert('Cool! We will not delete this recipe');
 		}
 	}, {
 		key: 'removeRecipeConfirm',
 		value: function removeRecipeConfirm(recipeToRemove) {
-			return _react2.default.createElement(
-				_reactBootstrapSweetalert.SweetAlert,
-				{
-					warning: true,
-					showCancel: true,
-					confirmBtnText: 'Yes, delete it!',
-					confirmBtnBsStyle: 'danger',
-					cancelBtnBsStyle: 'default',
-					title: 'Are you sure?',
-					onConfirm: this.removeRecipe(recipeToRemove),
-					onCancel: this.onCancelDelete
-				},
-				'Are you sure you want to delete this recipe?'
-			);
+			if (confirm('Are you sure you want to delete this recipe?')) {
+				this.removeRecipe(recipeToRemove);
+			} else {
+				this.onCancelDelete();
+			}
 		}
 	}, {
 		key: 'removeGlobalRecipe',
 		value: function removeGlobalRecipe(recipeToRemove) {
 			if (confirm('Are you sure you want to delete this recipe')) {
 				firebase.database().ref('recipe/' + recipeToRemove.key).remove();
-
 				// delete the userId on the private version of the recipe here
 				alert('Note: deleting this public recipe does not automatically delete your private recipe');
+			} else {
+				this.onCancelDelete();
 			}
 		}
 	}, {

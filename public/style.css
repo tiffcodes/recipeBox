@@ -134,9 +134,8 @@ form.addRecipe, .recipe {
 	padding: 50px 5%;
 	position: relative;
 	background-color: #ffffff;
-	background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */);
-	/*background-image: url(../src/assets/handmadepaper_@2X.png);*/
+	background-image: url(../src/assets/handmadepaper.png);
+	background-image: url(../src/assets/handmadepaper_@2X.png);
 	box-shadow: 1px 1px 2px grey;
 }
 
