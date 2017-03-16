@@ -224,7 +224,7 @@ class App extends React.Component {
 			return (
 				<div className='moreInfo'>
 					<h2>Welcome to Recipe Box!</h2>
-					<p><strong>'My Recipes'</strong> is a place for you to save recipes. The <strong>'Public'</strong> recipe list is a shared recipe list for everyone that uses Recipe Box. Add your own recipes to the <strong>'Public'</strong> recipe list, and save other public recipes to your 'My Recipe' list.</p>
+					<p><strong>'My Recipes'</strong> is a place for you to save and share recipes. 'My Recipes' list is private to only you! The <strong>'Public'</strong> recipe list is a shared recipe list for everyone that uses Recipe Box. You can add your own recipes to the <strong>'Public'</strong> recipe list by clicking the share button on the recipe card in 'My Recipes' list. You can save public recipes to your personal recipe list by clicking the 'save' button on the public recipe card.</p>
 				</div>
 			)
 		} 
