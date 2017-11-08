@@ -43,6 +43,7 @@ export default class SignIn extends React.Component {
 					<input type="password" ref={ref => this.password = ref} autoComplete="off" />
 				</div>
 				<input type="submit" value="Sign In" />
+				<a className="forgotPassword" href="mailto:tiffany@tiffanydanielle.com">Forgot Password? Email us with your email address</a>
 			</form>
 		);
 	}

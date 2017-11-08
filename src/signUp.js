@@ -36,11 +36,11 @@ export default class SignUp extends React.Component {
 			  } else if ( errorMessage === "auth/invalid-email") {
 			  	alert('Email invalid');
 			  } else if (errorMessage === "auth/operation-not-allowed") {
-			  	alert('Oops we\'re not allowing emails right now. Please sign up with Facebook or gmail')
+			  	alert('Oops we\'re not allowing emails right now. Please come back later!')
 			  } else if (errorMessage === "auth/weak-password") {
 			  	alert('Yikes your password isn\'t strong enough. Try again but maybe throw in a cap or exclamation point??');
 			  } else {
-			  	alert('ah! Something went wrong. Try again in a little while. Maybe turn it off then on again?');
+			  	alert('ah! Something went wrong. Most likely, you already registered an email address with us. If not, try again in a little while. Maybe turn it off then on again?');
 			  }
 		}).then(function(user) {
 			// console.log(user);

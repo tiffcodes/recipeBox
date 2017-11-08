@@ -28848,26 +28848,52 @@ var App = function (_React$Component) {
 						'Welcome to Recipe Box!'
 					),
 					_react2.default.createElement(
-						'p',
+						'h3',
+						null,
+						'My Recipes List'
+					),
+					_react2.default.createElement(
+						'ul',
 						null,
 						_react2.default.createElement(
-							'strong',
+							'li',
 							null,
-							'\'My Recipes\''
+							'The \'My Recipes\' list is a place for you to save and share recipes.'
 						),
-						' is a place for you to save recipes. The ',
 						_react2.default.createElement(
-							'strong',
+							'li',
 							null,
-							'\'Public\''
-						),
-						' recipe list is a shared recipe list for everyone that uses Recipe Box. Add your own recipes to the ',
+							'This list is ',
+							_react2.default.createElement(
+								'em',
+								null,
+								'private to only you!'
+							)
+						)
+					),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Public Recipe List'
+					),
+					_react2.default.createElement(
+						'ul',
+						null,
 						_react2.default.createElement(
-							'strong',
+							'li',
 							null,
-							'\'Public\''
+							'The \'Public\' recipe list is a shared recipe list for everyone that uses Recipe Box.'
 						),
-						' recipe list, and save other public recipes to your \'My Recipe\' list.'
+						_react2.default.createElement(
+							'li',
+							null,
+							' You can add your own recipes to the \'Public\' recipe list by clicking the share button on the recipe card in \'My Recipes\' list.'
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							'You can save public recipes to your personal recipe list by clicking the \'save\' button on the public recipe card.'
+						)
 					)
 				);
 			}
@@ -29210,6 +29236,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrapSweetalert = require('react-bootstrap-sweetalert');
 
+var _reactBootstrapSweetalert2 = _interopRequireDefault(_reactBootstrapSweetalert);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29229,7 +29257,8 @@ var RecipeCard = function (_React$Component) {
 		_this.state = {
 			publicRecipeSaved: false,
 			privateRecipeDownloaded: false,
-			recipeShared: false
+			recipeShared: false,
+			alert: null
 		};
 		return _this;
 	}
@@ -29293,7 +29322,53 @@ var RecipeCard = function (_React$Component) {
 	}, {
 		key: 'onCancelDelete',
 		value: function onCancelDelete() {
-			alert('Cool! We will not delete this recipe');
+			var _this3 = this;
+
+			_react2.default.createElement(
+				_reactBootstrapSweetalert2.default,
+				{
+					success: true,
+					title: 'Cool! We will not delete this recipe' },
+				'onConfirm=',
+				function () {
+					return _this3.hideAlert;
+				}
+			);
+
+			this.setState({
+				alert: getAlert()
+			});
+		}
+	}, {
+		key: 'sweetAlert',
+		value: function sweetAlert() {
+			var _this4 = this;
+
+			var getAlert = function getAlert() {
+				return _react2.default.createElement(
+					_reactBootstrapSweetalert2.default,
+					{
+						success: true,
+						title: 'Woot!',
+						onConfirm: function onConfirm() {
+							return _this4.hideAlert();
+						}
+					},
+					'Hello world!'
+				);
+			};
+
+			this.setState({
+				alert: null
+			});
+		}
+	}, {
+		key: 'hideAlert',
+		value: function hideAlert() {
+			// console.log('Hiding alert...');
+			this.setState({
+				alert: null
+			});
 		}
 	}, {
 		key: 'removeRecipeConfirm',
@@ -29318,14 +29393,14 @@ var RecipeCard = function (_React$Component) {
 	}, {
 		key: 'saveToMyRecipes',
 		value: function saveToMyRecipes(recipeToSave) {
-			var _this3 = this;
+			var _this5 = this;
 
 			firebase.database().ref('recipe/' + recipeToSave.key).on('value', function (res) {
 				var data = res.val();
 				// save to firebase db private list:
-				firebase.database().ref(_this3.props.currentUser + '/recipe').push(data);
-				_this3.handleState();
-				_this3.setState({
+				firebase.database().ref(_this5.props.currentUser + '/recipe').push(data);
+				_this5.handleState();
+				_this5.setState({
 					publicRecipeSaved: true
 				});
 			});
@@ -29333,20 +29408,20 @@ var RecipeCard = function (_React$Component) {
 	}, {
 		key: 'shareRecipe',
 		value: function shareRecipe(recipeToShare) {
-			var _this4 = this;
+			var _this6 = this;
 
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToShare.key).on('value', function (res) {
 				var data = res.val();
 				// add user id to the recipe object
-				data['userId'] = _this4.props.currentUser;
+				data['userId'] = _this6.props.currentUser;
 				// add user id to original private recipe:
-				firebase.database().ref(_this4.props.currentUser + '/recipe/' + recipeToShare.key).set(data);
+				firebase.database().ref(_this6.props.currentUser + '/recipe/' + recipeToShare.key).set(data);
 			});
 
 			firebase.database().ref(this.props.currentUser + '/recipe/' + recipeToShare.key).on('value', function (res) {
 				var data = res.val();
 				// add user id to the recipe object
-				data['userId'] = _this4.props.currentUser;
+				data['userId'] = _this6.props.currentUser;
 				// save to firebase db in public recipes:
 				firebase.database().ref('recipe').push(data);
 				// set state to show recipe is shared:
@@ -29359,23 +29434,23 @@ var RecipeCard = function (_React$Component) {
 	}, {
 		key: 'getRemoveButton',
 		value: function getRemoveButton() {
-			var _this5 = this;
+			var _this7 = this;
 
 			if (this.props.isGlobal && this.props.recipe.userId === this.props.currentUser) {
 
 				return _react2.default.createElement('i', { className: 'fa fa-times upperLeft', onClick: function onClick(e) {
-						return _this5.removeGlobalRecipe.call(_this5, _this5.props.recipe);
+						return _this7.removeGlobalRecipe.call(_this7, _this7.props.recipe);
 					} });
 			} else if (this.props.isGlobal === false) {
 				return _react2.default.createElement('i', { className: 'fa fa-times upperLeft', onClick: function onClick(e) {
-						return _this5.removeRecipeConfirm.call(_this5, _this5.props.recipe);
+						return _this7.removeRecipeConfirm.call(_this7, _this7.props.recipe);
 					} });
 			}
 		}
 	}, {
 		key: 'getSaveRecipeButton',
 		value: function getSaveRecipeButton() {
-			var _this6 = this;
+			var _this8 = this;
 
 			if (this.props.isGlobal && this.props.recipe.userId === this.props.currentUser) {
 				return _react2.default.createElement(
@@ -29393,7 +29468,7 @@ var RecipeCard = function (_React$Component) {
 					'div',
 					{ className: 'upperRight clearfix clickable',
 						onClick: function onClick(e) {
-							return _this6.saveToMyRecipes.call(_this6, _this6.props.recipe);
+							return _this8.saveToMyRecipes.call(_this8, _this8.props.recipe);
 						} },
 					_react2.default.createElement(
 						'p',
@@ -29418,7 +29493,7 @@ var RecipeCard = function (_React$Component) {
 	}, {
 		key: 'getShareRecipeButton',
 		value: function getShareRecipeButton() {
-			var _this7 = this;
+			var _this9 = this;
 
 			if (this.props.isGlobal === false && this.state.privateRecipeDownloaded) {
 				return _react2.default.createElement(
@@ -29437,7 +29512,7 @@ var RecipeCard = function (_React$Component) {
 					'div',
 					{ className: 'upperRight clearfix clickable',
 						onClick: function onClick(e) {
-							return _this7.shareRecipe.call(_this7, _this7.props.recipe);
+							return _this9.shareRecipe.call(_this9, _this9.props.recipe);
 						} },
 					_react2.default.createElement(
 						'p',
@@ -29489,6 +29564,8 @@ var RecipeCard = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
+			var _this10 = this;
+
 			return _react2.default.createElement(
 				'div',
 				{ className: 'recipe', id: this.props.checkAlphabet(this.props.firstLetter, this.props.alphabet) },
@@ -29560,7 +29637,15 @@ var RecipeCard = function (_React$Component) {
 					),
 					' ',
 					this.props.recipe.serves
-				)
+				),
+				_react2.default.createElement(
+					'button',
+					{ onClick: function onClick() {
+							return _this10.testing();
+						} },
+					'Click me to see alert'
+				),
+				this.state.alert
 			);
 		}
 	}]);
@@ -29764,7 +29849,12 @@ var SignIn = function (_React$Component) {
 							return _this2.password = _ref2;
 						}, autoComplete: 'off' })
 				),
-				_react2.default.createElement('input', { type: 'submit', value: 'Sign In' })
+				_react2.default.createElement('input', { type: 'submit', value: 'Sign In' }),
+				_react2.default.createElement(
+					'a',
+					{ className: 'forgotPassword', href: 'mailto:tiffany@tiffanydanielle.com' },
+					'Forgot Password? Email us with your email address'
+				)
 			);
 		}
 	}]);
@@ -29835,11 +29925,11 @@ var SignUp = function (_React$Component) {
 				} else if (errorMessage === "auth/invalid-email") {
 					alert('Email invalid');
 				} else if (errorMessage === "auth/operation-not-allowed") {
-					alert('Oops we\'re not allowing emails right now. Please sign up with Facebook or gmail');
+					alert('Oops we\'re not allowing emails right now. Please come back later!');
 				} else if (errorMessage === "auth/weak-password") {
 					alert('Yikes your password isn\'t strong enough. Try again but maybe throw in a cap or exclamation point??');
 				} else {
-					alert('ah! Something went wrong. Try again in a little while. Maybe turn it off then on again?');
+					alert('ah! Something went wrong. Most likely, you already registered an email address with us. If not, try again in a little while. Maybe turn it off then on again?');
 				}
 			}).then(function (user) {
 				// console.log(user);

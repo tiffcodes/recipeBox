@@ -227,6 +227,12 @@ footer {
 	clear: both;
 }
 
+.forgotPassword {
+	margin-top: 20px;
+	display: block;
+	font-size: 12px;
+}
+
 i.fa-times.remove {
 	padding: 5px;
 	margin-left: 10px;

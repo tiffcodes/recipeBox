@@ -1,5 +1,5 @@
 import React from 'react';
-import { SweetAlert } from 'react-bootstrap-sweetalert';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 export default class RecipeCard extends React.Component {
 	constructor(props, context) {
@@ -7,7 +7,8 @@ export default class RecipeCard extends React.Component {
 		this.state = {
 			publicRecipeSaved: false, 
 			privateRecipeDownloaded: false,
-			recipeShared: false
+			recipeShared: false,
+			alert: null
 		}
 	}	
 
@@ -65,7 +66,40 @@ export default class RecipeCard extends React.Component {
 	}
 
 	onCancelDelete() {
-		alert('Cool! We will not delete this recipe');
+		<SweetAlert
+			success 
+			title="Cool! We will not delete this recipe" >	
+			onConfirm={() => this.hideAlert}
+		</SweetAlert>
+		
+		this.setState({
+		 alert: getAlert()
+		});
+		
+	}
+
+	sweetAlert() {
+		const getAlert = () => (
+			<SweetAlert 
+			success 
+			title="Woot!" 
+			onConfirm={() => this.hideAlert()}
+			>
+			Hello world!
+			</SweetAlert>
+		);
+
+		this.setState({
+		 alert: null
+		});
+		
+	}
+
+	hideAlert() {
+	  // console.log('Hiding alert...');
+	  this.setState({
+	    alert: null
+	  });
 	}
 
 	removeRecipeConfirm(recipeToRemove) {
@@ -232,6 +266,8 @@ export default class RecipeCard extends React.Component {
 					{this.getRecipeInstructions()}
 				</ol>
 				<p><span className="formLabel">Serves/Notes:</span> {this.props.recipe.serves}</p>
+				<button onClick={() => this.testing()}>Click me to see alert</button>
+				{this.state.alert}
 			</div>
 		)
 	};
